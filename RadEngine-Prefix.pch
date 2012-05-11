@@ -1,0 +1,35 @@
+
+#ifdef __OBJC__
+
+#import "TargetConditionals.h"
+
+#if TARGET_OS_IPHONE
+
+		#import <Foundation/Foundation.h>
+		#import <UIKit/UIKit.h>
+
+		#import <CoreMotion/CoreMotion.h>
+
+		#import <QuartzCore/QuartzCore.h>
+
+		#import <OpenGLES/EAGLDrawable.h>
+
+		#import <OpenGLES/EAGL.h>
+		#import <OpenGLES/ES1/gl.h>
+		#import <OpenGLES/ES1/glext.h>
+
+		#define GL_WRITE_ONLY GL_WRITE_ONLY_OES
+		#define glMapBuffer glMapBufferOES
+		#define glUnmapBuffer glUnmapBufferOES
+		#define glFrustum glFrustumf
+
+#else
+
+		#import <Cocoa/Cocoa.h>
+		#import <OpenGL/gl.h>
+		#import <OpenGL/glext.h>
+		#import <OpenGL/glu.h>
+
+#endif
+
+#endif
