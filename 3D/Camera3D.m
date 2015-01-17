@@ -45,6 +45,11 @@
 	projection = Matrix4x4Perspective(fovy, aspect, near, far);
 }
 
+- (Vector2D)project:(Vector3D)position to:(CGRect)frame {
+	Vector3D projected = Vector3DMultiply(Vector3DMultiply(position, worldToLocal), projection);
+	return Vector2DMake(frame.origin.x + (projected.x+1) * frame.size.width, frame.origin.x + (projected.y+1) * frame.size.height);
+}
+
 - (Ray3D)unproject:(Vector2D)point from:(CGRect)frame {
 	Matrix4x4 inverse = Matrix4x4Invert(Matrix4x4Multiply(projection, worldToLocal));
 	Vector3D normalized = Vector3DMake(2*(point.x-frame.origin.x)/frame.size.width-1, 2*(point.y-frame.origin.y)/frame.size.height-1, far);

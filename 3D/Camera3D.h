@@ -19,6 +19,7 @@
 
 - (id)initWithPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up fovy:(float)fovy aspect:(float)aspect near:(float)near far:(float)far;
 
+- (Vector2D)project:(Vector3D)position to:(CGRect)frame;
 - (Ray3D)unproject:(Vector2D)point from:(CGRect)frame;
 
 @end
