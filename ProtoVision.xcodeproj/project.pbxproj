@@ -63,11 +63,11 @@
 		EF7E7D6E1A695778009BD387 /* Box3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D281A695778009BD387 /* Box3D.m */; };
 		EF7E7D6F1A695778009BD387 /* Camera3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D291A695778009BD387 /* Camera3D.h */; };
 		EF7E7D701A695778009BD387 /* Object3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2A1A695778009BD387 /* Object3D.h */; };
-		EF7E7D711A695778009BD387 /* View3D+MacOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D2C1A695778009BD387 /* View3D+MacOSX.m */; };
-		EF7E7D721A695778009BD387 /* View3D+MacOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2D1A695778009BD387 /* View3D+MacOSX.h */; };
-		EF7E7D731A695778009BD387 /* Window3D+MacOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D2E1A695778009BD387 /* Window3D+MacOSX.m */; };
-		EF7E7D741A695778009BD387 /* Window3D+MacOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2F1A695778009BD387 /* Window3D+MacOSX.h */; };
-		EF7E7D751A695778009BD387 /* Texture2D+MacOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D301A695778009BD387 /* Texture2D+MacOSX.m */; };
+		EF7E7D711A695778009BD387 /* View3D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D2C1A695778009BD387 /* View3D+OSX.m */; };
+		EF7E7D721A695778009BD387 /* View3D+OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2D1A695778009BD387 /* View3D+OSX.h */; };
+		EF7E7D731A695778009BD387 /* Window3D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D2E1A695778009BD387 /* Window3D+OSX.m */; };
+		EF7E7D741A695778009BD387 /* Window3D+OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2F1A695778009BD387 /* Window3D+OSX.h */; };
+		EF7E7D751A695778009BD387 /* Texture2D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D301A695778009BD387 /* Texture2D+OSX.m */; };
 		EF7E7D771A695778009BD387 /* ProtoVision.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D321A695778009BD387 /* ProtoVision.h */; };
 		EF7E7D821A695838009BD387 /* unlit.v1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7A1A695838009BD387 /* unlit.v1.fsh */; };
 		EF7E7D831A695838009BD387 /* unlit.v3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7B1A695838009BD387 /* unlit.v3.fsh */; };
@@ -85,13 +85,13 @@
 		EF9755881A695C7A009FDB0B /* ProtoVisionOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */; };
 		EF9755891A695C9C009FDB0B /* default.v3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7D1A695838009BD387 /* default.v3.fsh */; };
 		EF97558A1A695C9C009FDB0B /* default.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D801A695838009BD387 /* default.v3.vsh */; };
-		EF9755B31A695F1C009FDB0B /* View3D+iPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AC1A695F1C009FDB0B /* View3D+iPhone.h */; };
-		EF9755B41A695F1C009FDB0B /* Window3D+iPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AD1A695F1C009FDB0B /* Window3D+iPhone.h */; };
-		EF9755B51A695F1C009FDB0B /* View3D+iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755AE1A695F1C009FDB0B /* View3D+iPhone.m */; };
-		EF9755B61A695F1C009FDB0B /* Texture2D+iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755AF1A695F1C009FDB0B /* Texture2D+iPhone.m */; };
-		EF9755B71A695F1C009FDB0B /* Gyro3D+iPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755B01A695F1C009FDB0B /* Gyro3D+iPhone.h */; };
-		EF9755B81A695F1C009FDB0B /* Window3D+iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755B11A695F1C009FDB0B /* Window3D+iPhone.m */; };
-		EF9755B91A695F1C009FDB0B /* Gyro3D+iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755B21A695F1C009FDB0B /* Gyro3D+iPhone.m */; };
+		EF9755B31A695F1C009FDB0B /* View3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */; };
+		EF9755B41A695F1C009FDB0B /* Window3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AD1A695F1C009FDB0B /* Window3D+iOS.h */; };
+		EF9755B51A695F1C009FDB0B /* View3D+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755AE1A695F1C009FDB0B /* View3D+iOS.m */; };
+		EF9755B61A695F1C009FDB0B /* Texture2D+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755AF1A695F1C009FDB0B /* Texture2D+iOS.m */; };
+		EF9755B71A695F1C009FDB0B /* Gyro3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755B01A695F1C009FDB0B /* Gyro3D+iOS.h */; };
+		EF9755B81A695F1C009FDB0B /* Window3D+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755B11A695F1C009FDB0B /* Window3D+iOS.m */; };
+		EF9755B91A695F1C009FDB0B /* Gyro3D+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755B21A695F1C009FDB0B /* Gyro3D+iOS.m */; };
 		EF9755BA1A696022009FDB0B /* Camera2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CED1A695778009BD387 /* Camera2D.m */; };
 		EF9755BC1A696022009FDB0B /* Polygon2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CF01A695778009BD387 /* Polygon2D.m */; };
 		EF9755BD1A696022009FDB0B /* Box2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CF11A695778009BD387 /* Box2D.m */; };
@@ -199,11 +199,11 @@
 		EF7E7D281A695778009BD387 /* Box3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Box3D.m; sourceTree = "<group>"; };
 		EF7E7D291A695778009BD387 /* Camera3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera3D.h; sourceTree = "<group>"; };
 		EF7E7D2A1A695778009BD387 /* Object3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object3D.h; sourceTree = "<group>"; };
-		EF7E7D2C1A695778009BD387 /* View3D+MacOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View3D+MacOSX.m"; sourceTree = "<group>"; };
-		EF7E7D2D1A695778009BD387 /* View3D+MacOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View3D+MacOSX.h"; sourceTree = "<group>"; };
-		EF7E7D2E1A695778009BD387 /* Window3D+MacOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Window3D+MacOSX.m"; sourceTree = "<group>"; };
-		EF7E7D2F1A695778009BD387 /* Window3D+MacOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Window3D+MacOSX.h"; sourceTree = "<group>"; };
-		EF7E7D301A695778009BD387 /* Texture2D+MacOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Texture2D+MacOSX.m"; sourceTree = "<group>"; };
+		EF7E7D2C1A695778009BD387 /* View3D+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View3D+OSX.m"; sourceTree = "<group>"; };
+		EF7E7D2D1A695778009BD387 /* View3D+OSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View3D+OSX.h"; sourceTree = "<group>"; };
+		EF7E7D2E1A695778009BD387 /* Window3D+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Window3D+OSX.m"; sourceTree = "<group>"; };
+		EF7E7D2F1A695778009BD387 /* Window3D+OSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Window3D+OSX.h"; sourceTree = "<group>"; };
+		EF7E7D301A695778009BD387 /* Texture2D+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Texture2D+OSX.m"; sourceTree = "<group>"; };
 		EF7E7D311A695778009BD387 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF7E7D321A695778009BD387 /* ProtoVision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtoVision.h; sourceTree = "<group>"; };
 		EF7E7D331A695778009BD387 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -226,13 +226,13 @@
 		EF9755861A695C49009FDB0B /* SpinningCubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpinningCubeController.m; sourceTree = "<group>"; };
 		EF9755921A695EFA009FDB0B /* ProtoVisionIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtoVisionIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9755951A695EFA009FDB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF9755AC1A695F1C009FDB0B /* View3D+iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View3D+iPhone.h"; sourceTree = "<group>"; };
-		EF9755AD1A695F1C009FDB0B /* Window3D+iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Window3D+iPhone.h"; sourceTree = "<group>"; };
-		EF9755AE1A695F1C009FDB0B /* View3D+iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View3D+iPhone.m"; sourceTree = "<group>"; };
-		EF9755AF1A695F1C009FDB0B /* Texture2D+iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Texture2D+iPhone.m"; sourceTree = "<group>"; };
-		EF9755B01A695F1C009FDB0B /* Gyro3D+iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Gyro3D+iPhone.h"; sourceTree = "<group>"; };
-		EF9755B11A695F1C009FDB0B /* Window3D+iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Window3D+iPhone.m"; sourceTree = "<group>"; };
-		EF9755B21A695F1C009FDB0B /* Gyro3D+iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Gyro3D+iPhone.m"; sourceTree = "<group>"; };
+		EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View3D+iOS.h"; sourceTree = "<group>"; };
+		EF9755AD1A695F1C009FDB0B /* Window3D+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Window3D+iOS.h"; sourceTree = "<group>"; };
+		EF9755AE1A695F1C009FDB0B /* View3D+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View3D+iOS.m"; sourceTree = "<group>"; };
+		EF9755AF1A695F1C009FDB0B /* Texture2D+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Texture2D+iOS.m"; sourceTree = "<group>"; };
+		EF9755B01A695F1C009FDB0B /* Gyro3D+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Gyro3D+iOS.h"; sourceTree = "<group>"; };
+		EF9755B11A695F1C009FDB0B /* Window3D+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Window3D+iOS.m"; sourceTree = "<group>"; };
+		EF9755B21A695F1C009FDB0B /* Gyro3D+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Gyro3D+iOS.m"; sourceTree = "<group>"; };
 		EF9755D51A69614E009FDB0B /* Touch Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Touch Cube.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9755D81A69614E009FDB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF9755D91A69614E009FDB0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -380,11 +380,11 @@
 		EF7E7D2B1A695778009BD387 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
-				EF7E7D2C1A695778009BD387 /* View3D+MacOSX.m */,
-				EF7E7D2D1A695778009BD387 /* View3D+MacOSX.h */,
-				EF7E7D2E1A695778009BD387 /* Window3D+MacOSX.m */,
-				EF7E7D2F1A695778009BD387 /* Window3D+MacOSX.h */,
-				EF7E7D301A695778009BD387 /* Texture2D+MacOSX.m */,
+				EF7E7D2C1A695778009BD387 /* View3D+OSX.m */,
+				EF7E7D2D1A695778009BD387 /* View3D+OSX.h */,
+				EF7E7D2E1A695778009BD387 /* Window3D+OSX.m */,
+				EF7E7D2F1A695778009BD387 /* Window3D+OSX.h */,
+				EF7E7D301A695778009BD387 /* Texture2D+OSX.m */,
 				EF7E7D311A695778009BD387 /* Info.plist */,
 			);
 			path = OSX;
@@ -441,13 +441,13 @@
 			isa = PBXGroup;
 			children = (
 				EF9755951A695EFA009FDB0B /* Info.plist */,
-				EF9755AC1A695F1C009FDB0B /* View3D+iPhone.h */,
-				EF9755AD1A695F1C009FDB0B /* Window3D+iPhone.h */,
-				EF9755AE1A695F1C009FDB0B /* View3D+iPhone.m */,
-				EF9755AF1A695F1C009FDB0B /* Texture2D+iPhone.m */,
-				EF9755B01A695F1C009FDB0B /* Gyro3D+iPhone.h */,
-				EF9755B11A695F1C009FDB0B /* Window3D+iPhone.m */,
-				EF9755B21A695F1C009FDB0B /* Gyro3D+iPhone.m */,
+				EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */,
+				EF9755AD1A695F1C009FDB0B /* Window3D+iOS.h */,
+				EF9755AE1A695F1C009FDB0B /* View3D+iOS.m */,
+				EF9755AF1A695F1C009FDB0B /* Texture2D+iOS.m */,
+				EF9755B01A695F1C009FDB0B /* Gyro3D+iOS.h */,
+				EF9755B11A695F1C009FDB0B /* Window3D+iOS.m */,
+				EF9755B21A695F1C009FDB0B /* Gyro3D+iOS.m */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -493,13 +493,13 @@
 				EF7E7D6B1A695778009BD387 /* Quaternion3D.h in Headers */,
 				EF7E7D701A695778009BD387 /* Object3D.h in Headers */,
 				EF7E7D541A695778009BD387 /* Pyramid3D.h in Headers */,
-				EF7E7D741A695778009BD387 /* Window3D+MacOSX.h in Headers */,
+				EF7E7D741A695778009BD387 /* Window3D+OSX.h in Headers */,
 				EF7E7D641A695778009BD387 /* Matrix4x4.h in Headers */,
 				EF7E7D5E1A695778009BD387 /* Container3D.h in Headers */,
 				EF7E7D441A695778009BD387 /* Image2D.h in Headers */,
 				EF7E7D5D1A695778009BD387 /* Buffer3D.h in Headers */,
 				EF7E7D501A695778009BD387 /* Plane3D.h in Headers */,
-				EF7E7D721A695778009BD387 /* View3D+MacOSX.h in Headers */,
+				EF7E7D721A695778009BD387 /* View3D+OSX.h in Headers */,
 				EF7E7D471A695778009BD387 /* Buffer2D.h in Headers */,
 				EF7E7D411A695778009BD387 /* Matrix2x2.h in Headers */,
 				EF7E7D5F1A695778009BD387 /* Vector3D.h in Headers */,
@@ -526,9 +526,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9755B41A695F1C009FDB0B /* Window3D+iPhone.h in Headers */,
-				EF9755B31A695F1C009FDB0B /* View3D+iPhone.h in Headers */,
-				EF9755B71A695F1C009FDB0B /* Gyro3D+iPhone.h in Headers */,
+				EF9755B41A695F1C009FDB0B /* Window3D+iOS.h in Headers */,
+				EF9755B31A695F1C009FDB0B /* View3D+iOS.h in Headers */,
+				EF9755B71A695F1C009FDB0B /* Gyro3D+iOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,19 +710,19 @@
 				EF7E7D3B1A695778009BD387 /* Buffer2D.m in Sources */,
 				EF7E7D5B1A695778009BD387 /* Object3D+OBJ.m in Sources */,
 				EF7E7D661A695778009BD387 /* Camera3D.m in Sources */,
-				EF7E7D751A695778009BD387 /* Texture2D+MacOSX.m in Sources */,
+				EF7E7D751A695778009BD387 /* Texture2D+OSX.m in Sources */,
 				EF7E7D671A695778009BD387 /* Controller3D.m in Sources */,
 				EF7E7D3F1A695778009BD387 /* Image2D.m in Sources */,
 				EF7E7D561A695778009BD387 /* Pyramid3D.m in Sources */,
 				EF7E7D681A695778009BD387 /* Line3D.m in Sources */,
 				EF7E7D6E1A695778009BD387 /* Box3D.m in Sources */,
 				EF7E7D371A695778009BD387 /* Polygon2D.m in Sources */,
-				EF7E7D731A695778009BD387 /* Window3D+MacOSX.m in Sources */,
+				EF7E7D731A695778009BD387 /* Window3D+OSX.m in Sources */,
 				EF7E7D3C1A695778009BD387 /* Line2D.m in Sources */,
 				EF7E7D4B1A695778009BD387 /* Container2D.m in Sources */,
 				EF7E7D591A695778009BD387 /* Sphere3D.m in Sources */,
 				EF7E7D6D1A695778009BD387 /* Buffer3D.m in Sources */,
-				EF7E7D711A695778009BD387 /* View3D+MacOSX.m in Sources */,
+				EF7E7D711A695778009BD387 /* View3D+OSX.m in Sources */,
 				EF7E7D551A695778009BD387 /* Program3D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -762,10 +762,10 @@
 				EF9755CD1A696022009FDB0B /* Light3D.m in Sources */,
 				EF9755CF1A696022009FDB0B /* Buffer3D.m in Sources */,
 				EF9755D01A696022009FDB0B /* Box3D.m in Sources */,
-				EF9755B91A695F1C009FDB0B /* Gyro3D+iPhone.m in Sources */,
-				EF9755B81A695F1C009FDB0B /* Window3D+iPhone.m in Sources */,
-				EF9755B61A695F1C009FDB0B /* Texture2D+iPhone.m in Sources */,
-				EF9755B51A695F1C009FDB0B /* View3D+iPhone.m in Sources */,
+				EF9755B91A695F1C009FDB0B /* Gyro3D+iOS.m in Sources */,
+				EF9755B81A695F1C009FDB0B /* Window3D+iOS.m in Sources */,
+				EF9755B61A695F1C009FDB0B /* Texture2D+iOS.m in Sources */,
+				EF9755B51A695F1C009FDB0B /* View3D+iOS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

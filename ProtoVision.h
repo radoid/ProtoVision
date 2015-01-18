@@ -43,12 +43,12 @@
 #import "2D/Button2D.h"
 
 #if TARGET_OS_IPHONE
-	#import "iOS/Gyro3D+iPhone.h"
-	#import "iOS/View3D+iPhone.h"
-	#import "iOS/Window3D+iPhone.h"
+	#import "iOS/Gyro3D+iOS.h"
+	#import "iOS/View3D+iOS.h"
+	#import "iOS/Window3D+iOS.h"
 #else
-	#import "OSX/View3D+MacOSX.h"
-	#import "OSX/Window3D+MacOSX.h"
+	#import "OSX/View3D+OSX.h"
+	#import "OSX/Window3D+OSX.h"
 #endif
 
 #import "3D/VectorIJK.h"

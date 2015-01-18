@@ -5,7 +5,7 @@
 // http://www.radoid.com/protovision/
 //
 
-#import "Window3D+MacOSX.h"
+#import "Window3D+OSX.h"
 
 
 @implementation Window3D

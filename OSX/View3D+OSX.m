@@ -6,7 +6,7 @@
 //
 
 #import "ProtoVision.h"
-#import "View3D+MacOSX.h"
+#import "View3D+OSX.h"
 
 
 @implementation View3D
@@ -49,6 +49,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[self draw];
 	}
 	return kCVReturnSuccess;
+}
+
+- (void)prepareOpenGL {
+    CGLPixelFormatObj cglPixelFormat = [[self pixelFormat] CGLPixelFormatObj];
 }
 
 - (id)initWithFrame:(NSRect)initframe {
