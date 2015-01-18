@@ -113,13 +113,11 @@
 
 	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
-	//glEnable(GL_TEXTURE_2D);
 
 	[buffer drawWithProjection:camera.projection modelView:modelview color:_color texture:texture];
 
 	if (_color.alpha < 1)
 		glDisable(GL_BLEND);
-	//glDisable(GL_TEXTURE_2D);
 }
 
 @end

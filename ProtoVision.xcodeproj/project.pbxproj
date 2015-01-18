@@ -843,7 +843,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -880,7 +880,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1056,6 +1056,7 @@
 				EF9755811A695BF1009FDB0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF9755A51A695EFB009FDB0B /* Build configuration list for PBXNativeTarget "ProtoVisionIOS" */ = {
 			isa = XCConfigurationList;
@@ -1064,6 +1065,7 @@
 				EF9755A71A695EFB009FDB0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF9755F51A69614E009FDB0B /* Build configuration list for PBXNativeTarget "Touch Cube" */ = {
 			isa = XCConfigurationList;
@@ -1072,6 +1074,7 @@
 				EF9755F71A69614E009FDB0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

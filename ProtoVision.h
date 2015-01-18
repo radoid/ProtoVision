@@ -60,6 +60,7 @@
 #import "3D/Container3D.h"
 #import "3D/Light3D.h"
 #import "3D/Box3D.h"
+#import "3D/Line3D.h"
 #import "3D/Sphere3D.h"
 #import "3D/Pyramid3D.h"
 #import "3D/Camera3D.h"

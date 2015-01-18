@@ -11,17 +11,13 @@
 
 @implementation View3D
 {
+	EAGLContext *context;
+	GLuint framebuffer, renderbuffer, depthbuffer;
+
 	/* The pixel dimensions of the backbuffer */
 	GLint pixelWidth, pixelHeight;
-
-	EAGLContext *context;
-
-	/* OpenGL names for the renderbuffer and framebuffers used to render to this view */
-	GLuint renderbuffer, framebuffer;
-
 	/* OpenGL name for the depth buffer that is attached to viewFramebuffer, if it exists (0 if it does not exist) */
 	BOOL useDepthBuffer;
-	GLuint depthRenderbuffer;
 
 	id displayLink;
 	NSTimer *timer;
@@ -80,19 +76,17 @@
 }
 
 - (void)layoutSubviews {
-	//NSLog(@"[View3D layoutSubviews]");
-	//[EAGLContext setCurrentContext:context];  // TODO Sparrow ovo nema
-	[self destroyFramebuffer];
-	[self createFramebuffer];
-	[self draw];
-	GLenum err = glGetError(); if (err) NSLog(@"[View3D layoutSubviews] OpenGL ERROR %x", err);
-}
+	[EAGLContext setCurrentContext:context];  // TODO
 
-- (BOOL)createFramebuffer {
-	//NSLog(@"Pozvan createFramebuffer");
+	if (framebuffer)
+		glDeleteFramebuffers(1, &framebuffer);
+	if (renderbuffer)
+		glDeleteRenderbuffers(1, &renderbuffer);
+	if (depthbuffer)
+		glDeleteRenderbuffers(1, &depthbuffer);
+
 	glGenFramebuffers(1, &framebuffer);
 	glGenRenderbuffers(1, &renderbuffer);
-
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
 	[context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];
@@ -101,41 +95,20 @@
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &pixelWidth);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &pixelHeight);
 
-	//NSLog(@"glGetRenderbufferParameteriv daje %d x %d", pixelWidth, pixelHeight);
-
 	if (useDepthBuffer) {
-		glGenRenderbuffers(1, &depthRenderbuffer);
-		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
+		glGenRenderbuffers(1, &depthbuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, depthbuffer);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, pixelWidth, pixelHeight);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthbuffer);
 
-		// naknadno ubaceno jer je drugdje redundantno, by Profiler:
-		glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);  // TODO
 	}
 
-	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
-		return NO;
-	}
+	GLenum err; NSAssert(!(err = glGetError()), @"[View3D layoutSubviews] OpenGL error %x", err);
 
-	GLenum err = glGetError(); NSAssert(!err, @"[View3D createFrameBuffer] OpenGL error %x", err);
+	NSAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Framebuffer failed to complete!");
 
-	return YES;
-}
-
-- (void)destroyFramebuffer {
-	//NSLog(@"Pozvan destroyFramebuffer");
-	if (framebuffer)
-		glDeleteFramebuffers(1, &framebuffer);
-	framebuffer = 0;
-	if (renderbuffer)
-		glDeleteRenderbuffers(1, &renderbuffer);
-	renderbuffer = 0;
-	if (depthRenderbuffer)
-		glDeleteRenderbuffers(1, &depthRenderbuffer);
-	depthRenderbuffer = 0;
-
-	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);  // TODO
+	[self draw];
 }
 
 - (float)scale {
@@ -146,14 +119,11 @@
 	if (!framebuffer || !renderbuffer)
 		return;
 
-	//[EAGLContext setCurrentContext:context];
-	// redundantno by Profiler: glBindFramebuffer(GL_FRAMEBUFFER, viewFramebuffer);
-	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);  // TODO
+	//[EAGLContext setCurrentContext:context];  // TODO
 
 	if (!_initialized) {
 		[EAGLContext setCurrentContext:context];
 		glViewport(self.frame.origin.x * self.contentScaleFactor, self.frame.origin.y * self.contentScaleFactor, self.frame.size.width * self.contentScaleFactor, self.frame.size.height * self.contentScaleFactor);
-
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		//glDepthFunc(GL_LEQUAL);
@@ -165,17 +135,14 @@
 		//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glClearColor(color.r, color.g, color.b, 1);
 
-		//NSLog(@"[View3D draw] Inicijaliziran EAGLContext, glViewport");
 		_initialized = YES;
-
-		GLenum err = glGetError(); NSAssert(!err,@"[View3D draw] OpenGL ERROR %x", err);
 	}
 
-	glClear(GL_COLOR_BUFFER_BIT | (useDepthBuffer ? GL_DEPTH_BUFFER_BIT : 0));
+	glClear(GL_COLOR_BUFFER_BIT | (depthbuffer ? GL_DEPTH_BUFFER_BIT : 0));
 	[_controller draw];
 	_redrawing = NO;
 
-	// redundantno, by Profiler: glBindRenderbuffer(GL_RENDERBUFFER, viewRenderbuffer);
+	//glBindRenderbuffer(GL_RENDERBUFFER, viewRenderbuffer);  // TODO
 	[context presentRenderbuffer:GL_RENDERBUFFER];
 }
 
@@ -187,7 +154,7 @@
 
 
 /**
- * Podrška za animaciju
+ * Animation
  */
 
 - (void)startAnimation {
@@ -235,7 +202,7 @@
 
 
 /**
- * Podrška za touch
+ * Touch events
  */
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -267,7 +234,7 @@
 
 
 /**
- * Podrška za preorijentaciju
+ * Orientation changes
  */
 
 - (void)orientationDidChange:(NSNotification *)note {
@@ -283,7 +250,7 @@
 
 
 /**
- * Sustav kontrolera
+ * Controller stack
  */
 
 - (id)controller {
@@ -319,7 +286,7 @@
 			if (_controller)
 				[_controller resumeWithObject:result];
 			else {
-				NSLog(@"[View3D popController:] Stack je već prazan!");
+				NSLog(@"[View3D popController:] Stack already empty!");
 				_controllerStack = nil;
 			}
 			_redrawing = YES;

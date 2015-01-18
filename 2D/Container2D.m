@@ -58,11 +58,8 @@
 		if (o.color.alpha > 0) {
 			if ([o isKindOfClass:[Container2D class]])
 				[(Container2D *)o drawWithCamera:camera alpha:alpha*o.color.alpha];
-			else {
-				//glColor4f(o.color.red, o.color.g, o.color.b, alpha*o.color.alpha);
-				//glLoadMatrixf(Matrix4x4Multiply(camera.worldToLocal, o.localToWorld).data);
+			else
 				[o drawWithCamera:camera];
-			}
 		}
 }
 
