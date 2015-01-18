@@ -16,7 +16,7 @@
 	GLint uColor, uColorLight, uColorDark, uLight, uEye, uTexture, uTexSampler;
 	GLint aPosition, aNormal, aColor, aTexture;
 }
-@synthesize programname, uProjection, uModelView, uNormal, uColor, uColorDark, uColorLight, uLight, uEye, uTexture, uTexSampler, aPosition, aNormal, aColor, aTexture;
+@synthesize programname, uProjection, uModelView, uNormal, uColor, uColorDark, uColorLight, uLight, uEye, uTexture, uTexSampler, uTime, aPosition, aNormal, aColor, aTexture;
 
 - (id)initWithVertexShader:(NSString *)vs fragmentShader:(NSString *)fs {
 	if ((self = [super init])) {
@@ -52,6 +52,7 @@
 		uColorDark = glGetUniformLocation(programname, "uColorDark");
 		uTexture = glGetUniformLocation(programname, "uTexture");
 		uTexSampler = glGetUniformLocation(programname, "uTexSampler");
+		uTime = glGetUniformLocation(programname, "uTime");
 
 		aPosition = glGetAttribLocation(programname, "aPosition");
 		aNormal = glGetAttribLocation(programname, "aNormal");
@@ -91,8 +92,9 @@
 + (int)glslVersion {
 	char *version = (char *)glGetString(GL_SHADING_LANGUAGE_VERSION);
 	int major;
-	if (sscanf(version, "%d", &major) || sscanf(version, "OpenGL ES GLSL ES %d", &major))
-		return major;
+	if (version)
+		if (sscanf(version, "%d", &major) || sscanf(version, "OpenGL ES GLSL ES %d", &major))
+			return major;
 	return 0;
 }
 

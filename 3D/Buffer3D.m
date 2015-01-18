@@ -145,6 +145,8 @@
 		glUniform3fv(program.uLight, 1, (const GLfloat *)&direction);
 	if (program.uEye > -1)
 		glUniform3fv(program.uEye, 1, (const GLfloat *)&position);
+	if (program.uTime > -1)
+		glUniform1f(program.uTime, (float)CACurrentMediaTime());
 	if (program.uTexture > -1)
 		glUniform1i(program.uTexture, texture ? GL_TRUE : GL_FALSE);
 	if (texture && program.uTexture > -1 && program.uTexSampler > -1) {

@@ -12,7 +12,7 @@
 
 @property (nonatomic, readonly) GLuint programname;
 @property (nonatomic, readonly) GLint uProjection, uModelView, uNormal;
-@property (nonatomic, readonly) GLint uColor, uColorLight, uColorDark, uLight, uEye, uTexture, uTexSampler;
+@property (nonatomic, readonly) GLint uColor, uColorLight, uColorDark, uLight, uEye, uTexture, uTexSampler, uTime;
 @property (nonatomic, readonly) GLint aPosition, aNormal, aColor, aTexture;
 
 + (id)defaultProgram;
