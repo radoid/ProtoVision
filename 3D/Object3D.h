@@ -51,6 +51,7 @@
 - (void)rotateAround:(Vector3D)point rotation:(Quaternion3D)q;
 - (void)directTo:(Vector3D)forward up:(Vector3D)up;
 - (void)lookAt:(Vector3D)center up:(Vector3D)up;
+- (void)setPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up;
 
 - (void)recalculate;
 

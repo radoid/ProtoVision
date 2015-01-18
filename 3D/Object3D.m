@@ -149,15 +149,20 @@
 }
 
 - (void)directTo:(Vector3D)newforward up:(Vector3D)newup {
-	//newforward = Vector3DUnit(newforward);
-	//newup = Vector3DUnit(newup);
 	newup = Vector3DCross(newforward, Vector3DCross(newup, newforward));
 	Vector3D newright = Vector3DCross(newforward, newup);
-	//newright = Vector3DUnit(newright);
 	self.rotation = Quaternion3DMakeWithThreeVectors(newright, newup, Vector3DFlip(newforward));  // TODO: normalizacija povjerena
 }
 
 - (void)lookAt:(Vector3D)center up:(Vector3D)newup {
+	Vector3D newforward = Vector3DSubtract(center, self.position);
+	[self directTo:newforward up:newup];
+}
+
+- (void)setPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)newup {
+	x = position.x;
+	y = position.y;
+	z = position.z;
 	Vector3D newforward = Vector3DSubtract(center, self.position);
 	[self directTo:newforward up:newup];
 }

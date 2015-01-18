@@ -22,14 +22,20 @@
 - (void)stop;
 - (BOOL)update;
 
+#if TARGET_OS_IPHONE
 - (BOOL)touchDown:(Vector2D)location;
 - (BOOL)touchMove:(Vector2D)location;
 - (BOOL)touchUp:(Vector2D)location;
+#else
+- (BOOL)touchDown:(Vector2D)location modifiers:(int)flags;
+- (BOOL)touchMove:(Vector2D)location modifiers:(int)flags;
+- (BOOL)touchUp:(Vector2D)location modifiers:(int)flags;
+#endif
 
 #if TARGET_OS_IPHONE
 #else
-- (BOOL)keyDown:(int)keyCode;
-- (BOOL)keyUp:(int)keyCode;
+- (BOOL)keyDown:(int)keyCode modifiers:(int)flags;
+- (BOOL)keyUp:(int)keyCode modifiers:(int)flags;
 #endif
 
 - (void)reshape;

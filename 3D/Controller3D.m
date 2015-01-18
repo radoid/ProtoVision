@@ -34,18 +34,24 @@
 - (void)resumeWithObject:(id)result {}
 - (BOOL)update {return NO;}
 
+#if TARGET_OS_IPHONE
 - (BOOL)touchDown:(Vector2D)location {return NO;}
 - (BOOL)touchMove:(Vector2D)location {return NO;}
 - (BOOL)touchUp:(Vector2D)location {return NO;}
+#else
+- (BOOL)touchDown:(Vector2D)location modifiers:(int)flags {return NO;}
+- (BOOL)touchMove:(Vector2D)location modifiers:(int)flags {return NO;}
+- (BOOL)touchUp:(Vector2D)location modifiers:(int)flags {return NO;}
+#endif
 
 #if TARGET_OS_IPHONE
 #else
-- (BOOL)keyDown:(int)keyCode {
+- (BOOL)keyDown:(int)keyCode modifiers:(int)flags {
 	if (keyCode == 53)  // Escape
 		[NSApp terminate:self];
 	return NO;
 }
-- (BOOL)keyUp:(int)keyCode {return NO;}
+- (BOOL)keyUp:(int)keyCode modifiers:(int)flags {return NO;}
 #endif
 
 - (void)reshape {}
