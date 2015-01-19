@@ -52,6 +52,7 @@
 	return NO;
 }
 - (BOOL)keyUp:(int)keyCode modifiers:(int)flags {return NO;}
+- (BOOL)keyPress:(NSString *)key modifiers:(int)flags {return NO;}
 #endif
 
 - (void)reshape {}

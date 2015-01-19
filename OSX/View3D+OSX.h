@@ -13,6 +13,7 @@
 
 @interface View3D : NSOpenGLView
 
+@property (nonatomic, readonly) CGRect backingFrame;
 @property (nonatomic) Color2D color;
 
 - (float)scale;

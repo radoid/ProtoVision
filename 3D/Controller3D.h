@@ -36,6 +36,7 @@
 #else
 - (BOOL)keyDown:(int)keyCode modifiers:(int)flags;
 - (BOOL)keyUp:(int)keyCode modifiers:(int)flags;
+- (BOOL)keyPress:(NSString *)key modifiers:(int)flags;
 #endif
 
 - (void)reshape;

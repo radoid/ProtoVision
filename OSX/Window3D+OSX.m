@@ -10,9 +10,13 @@
 
 @implementation Window3D
 
+- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag screen:(NSScreen *)screen {
+	return [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag screen:screen];
+}
+
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag {
 	if ((self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag])) {
-		_view = [[View3D alloc] initWithFrame:NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height)];
+		_view = [[View3D alloc] initWithFrame:self.frame];
 		_view.autoresizingMask = NSViewWidthSizable|NSViewHeightSizable;
 		self.contentView = _view;
 		self.delegate = self;
@@ -20,19 +24,26 @@
 	return self;
 }
 
-- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag screen:(NSScreen *)screen {
-	NSLog(@"initWithContentRect:screen:");
-	if ((self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag screen:screen])) {
-		_view = [[View3D alloc] initWithFrame:NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height)];
-		_view.autoresizingMask = NSViewWidthSizable|NSViewHeightSizable;
-		self.contentView = _view;
-		self.delegate = self;
+- (id)initWithFullScreen {
+	if ((self = [self initWithContentRect:[[NSScreen mainScreen] frame] styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES])) {
+		[self setLevel:NSMainMenuWindowLevel+1];
+		[self setOpaque:YES];
+		[self setHidesOnDeactivate:YES];
+		[self makeKeyAndOrderFront:self];
 	}
 	return self;
 }
 
 - (void)awakeFromNib {
 	self.contentView = _view;
+}
+
+- (BOOL)canBecomeKeyWindow {
+     return YES;
+}
+
+- (BOOL)canBecomeMainWindow {
+     return YES;
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification {

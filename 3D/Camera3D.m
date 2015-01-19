@@ -26,6 +26,10 @@
 	return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+	return [[Camera3D allocWithZone:zone] initWithPosition:self.position lookAt:Vector3DAdd(self.position, self.forward) up:self.up fovy:fovy aspect:aspect near:near far:far];
+}
+
 - (void)setAspect:(float)initaspect {
 	aspect = initaspect;
 	[self recalculate];

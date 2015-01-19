@@ -12,6 +12,7 @@
 
 @property (nonatomic, readonly) View3D *view;
 
+- (id)initWithFullScreen;
 - (void)pushController:(Controller3D *)controller;
 
 @end

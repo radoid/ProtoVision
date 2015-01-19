@@ -16,13 +16,14 @@
 
 	Color2D color;
 	CVDisplayLinkRef displayLink;
-	BOOL _initialized, _started, _redrawing;
+	BOOL _started, _redrawing;
+	CGRect backingFrame;
 }
-@synthesize color;
+@synthesize backingFrame, color;
 
 
-+ (NSOpenGLPixelFormat *)defaultPixelFormat {
-	return [[NSOpenGLPixelFormat alloc] initWithAttributes:(NSOpenGLPixelFormatAttribute[]) {
+- (id)initWithFrame:(NSRect)initframe {
+	NSOpenGLPixelFormat *format = [[NSOpenGLPixelFormat alloc] initWithAttributes:(NSOpenGLPixelFormatAttribute[]) {
 		NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
 		NSOpenGLPFAColorSize, 24,
 		NSOpenGLPFAAlphaSize, 8,
@@ -30,33 +31,12 @@
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFAAccelerated,
 		NSOpenGLPFANoRecovery,
-		0
-/*		//NSOpenGLPFAWindow,//NSOpenGLPFAFullScreen,
-		//NSOpenGLPFADoubleBuffer,
+		NSOpenGLPFASampleBuffers, 1,
+		NSOpenGLPFASamples, 2,
 		//NSOpenGLPFAStencilSize, 8,
 		//NSOpenGLPFAAccumSize, 0,
-		0*/}];
-}
-
-static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext) {
-	CVReturn result = [(__bridge View3D *)displayLinkContext getFrameForTime:outputTime];
-	return result;
-}
-
-- (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime {
-	if (_redrawing) {
-		[self.openGLContext makeCurrentContext];
-		[self draw];
-	}
-	return kCVReturnSuccess;
-}
-
-- (id)initWithFrame:(NSRect)initframe {
-	if ((self = [super initWithFrame:initframe])) {
-		color = Color2DMake(.8, .8, .8, 1);
-		_initialized = NO;
-	}
-	return self;
+		0}];
+	return [super initWithFrame:initframe pixelFormat:format];
 }
 
 - (id)initWithCoder:(NSCoder*)coder {
@@ -80,7 +60,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (void)reshape {
-	glViewport(0, 0, _frame.size.width, _frame.size.height);
+	backingFrame = [self convertRectToBacking:[self frame]];
+	glViewport(0, 0, backingFrame.size.width, backingFrame.size.height);
 	_redrawing = YES;
 	@synchronized (_controllerStack) {
 		[_controller reshape];
@@ -91,6 +72,19 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 /**
  * Drawing
  */
+
+- (void)prepareOpenGL {
+	self.wantsBestResolutionOpenGLSurface = YES;
+	backingFrame = [self convertRectToBacking:[self frame]];
+	glViewport(0, 0, backingFrame.size.width, backingFrame.size.height);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_MULTISAMPLE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	self.color = Color2DMake(0.8, 0.8, 0.8, 1);
+}
+
 - (void)drawRect:(NSRect)rect {
 	if (!displayLink) {
 		[self.openGLContext makeCurrentContext];
@@ -99,15 +93,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (void)draw {
-	if (!_initialized) {
-		glViewport(0, 0, _frame.size.width, _frame.size.height);
-		glClearColor(color.r, color.g, color.b, 1);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		_initialized = YES;
-	}
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	[(Controller3D *)_controller draw];
@@ -143,11 +128,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		_controller = newcontroller;
 		_controller.view = self;
 		//_button = nil;  // TODO
-		if (_initialized) {
-			[_controller start];
-			_started = _redrawing = YES;
-			self.needsDisplay = YES;
-		}
+		[_controller start];
+		_started = _redrawing = YES;
+		self.needsDisplay = YES;
 	}
 }
 
@@ -161,7 +144,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 			if (_controller)
 				[_controller resumeWithObject:result];
 			else {
-				NSLog(@"Releasanje praznog controller stacka");
+				NSLog(@"Releasing empty controller stack!");
 				_controllerStack = nil;
 			}
 			_redrawing = YES;
@@ -173,16 +156,25 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
  * Animation
  */
 
-- (void)startAnimation {
-	if (_initialized) {
-		if (!_started)
-			[_controller start];
-		else
-			[_controller resume];
-		_started = _redrawing = YES;
-	}
+static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext) {
+	CVReturn result = [(__bridge View3D *)displayLinkContext getFrameForTime:outputTime];
+	return result;
+}
 
-	[self setPixelFormat:[View3D defaultPixelFormat]]; // TODO
+- (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime {
+	if (_redrawing) {
+		[self.openGLContext makeCurrentContext];
+		[self draw];
+	}
+	return kCVReturnSuccess;
+}
+
+- (void)startAnimation {
+	if (!_started)
+		[_controller start];
+	else
+		[_controller resume];
+	_started = _redrawing = YES;
 
 	GLint swapInt = 1;
 	[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
@@ -203,16 +195,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (void)updateAnimation {
-	if (_initialized) {
-		//[[self openGLContext] makeCurrentContext];
-		if (!_started) {
-			[(Controller3D *)_controller start];
-			_started = _redrawing = YES;
-		} else
-			_redrawing |= [(Controller3D *)_controller update];
-		if (_redrawing && !displayLink)
-			[self drawRect:_frame];
-	}
+	//[[self openGLContext] makeCurrentContext];
+	if (!_started) {
+		[(Controller3D *)_controller start];
+		_started = _redrawing = YES;
+	} else
+		_redrawing |= [(Controller3D *)_controller update];
+	if (_redrawing && !displayLink)
+		[self drawRect:_frame];
 }
 
 
@@ -232,6 +222,12 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void)keyUp:(NSEvent *)event {
 	_redrawing |= [(Controller3D *)_controller keyUp:event.keyCode modifiers:event.modifierFlags];
+	if (_redrawing)
+		self.needsDisplay = YES;
+}
+
+- (void)keyPress:(NSEvent *)event {
+	_redrawing |= [(Controller3D *)_controller keyPress:event.charactersIgnoringModifiers modifiers:event.modifierFlags];
 	if (_redrawing)
 		self.needsDisplay = YES;
 }

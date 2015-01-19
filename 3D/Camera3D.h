@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Camera3D : Object3D
+@interface Camera3D : Object3D <NSCopying>
 {
 	float near, far, fovy, aspect;
 	float orientationAngle;
