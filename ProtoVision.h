@@ -35,6 +35,8 @@
 #import "2D/Camera2D.h"
 #import "2D/Container2D.h"
 #import "2D/Box2D.h"
+#import "2D/Line2D.h"
+#import "2D/Circle2D.h"
 #import "2D/Polygon2D.h"
 #import "2D/Font2D.h"
 #import "2D/Text2D.h"

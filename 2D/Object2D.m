@@ -11,7 +11,7 @@
 
 @implementation Object2D
 
-@synthesize x, y, scaleX, scaleY, parent, localToWorld, worldToLocal, color=_color;
+@synthesize x, y, scaleX, scaleY, parent, localToWorld, worldToLocal;
 
 - (id)init {
 	if ((self = [super init])) {

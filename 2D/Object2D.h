@@ -33,6 +33,7 @@
 @property (nonatomic, weak) id parent;
 @property (nonatomic) Matrix4x4 localToWorld, worldToLocal;
 
+- (id)initWithBuffer:(Buffer2D *)initbuffer;
 - (void)recalculate;
 - (void)drawWithCamera:(Camera2D *)camera;
 
