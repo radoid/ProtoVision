@@ -143,7 +143,7 @@
 	self.rotation = Quaternion3DMultiply(q, rotation);
 }
 
-- (void)rotateAround:(Vector3D)point rotation:(Quaternion3D)q {
+- (void)rotateAround:(Vector3D)point byQuaternion:(Quaternion3D)q {
 	self.position = Vector3DAdd(point, Vector3DRotateByQuaternion(Vector3DSubtract(self.position, point), q));
 	self.rotation = Quaternion3DMultiply(q, rotation);
 }
@@ -177,6 +177,18 @@
 	//if (origin.x || origin.y || origin.z)
 	//	localToWorld = Matrix4x4Translate(localToWorld, -origin.x, -origin.y, -origin.z);
 	worldToLocal = Matrix4x4Invert(localToWorld);
+}
+
+- (void)drawWithCamera:(Camera3D *)camera {
+	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, localToWorld);
+
+	if (color.alpha < 1)
+		glEnable(GL_BLEND);
+
+	[buffer drawWithProjection:camera.projection modelView:modelview color:color texture:texture];
+
+	if (color.alpha < 1)
+		glDisable(GL_BLEND);
 }
 
 - (void)drawWithCamera:(Camera3D *)camera light:(Vector3D)direction {

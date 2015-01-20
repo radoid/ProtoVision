@@ -13,7 +13,7 @@
 @synthesize frame, orientation, projection;
 
 - (id)initWithFrame:(CGRect)initframe {
-	return [self initWithFrame:initframe near:-1 far:1];
+	return [self initWithFrame:initframe near:-initframe.size.width far:initframe.size.width];
 }
 
 - (id)initWithFrame:(CGRect)initcoords near:(float)initnear far:(float)initfar {

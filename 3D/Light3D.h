@@ -15,11 +15,5 @@
 }
 
 - (id)initWithDirection:(Vector3D)direction ambient:(GLfloat *)ambient diffuse:(GLfloat *)diffuse;
-- (void)enableAt:(int)number;
-- (void)disable;
-- (void)setup;
-
-+ (void)enableAll;
-+ (void)disableAll;
 
 @end

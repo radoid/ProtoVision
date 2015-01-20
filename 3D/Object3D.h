@@ -44,11 +44,12 @@
 - (float)opacity;
 - (void)setOpacity:(float)opacity;
 
+- (void)drawWithCamera:(Camera3D *)camera;
 - (void)drawWithCamera:(Camera3D *)camera light:(Vector3D)direction;
 
 - (void)rotateByAxis:(Vector3D)axis angle:(float)angle;
 - (void)rotateByQuaternion:(Quaternion3D)q;
-- (void)rotateAround:(Vector3D)point rotation:(Quaternion3D)q;
+- (void)rotateAround:(Vector3D)point byQuaternion:(Quaternion3D)q;
 - (void)directTo:(Vector3D)forward up:(Vector3D)up;
 - (void)lookAt:(Vector3D)center up:(Vector3D)up;
 - (void)setPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up;
