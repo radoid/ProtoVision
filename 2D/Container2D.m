@@ -37,9 +37,9 @@
 }
 
 - (void)remove:(Object2D *)child {
+	[children removeObject:child];
 	child.parent = nil;
 	[child recalculate];
-	[children removeObject:child];
 }
 
 - (void)removeAll {

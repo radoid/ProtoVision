@@ -12,6 +12,7 @@
 @implementation Object2D
 
 @synthesize x, y, scaleX, scaleY, parent, localToWorld, worldToLocal;
+@synthesize buffer;
 
 - (id)init {
 	if ((self = [super init])) {
@@ -23,15 +24,36 @@
 	return self;
 }
 
-- (id)initWithBuffer:(Buffer2D *)initbuffer {
+- (id)initWithProgram:(Program3D *)initprogram mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
+	int stride = (vertexsize + texcoordssize + colorsize) * sizeof(GLfloat);
+	Buffer3D *buffer = [[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount stride:stride indices:ibuffer indexCount:icount isDynamic:dynamic];
+	if (initprogram.aPosition > -1 && vertexsize)
+		[buffer attrib:initprogram.aPosition size:vertexsize type:GL_FLOAT stride:stride offset:0];
+	if (initprogram.aTexture > -1 && texcoordssize)
+		[buffer attrib:initprogram.aTexture size:texcoordssize type:GL_FLOAT stride:stride offset:vertexsize * sizeof(GLfloat)];
+	if (initprogram.aColor > -1 && colorsize)
+		[buffer attrib:initprogram.aColor size:colorsize type:GL_FLOAT stride:stride offset:(vertexsize+texcoordssize) * sizeof(GLfloat)];
+	return [self initWithProgram:initprogram buffer:buffer];
+}
+
+- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
+	return [self initWithProgram:[Program3D defaultProgram2D] mode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize colorSize:colorsize isDynamic:dynamic];
+}
+
+- (id)initWithProgram:(Program3D *)initprogram buffer:(Buffer2D *)initbuffer {
 	if ((self = [self init])) {
+		program = initprogram;
 		buffer = initbuffer;
 	}
 	return self;
 }
 
+- (id)initWithBuffer:(Buffer2D *)initbuffer {
+	return [self initWithProgram:[Program3D defaultProgram2D] buffer:initbuffer];
+}
+
 - (id)copyWithZone:(NSZone *)zone {
-	Object2D *copy = [[Object2D allocWithZone:zone] initWithBuffer:buffer];
+	Object2D *copy = [[Object2D allocWithZone:zone] initWithProgram:program buffer:buffer];
 	copy.position = self.position;
 	copy.scaleX = self.scaleX;
 	copy.scaleY = self.scaleY;
@@ -114,7 +136,8 @@
 	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[buffer drawWithProjection:camera.projection modelView:modelview color:_color texture:texture];
+	[program useWithProjection:camera.projection modelView:modelview color:_color texture:texture];
+	[buffer draw];
 
 	if (_color.alpha < 1)
 		glDisable(GL_BLEND);

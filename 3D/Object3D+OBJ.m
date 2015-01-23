@@ -90,7 +90,7 @@
 	}
 	fclose(f);
 
-	self = [self initWithBuffer:[[Buffer3D alloc] initWithNormalsCalculatedAsSharp:NO vertexBuffer:vertices vertexCount:vertexcount indices:indices indexCount:indexcount isDynamic:NO]];
+	// TODO self = [self initWithBuffer:[[Buffer3D alloc] initWithNormalsCalculatedAsSharp:NO vertexBuffer:vertices vertexCount:vertexcount indices:indices indexCount:indexcount isDynamic:NO]];
 
 	if (vertices) free(vertices);
 	if (normals) free(normals);

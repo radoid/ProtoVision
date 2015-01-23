@@ -25,19 +25,60 @@
 	return self;
 }
 
-- (id)initWithBuffer:(Buffer3D *)initbuffer {
+- (id)initWithProgram:(Program3D *)initprogram buffer:(Buffer3D *)initbuffer {
 	if ((self = [self init])) {
+		program = initprogram;
 		buffer = initbuffer;
 	}
 	return self;
 }
 
-- (id)initWithVertices:(Buffer3DVertex *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount {
-	return [self initWithBuffer:[[Buffer3D alloc] initWithMode:GL_TRIANGLES vertices:vertices vertexCount:vcount indices:indices indexCount:icount isDynamic:NO]];
+- (id)initWithBuffer:(Buffer3D *)initbuffer {
+	return [self initWithProgram:[Program3D defaultProgram] buffer:initbuffer];
 }
 
+- (id)initWithProgram:(Program3D *)initprogram mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
+	int stride = (vertexsize + texcoordssize + normalsize + colorsize) * sizeof(GLfloat);
+	Buffer3D *buffer = [[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount stride:stride indices:ibuffer indexCount:icount isDynamic:dynamic];
+	if (initprogram.aPosition > -1 && vertexsize)
+		[buffer attrib:initprogram.aPosition size:vertexsize type:GL_FLOAT stride:stride offset:0];
+	if (initprogram.aTexture > -1 && texcoordssize)
+		[buffer attrib:initprogram.aTexture size:texcoordssize type:GL_FLOAT stride:stride offset:vertexsize * sizeof(GLfloat)];
+	if (initprogram.aNormal > -1 && normalsize)
+		[buffer attrib:initprogram.aNormal size:normalsize type:GL_FLOAT stride:stride offset:(vertexsize+texcoordssize) * sizeof(GLfloat)];
+	if (initprogram.aColor > -1 && colorsize)
+		[buffer attrib:initprogram.aColor size:colorsize type:GL_FLOAT stride:stride offset:(vertexsize+texcoordssize+normalsize) * sizeof(GLfloat)];
+	return [self initWithProgram:initprogram buffer:buffer];
+}
+
+- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
+	return [self initWithProgram:[Program3D defaultProgram] mode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic];
+}
+/*
+- (id)initWithNormalsCalculatedAsSharp:(BOOL)sharpen vertexBuffer:(Buffer3DVertex *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount isDynamic:(BOOL)dynamic {
+	for (int i=0; i < icount; i += 3) {
+		Vector3D a = vertices[indices[i+0]].vertex;
+		Vector3D b = vertices[indices[i+1]].vertex;
+		Vector3D c = vertices[indices[i+2]].vertex;
+		Vector3D normal = Vector3DUnit(Vector3DCross(Vector3DSubtract(b, a), Vector3DSubtract(c, b)));
+		if (sharpen) {
+			vertices[indices[i+0]].normal = normal;
+			vertices[indices[i+1]].normal = normal;
+			vertices[indices[i+2]].normal = normal;
+		} else {
+			vertices[indices[i+0]].normal = Vector3DAdd(normal, vertices[indices[i+0]].normal);
+			vertices[indices[i+1]].normal = Vector3DAdd(normal, vertices[indices[i+1]].normal);
+			vertices[indices[i+2]].normal = Vector3DAdd(normal, vertices[indices[i+2]].normal);
+		}
+	}
+	if (!sharpen)
+		for (int i=0; i < vcount; i++)
+			vertices[i].normal = Vector3DUnit(vertices[i].normal);
+	return [self initWithMode:GL_TRIANGLES vertices:vertices vertexCount:vcount indices:indices indexCount:icount isDynamic:dynamic];
+}*/
+
 - (id)copyWithZone:(NSZone *)zone {
-	Object3D *copy = [[Object3D allocWithZone:zone] initWithBuffer:buffer];
+	Object3D *copy = [[Object3D allocWithZone:zone] initWithProgram:program buffer:buffer];
 	copy.position = self.position;
 	copy.scaleX = self.scaleX;
 	copy.scaleY = self.scaleY;
@@ -185,7 +226,8 @@
 	if (color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[buffer drawWithProjection:camera.projection modelView:modelview color:color texture:texture];
+	[program useWithProjection:camera.projection modelView:modelview color:color texture:texture];
+	[buffer draw];
 
 	if (color.alpha < 1)
 		glDisable(GL_BLEND);
@@ -198,14 +240,15 @@
 	if (color.alpha < 1 || colorDark.alpha < 1 || colorLight.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[buffer drawWithProjection:camera.projection
-					 modelView:modelview
-						normal:normal
-					 colorDark:colorDark
-					colorLight:colorLight
-					   texture:texture
-						 light:direction
-					  position:camera.position];
+	[program useWithProjection:camera.projection
+							modelView:modelview
+							   normal:normal
+							colorDark:colorDark
+						   colorLight:colorLight
+							  texture:texture
+								light:direction
+							 position:camera.position];
+	[buffer draw];
 
 	if (color.alpha < 1 || colorDark.alpha < 1 || colorLight.alpha < 1)
 		glDisable(GL_BLEND);

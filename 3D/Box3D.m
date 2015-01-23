@@ -51,13 +51,12 @@
 		16, 17, 18, 18, 19, 16,
 		20, 22, 21, 22, 20, 23,
 	};
-	NSAssert(sizeof(Buffer3DVertex) == 8*sizeof(GLfloat), @"Promijenjen Buffer3DVertex - prilagoditi inicijalizatore!");
 
 	return [super initWithVertices:vertices vertexCount:sizeof(vertices)/sizeof(Buffer3DVertex) indices:indices indexCount:sizeof(indices)/sizeof(GLushort)];
 }*/
 
 - (id)initWithWidth:(float)width height:(float)height depth:(float)depth {
-	static Buffer3DVertex vertices[24] = {
+	static GLfloat vertices[24*8] = {
 		-0.5, -0.5, -0.5, 0.f, 0.f, 0.f, -1.f, 0.f,  // dolje
 		0.5, -0.5, -0.5, 0.f, 0.f, 0.f, -1.f, 0.f,
 		0.5, -0.5, 0.5, 0.f, 0.f, 0.f, -1.f, 0.f,
@@ -97,14 +96,14 @@
 		20, 22, 21, 22, 20, 23,
 	};
 	static Buffer3D *shared;
-	if (!shared)
-		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLES vertices:vertices vertexCount:sizeof(vertices) / sizeof(Buffer3DVertex) indices:indices indexCount:sizeof(indices) / sizeof(GLushort) isDynamic:NO];
-	self = [super initWithBuffer:shared];
+	if (!shared) {
+		self = [super initWithMode:GL_TRIANGLES vertices:vertices vertexCount:sizeof(vertices)/sizeof(GLfloat)/8 indices:indices indexCount:sizeof(indices)/sizeof(GLushort) vertexSize:3 texCoordsSize:2 normalSize:3 colorSize:0 isDynamic:NO];
+		shared = self.buffer;
+	} else
+		self = [super initWithProgram:[Program3D defaultProgram] buffer:shared];
 	self.scaleX = width;
 	self.scaleY = height;
 	self.scaleZ = depth;
-
-	NSAssert(sizeof(Buffer3DVertex) == 8*sizeof(GLfloat), @"Promijenjen Buffer3DVertex - prilagoditi inicijalizatore!");
 
 	return self;
 }

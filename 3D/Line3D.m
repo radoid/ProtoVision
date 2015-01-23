@@ -12,14 +12,11 @@
 @implementation Line3D
 
 - (id)initWithStart:(Vector3D)point1 end:(Vector3D)point2 {
-	if ((self = [super init])) {
-		GLfloat vertices[] = {
-				point1.x, point1.y, point1.z,
-				point2.x, point2.y, point2.z
-		};
-		buffer = [[Buffer3D alloc] initWithMode:GL_LINE_LOOP vertices:vertices vertexCount:2 indices:nil indexCount:0 vertexSize:3 texCoordsSize:0 normalSize:0 colorSize:0 isDynamic:NO];
-	}
-	return self;
+	GLfloat vertices[] = {
+			point1.x, point1.y, point1.z,
+			point2.x, point2.y, point2.z
+	};
+	return [super initWithMode:GL_LINE_LOOP vertices:vertices vertexCount:2 indices:nil indexCount:0 vertexSize:3 texCoordsSize:0 normalSize:0 colorSize:0 isDynamic:NO];
 }
 
 @end

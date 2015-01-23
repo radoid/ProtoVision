@@ -7,6 +7,7 @@
 
 #import "ProtoVision.h"
 #import "Program3D.h"
+#import "Texture2D.h"
 
 
 @implementation Program3D
@@ -122,6 +123,54 @@
 	if (!material2D)
 		material2D = [Program3D programNamed:@"unlit"];
 	return material2D;
+}
+
+- (void)use {
+	glUseProgram(programname);
+}
+
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
+	[self useWithProjection:projection modelView:modelview normal:normal colorDark:color colorLight:color texture:texture light:direction position:position];
+}
+
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal colorDark:(Color2D)colorDark colorLight:(Color2D)colorLight texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
+	glUseProgram(programname);
+	glUniformMatrix4fv(uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
+	glUniformMatrix4fv(uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
+	glUniformMatrix3fv(uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
+	//glUniform4fv(uColor, 1, (const GLfloat *)&color);
+	glUniform4fv(uColorDark, 1, (const GLfloat *)&colorDark);
+	glUniform4fv(uColorLight, 1, (const GLfloat *)&colorLight);
+	if (uLight > -1)
+		glUniform3fv(uLight, 1, (const GLfloat *)&direction);
+	if (uEye > -1)
+		glUniform3fv(uEye, 1, (const GLfloat *)&position);
+	if (uTime > -1)
+		glUniform1f(uTime, (float)CACurrentMediaTime());
+	if (uTexture > -1)
+		glUniform1i(uTexture, texture ? GL_TRUE : GL_FALSE);
+	if (texture && uTexture > -1 && uTexSampler > -1) {
+		glUniform1i(uTexSampler, 0);
+		glActiveTexture (GL_TEXTURE0);
+		[texture bind];
+	}
+
+	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);
+}
+
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview color:(Color2D)color texture:(Texture2D *)texture {
+	glUseProgram(programname);
+	glUniformMatrix4fv(uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
+	glUniformMatrix4fv(uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
+	glUniform4fv(uColor, 1, (const GLfloat *)&color);
+	glUniform1i(uTexture, texture ? GL_TRUE : GL_FALSE);
+	if (texture) {
+		glUniform1i(uTexSampler, 0);
+		glActiveTexture (GL_TEXTURE0);
+		[texture bind];
+	}
+
+	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);
 }
 
 @end

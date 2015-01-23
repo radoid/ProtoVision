@@ -7,6 +7,8 @@
 
 #import "ProtoVision.h"
 
+@class Texture2D;
+
 
 @interface Program3D : NSObject
 
@@ -17,6 +19,15 @@
 
 + (id)defaultProgram;
 + (id)defaultProgram2D;
+
+- (void)use;
+
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal1 color:(Color2D)color texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position;
+
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal1 colorDark:(Color2D)colorDark colorLight:(Color2D)colorLight texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position;
+
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview color:(Color2D)color texture:(Texture2D *)texture;
+
 + (id)programNamed:(NSString *)filename;
 
 - (id)initWithVertexShader:(NSString *)vss fragmentShader:(NSString *)fss;

@@ -44,8 +44,11 @@
 }
 
 - (void)removeAll {
-	for (Object3D *child in children)
-		[self remove:child];
+	for (Object3D *child in children) {
+		child.parent = nil;
+		[child recalculate];
+	}
+	[children removeAllObjects];
 }
 
 - (void)recalculate {

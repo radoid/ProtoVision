@@ -17,7 +17,7 @@
 		for (int i=0; i <= corners; i++) {
 			vertexBuffer[1+i] = (Buffer2DVertex) {cosf(i*2*M_PI/corners)*radius, sinf(i*2*M_PI/corners)*radius, 0, 0, 0};
 		}
-		buffer = [[Buffer2D alloc] initWithMode:GL_TRIANGLE_FAN vertices:vertexBuffer vertexCount:(int) sizeof(vertexBuffer) / sizeof(Buffer2DVertex) indices:nil indexCount:0 isDynamic:NO];
+		return [super initWithMode:GL_TRIANGLE_FAN vertices:vertexBuffer vertexCount:(int)sizeof(vertexBuffer)/sizeof(Buffer2DVertex) indices:nil indexCount:0 vertexSize:3 texCoordsSize:2 colorSize:0 isDynamic:NO];
     }
     return self;
 }

@@ -37,11 +37,4 @@ static inline Buffer2DRect Buffer2DRectMake(GLfloat x, GLfloat y, GLfloat width,
 
 @interface Buffer2D : Buffer3D
 
-- (id)initWithMode:(GLenum)drawmode vertices:(Buffer2DVertex *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount isDynamic:(BOOL)dynamic;
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vertices vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vsize texCoordsSize:(int)texsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
-
-- (void)updateVertices:(Buffer2DVertex *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount;
-
-- (void)drawWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview color:(Color2D)color;
-
 @end

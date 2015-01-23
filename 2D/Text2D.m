@@ -63,10 +63,10 @@
 		point.x += chardef.xAdvance * scale;
 	}
 
-	if (!buffer)
-		buffer = ([[Buffer2D alloc] initWithMode:GL_TRIANGLES vertices:(Buffer2DVertex *) buffer vertexCount:length * 6 indices:nil indexCount:0 isDynamic:YES]);
-	else
-		[buffer updateVertices:(Buffer2DVertex *) buffer vertexCount:length * 6 indices:nil indexCount:0];
+	//if (!buffer)
+	//	buffer = ([[Buffer2D alloc] initWithMode:GL_TRIANGLES vertices:(Buffer2DVertex *) buffer vertexCount:length * 6 indices:nil indexCount:0 isDynamic:YES]);
+	//else
+	//	[buffer updateVertices:(Buffer2DVertex *) buffer vertexCount:length * 6 indices:nil indexCount:0];
 
 	free(buffer);
 	buffer = nil;

@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-typedef struct {
+typedef struct {  // TODO deprecated
 	Vector3D vertex;
 	GLfloat texcoords[2];
 	Vector3D normal;
@@ -20,28 +20,25 @@ static inline Buffer3DVertex Buffer3DVertexMake(GLfloat x, GLfloat y, GLfloat z,
 }
 
 
-@interface Buffer3D : NSObject
+@interface Buffer3D : NSObject <NSCopying>
 {
-	Program3D *program;
 	GLuint vao;
-	GLenum mode;
 	GLuint vboname, iboname;
+	GLenum mode;
 	int vertexcount, maxvertexcount, indexcount, maxindexcount;
-	int vertexsize, texcoordssize, normalsize, colorsize;
 	int stride;
 }
+/*@property (nonatomic, readonly) GLuint vboname, iboname;
+@property (nonatomic, readonly) GLenum mode;
+@property (nonatomic, readonly) int vertexcount, indexcount;
+@property (nonatomic, readonly) int stride;*/
 
-- (id)initWithProgram:(Program3D *)program mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vsize texCoordsSize:(int)tsize normalSize:(int)nsize colorSize:(int)csize isDynamic:(BOOL)dynamic;
-
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vsize texCoordsSize:(int)tsize normalSize:(int)nsize colorSize:(int)csize isDynamic:(BOOL)dynamic;
-- (id)initWithMode:(GLenum)drawmode vertices:(Buffer3DVertex *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount isDynamic:(BOOL)dynamic;
-- (id)initWithNormalsCalculatedAsSharp:(BOOL)sharpen vertexBuffer:(Buffer3DVertex *)vertices vertexCount:(int)vertexcount indices:(GLushort *)indices indexCount:(int)indexcount isDynamic:(BOOL)dynamic;
+- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vertices vertexCount:(int)vcount stride:(int)stride indices:(GLushort *)indices indexCount:(int)icount isDynamic:(BOOL)dynamic;
 
 - (void)updateVertices:(Buffer3DVertex *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount;
 
-//- (void)drawWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color light:(Vector3D)direction;
-- (void)drawWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal colorDark:(Color2D)colorDark colorLight:(Color2D)colorLight texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position;
+- (void)attrib:(int)index size:(int)size type:(int)type stride:(int)stride1 offset:(int)offset;
 
-- (void)drawWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview color:(Color2D)color texture:(Texture2D *)texture;
+- (void)draw;
 
 @end

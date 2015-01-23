@@ -41,14 +41,14 @@
 		13, 14, 15
 	};
 	static Buffer3D *shared;
-	if (!shared)
-		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLES vertices:vertices vertexCount:sizeof(vertices) / sizeof(Buffer3DVertex) indices:indices indexCount:sizeof(indices) / sizeof(GLushort) isDynamic:NO];
-	self = [super initWithBuffer:shared];
+	if (!shared) {
+		self = [super initWithMode:GL_TRIANGLE_FAN vertices:vertices vertexCount:sizeof(vertices)/sizeof(GLfloat)/8 indices:indices indexCount:sizeof(indices)/sizeof(GLushort) vertexSize:3 texCoordsSize:2 normalSize:3 colorSize:0 isDynamic:NO];
+		shared = self.buffer;
+	} else
+		self = [super initWithBuffer:shared];
 	self.scaleX = width;
 	self.scaleY = height;
 	self.scaleZ = width;
-
-	NSAssert(sizeof(Buffer3DVertex) == 8*sizeof(GLfloat), @"Promijenjen Buffer3DVertex - prilagoditi inicijalizatore!");
 
 	return self;
 }
