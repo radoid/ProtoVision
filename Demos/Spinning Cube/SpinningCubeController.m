@@ -18,20 +18,16 @@
 }
 
 - (void)start {
-	if (!scene) {
-		scene = [[Container3D alloc] init];
-		camera = [[Camera3D alloc] initWithPosition:Vector3DMake(2, 1, 1) lookAt:Vector3DZero up:Vector3DY fovy:65 aspect:_view.frame.size.width/_view.frame.size.height near:0.1f far:20.f];
-		light = Vector3DMake(-1, 0, 0);
+	scene = [[Container3D alloc] init];
+	camera = [[Camera3D alloc] initWithPosition:Vector3DMake(2, 1, 1) lookAt:Vector3DZero up:Vector3DY fovy:65 aspect:_view.frame.size.width/_view.frame.size.height near:0.1f far:20.f];
+	light = Vector3DMake(-1, -0.25, 0);
 
-		Box3D *box = [[Box3D alloc] initWithWidth:1 height:1 depth:1];
-		[scene add:box];
-	}
+	Box3D *box = [[Box3D alloc] initWithWidth:1 height:1 depth:1];
+	[scene add:box];
 }
 
 - (void)draw {
-	if (scene) {
-		[scene drawWithCamera:camera light:light];
-	}
+	[scene drawWithCamera:camera light:light];
 }
 
 - (BOOL)update {
@@ -41,16 +37,15 @@
 }
 
 - (void)reshape {
-	if (camera)
-		camera.aspect = _view.frame.size.width/_view.frame.size.height;
+	camera.aspect = _view.frame.size.width/_view.frame.size.height;
 }
 
-- (BOOL)touchDown:(Vector2D)location {
+- (BOOL)touchDown:(Vector2D)location modifiers:(int)flags {
 	dragging = location;
 	return NO;
 }
 
-- (BOOL)touchMove:(Vector2D)location {
+- (BOOL)touchMove:(Vector2D)location modifiers:(int)flags {
 	float radius = _view.frame.size.height/5;
 
 	float angle = (location.x - dragging.x) / radius * 180/M_PI;

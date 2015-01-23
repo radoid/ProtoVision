@@ -29,10 +29,9 @@
 
 - (void)start {}
 - (void)stop {}
-- (void)pause {}
 - (void)resume {}
 - (void)resumeWithObject:(id)result {}
-- (BOOL)update {return NO;}
+- (BOOL)update:(float)delta {return NO;}
 
 #if TARGET_OS_IPHONE
 - (BOOL)touchDown:(Vector2D)location {return NO;}

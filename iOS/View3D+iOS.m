@@ -6,7 +6,7 @@
 //
 
 #import "ProtoVision.h"
-#import "View3D+iPhone.h"
+#import "View3D+iOS.h"
 
 
 @implementation View3D
@@ -26,6 +26,7 @@
 	Controller3D *_controller;
 	BOOL _initialized, _started, _redrawing;
 	Color2D color;
+	double last_time;
 }
 @synthesize color;
 
@@ -108,7 +109,7 @@
 
 	NSAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Framebuffer failed to complete!");
 
-	[self draw];
+	[self setNeedsDisplay];
 }
 
 - (float)scale {
@@ -161,9 +162,9 @@
 	[EAGLContext setCurrentContext:context];
 	if (_initialized) {
 		if (!_started)
-			[(Controller3D *)_controller start];
+			[_controller start];
 		else
-			[(Controller3D *)_controller resume];
+			[_controller resume];
 		_started = _redrawing = YES;
 	}
 	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);  // TODO
@@ -185,19 +186,22 @@
 	displayLink = timer = nil;
 
 	if (_started)
-		[(Controller3D *)_controller stop];
+		[_controller stop];
 }
 
 - (void)loopAnimation {
+	NSAssert(_started, @"loopAnimation before start!"); // TODO
+	double time = CACurrentMediaTime(), delta = time - last_time;
+	last_time = time;
 	if (_initialized) {
 		if (!_started) {
-			[(Controller3D *)_controller start];
+			[_controller start];
 			_started = _redrawing = YES;
 		} else
-			_redrawing |= [(Controller3D *)_controller update];
+			_redrawing |= [_controller update:delta];
 	}
 	if (_redrawing)
-		[self draw];
+		[self setNeedsDisplay];
 }
 
 
@@ -264,7 +268,7 @@
 		if (_controllerStack == nil)
 			_controllerStack = [[NSMutableArray alloc] init];
 		if (_controller)
-			[_controller pause];
+			[_controller stop];
 		[_controllerStack addObject:newcontroller];
 		_controller = newcontroller;
 		_controller.view = self;

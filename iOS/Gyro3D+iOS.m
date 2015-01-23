@@ -6,7 +6,7 @@
 //
 
 #import "ProtoVision.h"
-#import "Gyro3D+iPhone.h"
+#import "Gyro3D+iOS.h"
 
 
 @implementation Gyro3D

@@ -16,11 +16,10 @@
 @property (nonatomic) View3D *view;
 
 - (void)start;
-- (void)pause;
+- (void)stop;
 - (void)resume;
 - (void)resumeWithObject:(id)result;
-- (void)stop;
-- (BOOL)update;
+- (BOOL)update:(float)delta;
 
 #if TARGET_OS_IPHONE
 - (BOOL)touchDown:(Vector2D)location;

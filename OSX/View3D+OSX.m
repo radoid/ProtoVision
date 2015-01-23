@@ -18,6 +18,7 @@
 	CVDisplayLinkRef displayLink;
 	BOOL _started, _redrawing;
 	CGRect backingFrame;
+	double last_time;
 }
 @synthesize backingFrame, color;
 
@@ -86,16 +87,10 @@
 }
 
 - (void)drawRect:(NSRect)rect {
-	if (!displayLink) {
-		[self.openGLContext makeCurrentContext];
-		[self draw];
-	}
-}
-
-- (void)draw {
+	//[self.openGLContext makeCurrentContext];
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	[(Controller3D *)_controller draw];
+	[_controller draw];
 	_redrawing = NO;
 
 	[self.openGLContext flushBuffer];
@@ -123,7 +118,7 @@
 		if (_controllerStack == nil)
 			_controllerStack = [[NSMutableArray alloc] init];
 		if (_controller)
-			[_controller pause];
+			[_controller stop];
 		[_controllerStack addObject:newcontroller];
 		_controller = newcontroller;
 		_controller.view = self;
@@ -162,10 +157,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime {
-	if (_redrawing) {
-		[self.openGLContext makeCurrentContext];
-		[self draw];
-	}
+	[self.openGLContext makeCurrentContext];
+	[self updateAnimation];
 	return kCVReturnSuccess;
 }
 
@@ -175,6 +168,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	else
 		[_controller resume];
 	_started = _redrawing = YES;
+	last_time = CACurrentMediaTime();
 
 	GLint swapInt = 1;
 	[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
@@ -191,18 +185,16 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		CVDisplayLinkRelease(displayLink);
 	displayLink = 0;
 	if (_started)
-		[(Controller3D *)_controller pause];
+		[_controller stop];
 }
 
 - (void)updateAnimation {
-	//[[self openGLContext] makeCurrentContext];
-	if (!_started) {
-		[(Controller3D *)_controller start];
-		_started = _redrawing = YES;
-	} else
-		_redrawing |= [(Controller3D *)_controller update];
-	if (_redrawing && !displayLink)
-		[self drawRect:_frame];
+	NSAssert(_started, @"updateAnimation before start!"); // TODO
+	double time = CACurrentMediaTime(), delta = time - last_time;
+	last_time = time;
+	_redrawing |= [_controller update:delta];
+	if (_redrawing)
+		self.needsDisplay = YES;
 }
 
 
@@ -215,19 +207,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (void)keyDown:(NSEvent *)event {
-	_redrawing |= [(Controller3D *)_controller keyDown:event.keyCode modifiers:event.modifierFlags];
+	_redrawing |= [_controller keyDown:event.keyCode modifiers:event.modifierFlags];
 	if (_redrawing)
 		self.needsDisplay = YES;
 }
 
 - (void)keyUp:(NSEvent *)event {
-	_redrawing |= [(Controller3D *)_controller keyUp:event.keyCode modifiers:event.modifierFlags];
-	if (_redrawing)
-		self.needsDisplay = YES;
-}
-
-- (void)keyPress:(NSEvent *)event {
-	_redrawing |= [(Controller3D *)_controller keyPress:event.charactersIgnoringModifiers modifiers:event.modifierFlags];
+	_redrawing |= [_controller keyUp:event.keyCode modifiers:event.modifierFlags];
+	_redrawing |= [_controller keyPress:event.charactersIgnoringModifiers modifiers:event.modifierFlags];
 	if (_redrawing)
 		self.needsDisplay = YES;
 }
@@ -239,22 +226,22 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void)mouseDown:(NSEvent *)event {
 	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
-	_redrawing |= [(Controller3D *) _controller touchDown:location modifiers:event.modifierFlags];
-	if (_redrawing && !displayLink)
+	_redrawing |= [_controller touchDown:location modifiers:event.modifierFlags];
+	if (_redrawing)
 		self.needsDisplay = YES;
 }
 
 - (void)mouseUp:(NSEvent *)event {
 	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
-	_redrawing |= [(Controller3D *) _controller touchUp:location modifiers:event.modifierFlags];
-	if (_redrawing && !displayLink)
+	_redrawing |= [_controller touchUp:location modifiers:event.modifierFlags];
+	if (_redrawing)
 		self.needsDisplay = YES;
 }
 
 - (void)mouseDragged:(NSEvent *)event {
 	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
-	_redrawing |= [(Controller3D *) _controller touchMove:location modifiers:event.modifierFlags];
-	if (_redrawing && !displayLink)
+	_redrawing |= [_controller touchMove:location modifiers:event.modifierFlags];
+	if (_redrawing)
 		self.needsDisplay = YES;
 }
 

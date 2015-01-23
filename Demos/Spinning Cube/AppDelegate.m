@@ -11,7 +11,15 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	[_window pushController:[[SpinningCubeController alloc] init]];
+	[_window.view pushController:[[SpinningCubeController alloc] init]];
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+	[_window.view startAnimation];
+}
+
+- (void)applicationDidResignActive:(NSNotification *)notification {
+	[_window.view stopAnimation];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {

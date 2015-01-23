@@ -6,7 +6,7 @@
 //
 
 #import "ProtoVision.h"
-#import "Window3D+iPhone.h"
+#import "Window3D+iOS.h"
 
 
 @implementation Window3D
