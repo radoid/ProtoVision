@@ -35,6 +35,7 @@
 #import "3D/Plane3D.h"
 #import "3D/Ray3D.h"
 #import "3D/Quaternion3D.h"
+#import "3D/Spatial3D.h"
 #import "3D/Object3D.h"
 #import "3D/Object3D+OBJ.h"
 #import "3D/Container3D.h"

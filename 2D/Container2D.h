@@ -10,7 +10,7 @@
 
 @interface Container2D : Object2D <NSCopying>
 {
-	@private
+//	@private
 	NSMutableArray *children;
 }
 @property (nonatomic, readonly) NSMutableArray *children;

@@ -37,14 +37,17 @@
 }
 
 - (void)remove:(Object2D *)child {
-	[children removeObject:child];
 	child.parent = nil;
 	[child recalculate];
+	[children removeObject:child];
 }
 
 - (void)removeAll {
-	for (Object2D *child in children)
-		[self remove:child];
+	for (Object2D *child in children) {
+		child.parent = nil;
+		[child recalculate];
+	}
+	[children removeAllObjects];
 }
 
 - (void)recalculate {
