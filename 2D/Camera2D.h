@@ -8,18 +8,18 @@
 #import "ProtoVision.h"
 
 
-@interface Camera2D : Object2D
+@interface Camera2D : Spatial2D
 {
-	CGRect coords;
-	float near, far;
-	float orientation;
-	Matrix4x4 projection;
+	CGRect _frame;
+	float _near, _far;
+	float _orientation;
+	Matrix4x4 _projection;
 }
 @property (nonatomic) CGRect frame;
 @property (nonatomic) float orientation;
 @property (nonatomic, readonly) Matrix4x4 projection;
 
-- (id)initWithFrame:(CGRect)coords;
-- (id)initWithFrame:(CGRect)coords near:(float)near far:(float)far;
+- (id)initWithFrame:(CGRect)frame;
+- (id)initWithFrame:(CGRect)frame near:(float)near far:(float)far;
 
 @end

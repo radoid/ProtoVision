@@ -46,6 +46,7 @@
 #import "3D/Pyramid3D.h"
 #import "3D/Camera3D.h"
 
+#import "2D/Spatial2D.h"
 #import "2D/Object2D.h"
 #import "2D/Camera2D.h"
 #import "2D/Container2D.h"

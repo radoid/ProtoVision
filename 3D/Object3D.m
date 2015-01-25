@@ -70,7 +70,8 @@
 }*/
 
 - (id)copyWithZone:(NSZone *)zone {
-	Object3D *copy = [(Object3D *)[super copyWithZone:zone] initWithProgram:program buffer:buffer];
+	Object3D *copy = [super copyWithZone:zone];
+	[copy initWithProgram:program buffer:buffer];
 	copy.color = self.color;
 	copy.colorDark = self.colorDark;
 	copy.colorLight = self.colorLight;

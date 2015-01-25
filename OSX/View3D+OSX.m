@@ -162,7 +162,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if (!_started)
 		[_controller start];
 	else
-		[_controller resume];
+		[_controller resume];  // TODO only if stopped
 	_started = YES;
 	last_time = CACurrentMediaTime();
 

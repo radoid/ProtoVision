@@ -10,37 +10,35 @@
 
 @implementation Camera2D
 
-@synthesize frame, orientation, projection;
-
-- (id)initWithFrame:(CGRect)initframe {
-	return [self initWithFrame:initframe near:-initframe.size.width far:initframe.size.width];
+- (id)initWithFrame:(CGRect)frame {
+	return [self initWithFrame:frame near:-frame.size.width far:frame.size.width];
 }
 
-- (id)initWithFrame:(CGRect)initcoords near:(float)initnear far:(float)initfar {
+- (id)initWithFrame:(CGRect)frame near:(float)near far:(float)far {
 	if ((self = [super init])) {
-		near = initnear;
-		far = initfar;
-		[self setFrame:initcoords];
+		_near = near;
+		_far = far;
+		[self setFrame:frame];
 	}
 	return self;
 }
 
-- (void)setFrame:(CGRect)newframe {
-	coords = newframe;
+- (void)setFrame:(CGRect)frame {
+	_frame = frame;
 	[self recalculate];
 }
 
-- (void)setOrientation:(float)neworientation {
-	rotation = orientation = neworientation;
-	if (orientation == -90) {  // TODO
+- (void)setOrientation:(float)orientation {
+	rotation = _orientation = orientation;
+	if (_orientation == -90) {  // TODO
 		x = 0;
-		y = frame.size.width;
-	} else if (orientation == +90) {
-		x = frame.size.height;
+		y = _frame.size.width;
+	} else if (_orientation == +90) {
+		x = _frame.size.height;
 		y = 0;
-	} else if (orientation == 180) {
-		x = frame.size.width;
-		y = frame.size.height;
+	} else if (_orientation == 180) {
+		x = _frame.size.width;
+		y = _frame.size.height;
 	}
 	[self recalculate];
 }
@@ -50,7 +48,7 @@
 	//if (orientationAngle)
 	//	localToWorld = Matrix4x4Rotate(localToWorld, orientationAngle, 0, 0, 1);
 	//worldToLocal = Matrix4x4Invert(localToWorld);
-	projection = Matrix4x4Ortho(coords.origin.x, coords.origin.x + coords.size.width, coords.origin.y, coords.origin.y + coords.size.height, near, far);
+	_projection = Matrix4x4Ortho(_frame.origin.x, _frame.origin.x + _frame.size.width, _frame.origin.y, _frame.origin.y + _frame.size.height, _near, _far);
 }
 
 @end

@@ -26,10 +26,12 @@
 	if (icount)
 		glGenBuffers(1, &_iboname);
 	if ((self = [self initWithMode:drawmode vbo:_vboname vertexCount:vcount ibo:_iboname indexCount:icount vertexSize:vsize texCoordsSize:tsize normalSize:nsize colorSize:csize isDynamic:isDynamic])) {
-		if (vcount)
+		if (_vertexcount)
 			glBufferData(GL_ARRAY_BUFFER, _vertexcount * _stride, vertices, _dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
-		if (icount)
+		if (_indexcount)
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indexcount * sizeof(GLshort), indices, _dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
+
+		GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error %x", err);
 	}
 	return self;
 }

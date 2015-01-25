@@ -23,7 +23,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-	Spatial3D *copy = [[Spatial3D allocWithZone:zone] init];
+	Spatial3D *copy = [[[self class] allocWithZone:zone] init];
 	copy.position = self.position;
 	copy.scaleX = self.scaleX;
 	copy.scaleY = self.scaleY;
