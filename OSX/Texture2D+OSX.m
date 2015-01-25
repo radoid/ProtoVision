@@ -265,7 +265,7 @@ static NSMutableDictionary *atlasDictionary;
 @implementation Texture2D (Atlas)
 
 + (void)loadImageMap:(NSString *)filename withImageNamed:(NSString *)imagename {
-	@synchronized (atlasDictionary) {
+//	@synchronized (atlasDictionary) {
 		if (!atlasDictionary)
 			atlasDictionary = [[NSMutableDictionary alloc] init];
 
@@ -325,13 +325,13 @@ static NSMutableDictionary *atlasDictionary;
 				}
 			}
 		} while (p.location != NSNotFound && p2.location != NSNotFound);
-	}
+//	}
 }
 
 + (void)unloadAll {
-	@synchronized (atlasDictionary) {
+//	@synchronized (atlasDictionary) {
 		atlasDictionary = nil;
-	}
+//	}
 }
 
 + (Texture2D *)textureWithImageNamed:(NSString *)imagename {

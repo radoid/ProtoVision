@@ -37,12 +37,12 @@
 				[NSException raise:NSInternalInconsistencyException format:@""];
 		}
 		glBindTexture(GL_TEXTURE_2D, saveName);
-	
+
 		width = size.width / contentscale;
 		height = size.height / contentscale;
 		scale = contentscale;
 		coords = CGRectMake(0, 0, size.width / (float)texturewidth, size.height / (float)textureheight);
-	}					
+	}
 	return self;
 }
 
@@ -56,7 +56,7 @@
 - (NSString*)description {
 	return [NSString stringWithFormat:@"<%@ = %8@ | Name = %i | Dimensions = %dx%d | Scale = %0.f | Coordinates = (%.2f, %.2f, %.2f x %.2f)>", [self class], self, name, width, height, scale, coords.origin.x, coords.origin.y, coords.size.width, coords.size.height];
 }
-	
+
 - (id)initWithImageNamed:(NSString *)imagename {
 	NSUInteger textureheight, texturewidth, i;
 	CGContextRef			context = nil;
@@ -71,19 +71,19 @@
 	CGSize					imageSize;
 	Texture2DPixelFormat    pixelFormat;
 	BOOL					sizeToFit = NO;
-	
+
 	UIImage *uiImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:imagename ofType:@"png"]];
 	if (!uiImage) {
 		NSLog(@"ERROR: Cannot load UIImage named \"%@\"", imagename);
 		return nil;
 	}
-	
+
 	CGImageRef image = [uiImage CGImage];
 	if (!image) {
 		NSLog(@"ERROR: Image is Null");
 		return nil;
 	}
-	
+
 	info = CGImageGetAlphaInfo(image);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	if(CGImageGetColorSpace(image)) {
@@ -93,12 +93,12 @@
 			pixelFormat = kTexture2DPixelFormat_RGB565;
 	} else  //NOTE: No colorspace means a mask image
 		pixelFormat = kTexture2DPixelFormat_A8;
-	
+
 	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
 	transform = CGAffineTransformIdentity;
 
 	texturewidth = imageSize.width;
-	
+
 	if((texturewidth != 1) && (texturewidth & (texturewidth - 1))) {
 		i = 1;
 		while((sizeToFit ? 2 * i : i) < texturewidth)
@@ -119,8 +119,8 @@
 		imageSize.width *= 0.5;
 		imageSize.height *= 0.5;
 	}
-	
-	switch(pixelFormat) {		
+
+	switch(pixelFormat) {
 		case kTexture2DPixelFormat_RGBA8888:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(textureheight * texturewidth * 4);
@@ -136,16 +136,16 @@
 		case kTexture2DPixelFormat_A8:
 			data = malloc(textureheight * texturewidth);
 			context = CGBitmapContextCreate(data, texturewidth, textureheight, 8, texturewidth, NULL, kCGImageAlphaOnly);
-			break;				
+			break;
 		default:
 			[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
 	}
- 
+
 	CGContextClearRect(context, CGRectMake(0, 0, texturewidth, textureheight));
 	CGContextTranslateCTM(context, 0, textureheight); // Ante
 	CGContextScaleCTM(context, 1, -1); // Ante
 	//CGContextTranslateCTM(context, 0, height - imageSize.height);
-	
+
 	if(!CGAffineTransformIsIdentity(transform))
 		CGContextConcatCTM(context, transform);
 	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
@@ -158,14 +158,14 @@
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
 		free(data);
 		data = tempData;
-		
+
 	}
-	
+
 	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:texturewidth pixelsHigh:textureheight contentSize:imageSize contentScale:uiImage.scale];
-	
+
 	CGContextRelease(context);
 	free(data);
-	
+
 	return self;
 }
 
@@ -181,9 +181,9 @@
 	void*					data;
 	CGColorSpaceRef			colorSpace;
 	UIFont *				font;
-	
+
 	font = [UIFont fontWithName:name size:size];
-	
+
 	width = dimensions.width;
 	if((width != 1) && (width & (width - 1))) {
 		i = 1;
@@ -198,25 +198,25 @@
 		i *= 2;
 		height = i;
 	}
-	
+
 	colorSpace = CGColorSpaceCreateDeviceGray();
 	data = calloc(height, width);
 	context = CGBitmapContextCreate(data, width, height, 8, width, colorSpace, kCGImageAlphaNone);
 	CGColorSpaceRelease(colorSpace);
-	
-	
+
+
 	CGContextSetGrayFillColor(context, 1.0, 1.0);
 	CGContextTranslateCTM(context, 0.0, height);
 	CGContextScaleCTM(context, 1.0, -1.0); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
 	UIGraphicsPushContext(context);
 	[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
 	UIGraphicsPopContext();
-	
+
 	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
-	
+
 	CGContextRelease(context);
 	free(data);
-	
+
 	return self;
 }
 
@@ -243,7 +243,7 @@ static int current_name = 0;
 - (void)draw {
 	//[self drawAtPoint:CGPointMake(0, 0)];
 	[self bind];
-	
+
 	if (!vbo) {
 		Buffer2DVertex buffer[] = {
 			0.0, 0.0, coords.origin.x, coords.origin.y,
@@ -265,7 +265,7 @@ static int current_name = 0;
 		coords.origin.x + coords.size.width, coords.origin.y,
 		coords.origin.x, (coords.origin.y + coords.size.height),
 		coords.origin.x + coords.size.width, (coords.origin.y + coords.size.height) };
-	
+
 	[self bind];
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, realcoords);
@@ -283,7 +283,7 @@ static int current_name = 0;
 		coords.origin.x + coords.size.width, coords.origin.y,
 		coords.origin.x, (coords.origin.y + coords.size.height),
 		coords.origin.x + coords.size.width, (coords.origin.y + coords.size.height) };
-	
+
 	[self bind];
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, realcoords);
@@ -301,7 +301,7 @@ static int current_name = 0;
 		subcoords.origin.x + subcoords.size.width, subcoords.origin.y,
 		subcoords.origin.x, (subcoords.origin.y + subcoords.size.height),
 		subcoords.origin.x + subcoords.size.width, (subcoords.origin.y + subcoords.size.height) };
-	
+
 	[self bind];
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, realcoords);
@@ -316,23 +316,23 @@ static NSMutableDictionary *atlasDictionary;
 @implementation Texture2D (Atlas)
 
 + (void)loadImageMap:(NSString *)filename withImageNamed:(NSString *)imagename {
-	@synchronized (atlasDictionary) {
+//	@synchronized (atlasDictionary) {
 		if (!atlasDictionary)
 			atlasDictionary = [[NSMutableDictionary alloc] init];
-		
+
 		NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@"htm"] encoding:NSASCIIStringEncoding error:nil];
 		if (!contents) {
 			NSLog(@"ERROR: Ne mogu ucitati imagemap \"%@.htm\"!!", filename);
 			return;
 		}
-		
+
 		Texture2D *atlas = [[Texture2D alloc] initWithImageNamed:imagename];
 		if (!atlas) {
 			NSLog(@"ERROR: Ne mogu ucitati teksturu atlasa \"%.png\"@!!", imagename);
 			return;
 		}
 		[atlasDictionary setObject:atlas forKey:filename];
-		
+
 		NSRange p, p2;
 		do {
 			p = [contents rangeOfString:@"<AREA" options:NSCaseInsensitiveSearch];
@@ -376,13 +376,13 @@ static NSMutableDictionary *atlasDictionary;
 				}
 			}
 		} while (p.location != NSNotFound && p2.location != NSNotFound);
-	}
+//	}
 }
 
 + (void)unloadAll {
-	@synchronized (atlasDictionary) {
+//	@synchronized (atlasDictionary) {
 		atlasDictionary = nil;
-	}
+//	}
 }
 
 + (Texture2D *)textureWithImageNamed:(NSString *)imagename {

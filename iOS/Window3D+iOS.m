@@ -20,9 +20,6 @@
 		[self addSubview:_view];
 		[_view pushController:controller];
 
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:NULL];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:NULL];
-
 		//[self makeKeyAndVisible];
 	}
 	return self;
@@ -30,14 +27,6 @@
 
 - (void)pushController:(Controller3D *)controller {
 	[_view pushController:controller];
-}
-
-- (void)applicationDidBecomeActive {
-	[_view startAnimation];
-}
-
-- (void)applicationWillResignActive {
-	[_view stopAnimation];
 }
 
 @end

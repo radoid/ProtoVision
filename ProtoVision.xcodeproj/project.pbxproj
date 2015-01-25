@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DC35744D3F68128FABE32CC /* Spatial3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3508C2567415E673B8440 /* Spatial3D.m */; };
+		2DC357560C78CFBF30DBD55B /* Spatial3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC3547052F31DC443191CD7 /* Spatial3D.h */; };
+		2DC3576B829F7032233142FD /* Spatial3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC3547052F31DC443191CD7 /* Spatial3D.h */; };
+		2DC357A829191268806C67C8 /* Spatial3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3508C2567415E673B8440 /* Spatial3D.m */; };
 		EF0BB2451A6E443400713C2E /* Circle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF0BB2431A6E443400713C2E /* Circle2D.h */; };
 		EF0BB2461A6E443400713C2E /* Circle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF0BB2431A6E443400713C2E /* Circle2D.h */; };
 		EF0BB2471A6E443400713C2E /* Circle2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0BB2441A6E443400713C2E /* Circle2D.m */; };
@@ -143,6 +147,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2DC3508C2567415E673B8440 /* Spatial3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spatial3D.m; sourceTree = "<group>"; };
+		2DC3547052F31DC443191CD7 /* Spatial3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spatial3D.h; sourceTree = "<group>"; };
 		EF0BB2431A6E443400713C2E /* Circle2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle2D.h; sourceTree = "<group>"; };
 		EF0BB2441A6E443400713C2E /* Circle2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circle2D.m; sourceTree = "<group>"; };
 		EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtoVisionOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -381,6 +387,8 @@
 				EF7E7D251A695778009BD387 /* Quaternion3D.h */,
 				EF7E7D291A695778009BD387 /* Camera3D.h */,
 				EF7E7D2A1A695778009BD387 /* Object3D.h */,
+				2DC3508C2567415E673B8440 /* Spatial3D.m */,
+				2DC3547052F31DC443191CD7 /* Spatial3D.h */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -401,11 +409,11 @@
 		EF7E7D791A695838009BD387 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				EF7E7D7A1A695838009BD387 /* unlit.v1.fsh */,
-				EF7E7D7B1A695838009BD387 /* unlit.v3.fsh */,
-				EF7E7D7C1A695838009BD387 /* unlit.v3.vsh */,
-				EF7E7D7D1A695838009BD387 /* default.v3.fsh */,
 				EF7E7D7E1A695838009BD387 /* unlit.v1.vsh */,
+				EF7E7D7A1A695838009BD387 /* unlit.v1.fsh */,
+				EF7E7D7C1A695838009BD387 /* unlit.v3.vsh */,
+				EF7E7D7B1A695838009BD387 /* unlit.v3.fsh */,
+				EF7E7D7D1A695838009BD387 /* default.v3.fsh */,
 				EF7E7D7F1A695838009BD387 /* default.v1.fsh */,
 				EF7E7D801A695838009BD387 /* default.v3.vsh */,
 				EF7E7D811A695838009BD387 /* default.v1.vsh */,
@@ -528,6 +536,7 @@
 				EF7E7D611A695778009BD387 /* Line3D.h in Headers */,
 				EF7E7D3D1A695778009BD387 /* Camera2D.h in Headers */,
 				EF7E7D431A695778009BD387 /* Color2D.h in Headers */,
+				2DC3576B829F7032233142FD /* Spatial3D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +548,7 @@
 				EF9755B41A695F1C009FDB0B /* Window3D+iOS.h in Headers */,
 				EF9755B31A695F1C009FDB0B /* View3D+iOS.h in Headers */,
 				EF9755B71A695F1C009FDB0B /* Gyro3D+iOS.h in Headers */,
+				2DC357560C78CFBF30DBD55B /* Spatial3D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +745,7 @@
 				EF7E7D6D1A695778009BD387 /* Buffer3D.m in Sources */,
 				EF7E7D711A695778009BD387 /* View3D+OSX.m in Sources */,
 				EF7E7D551A695778009BD387 /* Program3D.m in Sources */,
+				2DC357A829191268806C67C8 /* Spatial3D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,6 +789,7 @@
 				EF9755B81A695F1C009FDB0B /* Window3D+iOS.m in Sources */,
 				EF9755B61A695F1C009FDB0B /* Texture2D+iOS.m in Sources */,
 				EF9755B51A695F1C009FDB0B /* View3D+iOS.m in Sources */,
+				2DC35744D3F68128FABE32CC /* Spatial3D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

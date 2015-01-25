@@ -16,7 +16,7 @@
 
 	Color2D color;
 	CVDisplayLinkRef displayLink;
-	BOOL _started, _redrawing;
+	BOOL _started;
 	CGRect backingFrame;
 	double last_time;
 }
@@ -63,8 +63,7 @@
 - (void)reshape {
 	backingFrame = [self convertRectToBacking:[self frame]];
 	glViewport(0, 0, backingFrame.size.width, backingFrame.size.height);
-	_redrawing = YES;
-	@synchronized (_controllerStack) {
+	@synchronized (self) {
 		[_controller reshape];
 	}
 }
@@ -90,8 +89,9 @@
 	//[self.openGLContext makeCurrentContext];
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	[_controller draw];
-	_redrawing = NO;
+	@synchronized (self) {
+		[_controller draw];
+	}
 
 	[self.openGLContext flushBuffer];
 }
@@ -99,7 +99,7 @@
 - (void)setColor:(Color2D)newcolor	{
 	color = newcolor;
 	glClearColor(color.r, color.g, color.b, 1);
-	self.needsDisplay = _redrawing = YES;
+	self.needsDisplay = YES;
 }
 
 
@@ -108,42 +108,36 @@
  */
 
 - (Controller3D *)controller {
-	@synchronized (_controllerStack) {
-		return _controller;
-	}
+	return _controller;
 }
 
 - (void)pushController:(Controller3D *)newcontroller {
-	@synchronized (_controllerStack) {
-		if (_controllerStack == nil)
-			_controllerStack = [[NSMutableArray alloc] init];
-		if (_controller)
-			[_controller stop];
-		[_controllerStack addObject:newcontroller];
-		_controller = newcontroller;
-		_controller.view = self;
-		//_button = nil;  // TODO
-		[_controller start];
-		_started = _redrawing = YES;
-		self.needsDisplay = YES;
-	}
+	if (_controllerStack == nil)
+		_controllerStack = [[NSMutableArray alloc] init];
+	if (_controller)
+		[_controller stop];
+	[_controllerStack addObject:newcontroller];
+	_controller = newcontroller;
+	_controller.view = self;
+	//_button = nil;  // TODO
+	[_controller start];
+	_started = YES;
+	self.needsDisplay = YES;
 }
 
 - (void)popWithObject:(id)result {
-	@synchronized (_controllerStack) {
-		if (_controllerStack /*&& [_controllerStack lastObject] == self*/) {  // TODO
-			if ([_controllerStack count])
-				[_controllerStack removeLastObject];
-			_controller = [_controllerStack lastObject];
-			//_button = nil;  // TODO
-			if (_controller)
-				[_controller resumeWithObject:result];
-			else {
-				NSLog(@"Releasing empty controller stack!");
-				_controllerStack = nil;
-			}
-			_redrawing = YES;
+	if (_controllerStack /*&& [_controllerStack lastObject] == self*/) {  // TODO
+		if ([_controllerStack count])
+			[_controllerStack removeLastObject];
+		_controller = [_controllerStack lastObject];
+		//_button = nil;  // TODO
+		if (_controller)
+			[_controller resumeWithObject:result];
+		else {
+			NSLog(@"Releasing empty controller stack!");
+			_controllerStack = nil;
 		}
+		self.needsDisplay = YES;
 	}
 }
 
@@ -158,7 +152,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime {
 	[self.openGLContext makeCurrentContext];
-	[self updateAnimation];
+	@synchronized (self) {
+		[self updateAnimation];
+	}
 	return kCVReturnSuccess;
 }
 
@@ -167,7 +163,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[_controller start];
 	else
 		[_controller resume];
-	_started = _redrawing = YES;
+	_started = YES;
 	last_time = CACurrentMediaTime();
 
 	GLint swapInt = 1;
@@ -192,8 +188,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	NSAssert(_started, @"updateAnimation before start!"); // TODO
 	double time = CACurrentMediaTime(), delta = time - last_time;
 	last_time = time;
-	_redrawing |= [_controller update:delta];
-	if (_redrawing)
+	if ([_controller update:delta])
 		self.needsDisplay = YES;
 }
 
@@ -207,16 +202,18 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (void)keyDown:(NSEvent *)event {
-	_redrawing |= [_controller keyDown:event.keyCode modifiers:event.modifierFlags];
-	if (_redrawing)
-		self.needsDisplay = YES;
+	@synchronized (self) {
+		if ([_controller keyDown:event.keyCode modifiers:event.modifierFlags])
+			self.needsDisplay = YES;
+	}
 }
 
 - (void)keyUp:(NSEvent *)event {
-	_redrawing |= [_controller keyUp:event.keyCode modifiers:event.modifierFlags];
-	_redrawing |= [_controller keyPress:event.charactersIgnoringModifiers modifiers:event.modifierFlags];
-	if (_redrawing)
-		self.needsDisplay = YES;
+	@synchronized (self) {
+		if ([_controller keyUp:event.keyCode modifiers:event.modifierFlags]
+		 || [_controller keyPress:event.charactersIgnoringModifiers modifiers:event.modifierFlags])
+			self.needsDisplay = YES;
+	}
 }
 
 
@@ -225,24 +222,27 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
  */
 
 - (void)mouseDown:(NSEvent *)event {
-	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
-	_redrawing |= [_controller touchDown:location modifiers:event.modifierFlags];
-	if (_redrawing)
-		self.needsDisplay = YES;
+	@synchronized (self) {
+		Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
+		if ([_controller touchDown:location modifiers:event.modifierFlags])
+			self.needsDisplay = YES;
+	}
 }
 
 - (void)mouseUp:(NSEvent *)event {
 	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
-	_redrawing |= [_controller touchUp:location modifiers:event.modifierFlags];
-	if (_redrawing)
-		self.needsDisplay = YES;
+	@synchronized (self) {
+		if ([_controller touchUp:location modifiers:event.modifierFlags])
+			self.needsDisplay = YES;
+	}
 }
 
 - (void)mouseDragged:(NSEvent *)event {
 	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
-	_redrawing |= [_controller touchMove:location modifiers:event.modifierFlags];
-	if (_redrawing)
-		self.needsDisplay = YES;
+	@synchronized (self) {
+		if ([_controller touchMove:location modifiers:event.modifierFlags])
+			self.needsDisplay = YES;
+	}
 }
 
 @end

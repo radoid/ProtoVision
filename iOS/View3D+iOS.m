@@ -20,7 +20,6 @@
 	BOOL useDepthBuffer;
 
 	id displayLink;
-	NSTimer *timer;
 
 	NSMutableArray *_controllerStack;
 	Controller3D *_controller;
@@ -116,6 +115,13 @@
 	return self.contentScaleFactor;
 }
 
+- (void)setNeedsDisplay {
+	if (!displayLink)
+		[self draw];
+	else
+		_redrawing = YES;
+}
+
 - (void)draw {
 	if (!framebuffer || !renderbuffer)
 		return;
@@ -165,11 +171,11 @@
 			[_controller start];
 		else
 			[_controller resume];
-		_started = _redrawing = YES;
+		_started = YES;
 	}
 	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);  // TODO
 
-	if (displayLink || timer)
+	if (displayLink)
 		return;
 	//NSLog(@"[View3D start] CADisplayLink starts");
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(loopAnimation)];
@@ -181,9 +187,7 @@
 	//NSLog(@"[View3D stop]");
 	if (displayLink)
 		[displayLink invalidate];
-	if (timer)
-		[timer invalidate];
-	displayLink = timer = nil;
+	displayLink = nil;
 
 	if (_started)
 		[_controller stop];
@@ -191,17 +195,16 @@
 
 - (void)loopAnimation {
 	NSAssert(_started, @"loopAnimation before start!"); // TODO
-	double time = CACurrentMediaTime(), delta = time - last_time;
-	last_time = time;
-	if (_initialized) {
-		if (!_started) {
-			[_controller start];
-			_started = _redrawing = YES;
-		} else
-			_redrawing |= [_controller update:delta];
+	@synchronized (self) {
+		double time = CACurrentMediaTime(), delta = time - last_time;
+		last_time = time;
+		if (_initialized) {
+			if ([_controller update:delta])
+				[self setNeedsDisplay];
+		}
+		if (_redrawing)
+			[self draw];
 	}
-	if (_redrawing)
-		[self setNeedsDisplay];
 }
 
 
@@ -215,7 +218,10 @@
 	//firstTouch = YES;
 	CGPoint location = [touch locationInView:self];
 	location.y = bounds.size.height - location.y;
-	_redrawing |= [_controller touchDown:Vector2DMake(location.x, location.y)];
+	@synchronized (self) {
+		if ([_controller touchDown:Vector2DMake(location.x, location.y)])
+			[self setNeedsDisplay];
+	}
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -224,7 +230,10 @@
 	//firstTouch = YES;
 	CGPoint location = [touch locationInView:self];
 	location.y = bounds.size.height - location.y;
-	_redrawing |= [_controller touchMove:Vector2DMake(location.x, location.y)];
+	@synchronized (self) {
+		if ([_controller touchMove:Vector2DMake(location.x, location.y)])
+			[self setNeedsDisplay];
+	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -233,7 +242,10 @@
 	//firstTouch = YES;
 	CGPoint location = [touch locationInView:self];
 	location.y = bounds.size.height - location.y;
-	_redrawing |= [_controller touchUp:Vector2DMake(location.x, location.y)];
+	@synchronized (self) {
+		if ([_controller touchUp:Vector2DMake(location.x, location.y)])
+			[self setNeedsDisplay];
+	}
 }
 
 
@@ -258,43 +270,35 @@
  */
 
 - (id)controller {
-	@synchronized (_controllerStack) {
-		return _controller;
-	}
+	return _controller;
 }
 
 - (void)pushController:(Controller3D *)newcontroller {
-	@synchronized (_controllerStack) {
-		if (_controllerStack == nil)
-			_controllerStack = [[NSMutableArray alloc] init];
-		if (_controller)
-			[_controller stop];
-		[_controllerStack addObject:newcontroller];
-		_controller = newcontroller;
-		_controller.view = self;
-		//_button = nil;  // TODO
-		if (_started) {
-			[_controller start];
-			_redrawing = YES;
-		}
-	}
+	if (!_controllerStack)
+		_controllerStack = [[NSMutableArray alloc] init];
+	if (_controller)
+		[_controller stop];
+	[_controllerStack addObject:newcontroller];
+	_controller = newcontroller;
+	_controller.view = self;
+	//_button = nil;  // TODO
+	[_controller start];
+	[self setNeedsDisplay];
 }
 
 - (void)popWithObject:(id)result {
-	@synchronized (_controllerStack) {
-		if (_controllerStack /*&& [_controllerStack lastObject] == self*/) {  // TODO
-			if ([_controllerStack count])
-				[_controllerStack removeLastObject];
-			_controller = [_controllerStack lastObject];
-			//_button = nil;  // TODO
-			if (_controller)
-				[_controller resumeWithObject:result];
-			else {
-				NSLog(@"[View3D popController:] Stack already empty!");
-				_controllerStack = nil;
-			}
-			_redrawing = YES;
+	if (_controllerStack /*&& [_controllerStack lastObject] == self*/) {  // TODO
+		if ([_controllerStack count])
+			[_controllerStack removeLastObject];
+		_controller = [_controllerStack lastObject];
+		//_button = nil;  // TODO
+		if (_controller)
+			[_controller resumeWithObject:result];
+		else {
+			NSLog(@"[View3D popController:] Stack already empty!");
+			_controllerStack = nil;
 		}
+		[self setNeedsDisplay];
 	}
 }
 
