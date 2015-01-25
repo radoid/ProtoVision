@@ -27,8 +27,8 @@
 
 - (id)initWithProgram:(Program3D *)initprogram buffer:(Buffer3D *)initbuffer {
 	if ((self = [self init])) {
-		program = initprogram;
 		buffer = initbuffer;
+		[self setProgram:initprogram];
 	}
 	return self;
 }
@@ -38,21 +38,17 @@
 }
 
 - (id)initWithProgram:(Program3D *)initprogram mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
-	int stride = (vertexsize + texcoordssize + normalsize + colorsize) * sizeof(GLfloat);
-	Buffer3D *buffer = [[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount stride:stride indices:ibuffer indexCount:icount isDynamic:dynamic];
-	if (initprogram.aPosition > -1 && vertexsize)
-		[buffer attrib:initprogram.aPosition size:vertexsize type:GL_FLOAT stride:stride offset:0];
-	if (initprogram.aTexture > -1 && texcoordssize)
-		[buffer attrib:initprogram.aTexture size:texcoordssize type:GL_FLOAT stride:stride offset:vertexsize * sizeof(GLfloat)];
-	if (initprogram.aNormal > -1 && normalsize)
-		[buffer attrib:initprogram.aNormal size:normalsize type:GL_FLOAT stride:stride offset:(vertexsize+texcoordssize) * sizeof(GLfloat)];
-	if (initprogram.aColor > -1 && colorsize)
-		[buffer attrib:initprogram.aColor size:colorsize type:GL_FLOAT stride:stride offset:(vertexsize+texcoordssize+normalsize) * sizeof(GLfloat)];
+	Buffer3D *buffer = [[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic];
 	return [self initWithProgram:initprogram buffer:buffer];
 }
 
 - (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
 	return [self initWithProgram:[Program3D defaultProgram] mode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic];
+}
+
+- (void)setProgram:(Program3D *)initprogram {
+	program	= initprogram;
+	[buffer setAttribForProgram:initprogram];
 }
 /*
 - (id)initWithNormalsCalculatedAsSharp:(BOOL)sharpen vertexBuffer:(Buffer3DVertex *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount isDynamic:(BOOL)dynamic {

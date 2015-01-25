@@ -10,40 +10,62 @@
 
 
 @implementation Buffer3D
+{
+	GLuint _vao;
+	GLuint _vboname, _iboname;
+	GLenum _mode;
+	int _vertexcount, _maxvertexcount, _indexcount, _maxindexcount;
+	int _vertexsize, _texcoordssize, _normalsize, _colorsize;
+	int _stride;
+	BOOL _dynamic;
+}
 
-/*@synthesize vboname, iboname;
-@synthesize mode;
-@synthesize vertexcount, indexcount;
-@synthesize stride;*/
+- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount vertexSize:(int)vsize texCoordsSize:(int)tsize normalSize:(int)nsize colorSize:(int)csize isDynamic:(BOOL)isDynamic {
+	if (vcount)
+		glGenBuffers(1, &_vboname);
+	if (icount)
+		glGenBuffers(1, &_iboname);
+	if ((self = [self initWithMode:drawmode vbo:_vboname vertexCount:vcount ibo:_iboname indexCount:icount vertexSize:vsize texCoordsSize:tsize normalSize:nsize colorSize:csize isDynamic:isDynamic])) {
+		if (vcount)
+			glBufferData(GL_ARRAY_BUFFER, _vertexcount * _stride, vertices, _dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
+		if (icount)
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indexcount * sizeof(GLshort), indices, _dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
+	}
+	return self;
+}
 
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vertices vertexCount:(int)vcount stride:(int)initstride indices:(GLushort *)indices indexCount:(int)icount isDynamic:(BOOL)dynamic {
+- (id)initWithMode:(GLenum)drawmode vbo:(GLuint)vbo vertexCount:(int)vcount ibo:(GLuint)ibo indexCount:(int)icount vertexSize:(int)vsize texCoordsSize:(int)tsize normalSize:(int)nsize colorSize:(int)csize isDynamic:(BOOL)isDynamic {
 	if ((self = [super init])) {
-		mode = drawmode;
-		vertexcount = maxvertexcount = vcount;
-		indexcount = maxindexcount = icount;
-		stride = initstride;
+		_mode = drawmode;
+		_vertexcount = _maxvertexcount = vcount;
+		_indexcount = _maxindexcount = icount;
+		_vertexsize = vsize;
+		_texcoordssize = tsize;
+		_normalsize = nsize;
+		_colorsize = csize;
+		_stride = (_vertexsize + _texcoordssize + _normalsize + _colorsize) * sizeof(GLfloat);
+		_dynamic = isDynamic;
 
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
+		glGenVertexArrays(1, &_vao);
+		glBindVertexArray(_vao);
 
-		if (vcount) {
-			glGenBuffers(1, &vboname);
-			glBindBuffer(GL_ARRAY_BUFFER, vboname);
-			glBufferData(GL_ARRAY_BUFFER, vertexcount * stride, vertices, dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
-			//NSLog(@"[Buffer3D init] VBO name %d", vboname);
+		if (vbo) {
+			_vboname = vbo;
+			glBindBuffer(GL_ARRAY_BUFFER, _vboname);
 		}
-		if (icount && indices) {
-			glGenBuffers(1, &iboname);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboname);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexcount * sizeof(GLshort), indices, dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
-			//NSLog(@"[Buffer3D init] IBO name %d", iboname);
+		if (ibo) {
+			_iboname = ibo;
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboname);
 		}
 
 		GLenum err; NSAssert(!(err = glGetError()), @"[Buffer3D init] OpenGL error %x", err);
-
-		NSAssert(vao && vboname && (iboname || !indexcount), @"Creating buffers failed!");
+		NSAssert(_vao && _vboname && (_iboname || !_indexcount), @"Creating buffers failed!");
 	}
 	return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+	return [[Buffer3D allocWithZone:zone] initWithMode:_mode vbo:_vboname vertexCount:_vertexcount ibo:_iboname indexCount:_indexcount vertexSize:_vertexsize texCoordsSize:_texcoordssize normalSize:_normalsize colorSize:_colorsize isDynamic:_dynamic];
 }
 
 - (void)updateVertices:(Buffer3DVertex *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount  {
@@ -74,7 +96,18 @@
 	}*/
 }
 
-- (void)attrib:(int)index size:(int)size type:(int)type stride:(int)stride offset:(int)offset {
+- (void)setAttribForProgram:(Program3D *)program {
+	if (program.aPosition > -1 && _vertexsize)
+		[self setAttrib:program.aPosition size:_vertexsize type:GL_FLOAT stride:_stride offset:0];
+	if (program.aTexture > -1 && _texcoordssize)
+		[self setAttrib:program.aTexture size:_texcoordssize type:GL_FLOAT stride:_stride offset:_vertexsize * sizeof(GLfloat)];
+	if (program.aNormal > -1 && _normalsize)
+		[self setAttrib:program.aNormal size:_normalsize type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize) * sizeof(GLfloat)];
+	if (program.aColor > -1 && _colorsize)
+		[self setAttrib:program.aColor size:_colorsize type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize + _normalsize) * sizeof(GLfloat)];
+}
+
+- (void)setAttrib:(int)index size:(int)size type:(int)type stride:(int)stride offset:(int)offset {
 	glEnableVertexAttribArray(index);
 	glVertexAttribPointer(index, size, type, GL_FALSE, stride, (const GLvoid *)offset);
 
@@ -82,81 +115,23 @@
 }
 
 - (void)draw {
-	glBindVertexArray(vao);
+	glBindVertexArray(_vao);
 
-	if (iboname)
-		glDrawElements(mode, indexcount, GL_UNSIGNED_SHORT, (const GLvoid *)0);
-	else
-		glDrawArrays(mode, 0, vertexcount);
-
-	GLenum err = glGetError(); NSAssert(!err, @"[Buffer3D draw] OpenGL error %x", err);
-}
-/*
-- (void)drawWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
-	[self drawWithProjection:projection modelView:modelview normal:normal colorDark:color colorLight:color texture:texture light:direction position:position];
-}
-
-- (void)drawWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal colorDark:(Color2D)colorDark colorLight:(Color2D)colorLight texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
-	glUseProgram(program.programname);
-	glUniformMatrix4fv(program.uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
-	glUniformMatrix4fv(program.uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
-	glUniformMatrix3fv(program.uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
-	//glUniform4fv(program.uColor, 1, (const GLfloat *)&color);
-	glUniform4fv(program.uColorDark, 1, (const GLfloat *)&colorDark);
-	glUniform4fv(program.uColorLight, 1, (const GLfloat *)&colorLight);
-	if (program.uLight > -1)
-		glUniform3fv(program.uLight, 1, (const GLfloat *)&direction);
-	if (program.uEye > -1)
-		glUniform3fv(program.uEye, 1, (const GLfloat *)&position);
-	if (program.uTime > -1)
-		glUniform1f(program.uTime, (float)CACurrentMediaTime());
-	if (program.uTexture > -1)
-		glUniform1i(program.uTexture, texture ? GL_TRUE : GL_FALSE);
-	if (texture && program.uTexture > -1 && program.uTexSampler > -1) {
-		glUniform1i(program.uTexSampler, 0);
-		glActiveTexture (GL_TEXTURE0);
-		[texture bind];
-	}
-
-	glBindVertexArray(vao);
-	//[self enableVertexArrays];
-	if (iboname)
-		glDrawElements(mode, indexcount, GL_UNSIGNED_SHORT, (const GLvoid *)0);
-	else
-		glDrawArrays(mode, 0, vertexcount);
+	if (_iboname)
+		glDrawElements(_mode, _indexcount, GL_UNSIGNED_SHORT, (const GLvoid *)0);
+	else if (_vboname)
+		glDrawArrays(_mode, 0, _vertexcount);
 
 	GLenum err = glGetError(); NSAssert(!err, @"[Buffer3D draw] OpenGL error %x", err);
 }
 
-- (void)drawWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview color:(Color2D)color texture:(Texture2D *)texture {
-	glUseProgram(program.programname);
-	glUniformMatrix4fv(program.uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
-	glUniformMatrix4fv(program.uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
-	glUniform4fv(program.uColor, 1, (const GLfloat *)&color);
-	glUniform1i(program.uTexture, texture ? GL_TRUE : GL_FALSE);
-	if (texture) {
-		glUniform1i(program.uTexSampler, 0);
-		glActiveTexture (GL_TEXTURE0);
-		[texture bind];
-	}
-
-	glBindVertexArray(vao);
-	//[self enableVertexArrays];
-	if (iboname)
-		glDrawElements(mode, indexcount, GL_UNSIGNED_SHORT, (const GLvoid *)0);
-	else
-		glDrawArrays(mode, 0, vertexcount);
-
-	GLenum err = glGetError(); NSAssert(!err, @"[Buffer3D draw] OpenGL error %x", err);
-}
-*/
 - (void)dealloc {
-	if (vao)
-		glDeleteVertexArrays(1, &vao);
-	if (vboname)
-		glDeleteBuffers(1, &vboname);
-	if (iboname)
-		glDeleteBuffers(1, &iboname);
+	if (_vao)
+		glDeleteVertexArrays(1, &_vao);
+	//if (vboname)
+	//	glDeleteBuffers(1, &vboname);
+	//if (iboname)
+	//	glDeleteBuffers(1, &iboname);
 	//NSLog(@"[Buffer3D dealloc] VBO name %d, IBO name %d", vboname, iboname);
 }
 

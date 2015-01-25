@@ -26,13 +26,8 @@
 
 - (id)initWithProgram:(Program3D *)initprogram mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
 	int stride = (vertexsize + texcoordssize + colorsize) * sizeof(GLfloat);
-	Buffer3D *buffer = [[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount stride:stride indices:ibuffer indexCount:icount isDynamic:dynamic];
-	if (initprogram.aPosition > -1 && vertexsize)
-		[buffer attrib:initprogram.aPosition size:vertexsize type:GL_FLOAT stride:stride offset:0];
-	if (initprogram.aTexture > -1 && texcoordssize)
-		[buffer attrib:initprogram.aTexture size:texcoordssize type:GL_FLOAT stride:stride offset:vertexsize * sizeof(GLfloat)];
-	if (initprogram.aColor > -1 && colorsize)
-		[buffer attrib:initprogram.aColor size:colorsize type:GL_FLOAT stride:stride offset:(vertexsize+texcoordssize) * sizeof(GLfloat)];
+	Buffer3D *buffer = [[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:0 colorSize:colorsize isDynamic:dynamic];
+	[buffer setAttribForProgram:initprogram];
 	return [self initWithProgram:initprogram buffer:buffer];
 }
 

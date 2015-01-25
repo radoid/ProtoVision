@@ -100,7 +100,7 @@
 }
 
 + (id)programNamed:(NSString *)filename {
-	for (int i = [self glslVersion]; i >= 0; i--) {
+	for (int i = [Program3D glslVersion]; i >= 0; i--) {
 		NSString *version = (i ? [NSString stringWithFormat:@"%@.v%d", filename, i] : filename);
 		NSString *vs = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:version ofType:@"vsh"] encoding:NSUTF8StringEncoding error:nil];
 		NSString *fs = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:version ofType:@"fsh"] encoding:NSUTF8StringEncoding error:nil];
