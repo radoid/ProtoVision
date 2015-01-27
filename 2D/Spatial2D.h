@@ -10,12 +10,12 @@
 
 @interface Spatial2D : NSObject <NSCopying>
 {
-	float x, y;
-	float rotation;
-	float scaleX, scaleY;
+	float _x, _y;
+	float _rotation;
+	float _scaleX, _scaleY;
 	CGPoint _origin;
-	id __weak parent;
-	Matrix4x4 localToWorld, worldToLocal;
+	id __weak _parent;
+	Matrix4x4 _localToWorld, _worldToLocal;
 }
 
 @property (nonatomic) float x, y, rotation, scale, scaleX, scaleY;

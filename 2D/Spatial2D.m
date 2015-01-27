@@ -11,84 +11,82 @@
 
 @implementation Spatial2D
 
-@synthesize x, y, scaleX, scaleY, parent, localToWorld, worldToLocal;
-
 - (id)init {
 	if ((self = [super init])) {
-		x = y = rotation = 0;
-		scaleX = scaleY = 1;
+		_x = _y = _rotation = 0;
+		_scaleX = _scaleY = 1;
 		[self recalculate];
 	}
 	return self;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-	Spatial2D *copy = [[Spatial2D allocWithZone:zone] init];
+	Spatial2D *copy = (Spatial2D *) [[[self class] allocWithZone:zone] init];
 	copy.position = self.position;
-	copy.scaleX = self.scaleX;
-	copy.scaleY = self.scaleY;
-	copy.rotation = self.rotation;
+	copy.scaleX = _scaleX;
+	copy.scaleY = _scaleY;
+	copy.rotation = _rotation;
 	return copy;
 }
 
-- (void)setX:(float)newx {
-	x = newx;
+- (void)setX:(float)x {
+	_x = x;
 	[self recalculate];
 }
 
-- (void)setY:(float)newy {
-	y = newy;
+- (void)setY:(float)y {
+	_y = y;
 	[self recalculate];
 }
 
 - (float)scale {
-	return (scaleX+scaleY)/2.f;
+	return (_scaleX + _scaleY)/2.f;
 }
 
 - (void)setScale:(float)scale {
-	scaleX = scaleY = scale;
+	_scaleX = _scaleY = scale;
 	[self recalculate];
 }
 
-- (void)setScaleX:(float)newx {
-	scaleX = newx;
+- (void)setScaleX:(float)x {
+	_scaleX = x;
 	[self recalculate];
 }
 
-- (void)setScaleY:(float)newy {
-	scaleY = newy;
+- (void)setScaleY:(float)y {
+	_scaleY = y;
 	[self recalculate];
 }
 
 - (Vector2D)position {
-	return Vector2DMake(x, y);
+	return Vector2DMake(_x, _y);
 }
 
-- (void)setPosition:(Vector2D)newposition {
-	x = newposition.x;
-	y = newposition.y;
+- (void)setPosition:(Vector2D)position {
+	_x = position.x;
+	_y = position.y;
 	[self recalculate];
 }
 
 - (float)rotation {
-	return rotation;
+	return _rotation;
 }
 
-- (void)setRotation:(float)newrotation {
-	rotation = newrotation;
+- (void)setRotation:(float)rotation {
+	_rotation = rotation;
 	[self recalculate];
 }
 
 - (void)recalculate {
-	localToWorld = (parent ? [parent localToWorld] : Matrix4x4Identity);
-	localToWorld = Matrix4x4Translate(localToWorld, x, y, 0);
-	if (rotation)
-		localToWorld = Matrix4x4Rotate(localToWorld, rotation, 0, 0, 1);
-	if (scaleX != 1 || scaleY != 1)
-		localToWorld = Matrix4x4Scale(localToWorld, scaleX, scaleY, 1);
+	_localToWorld = (_parent ? [_parent localToWorld] : Matrix4x4Identity);
+	_localToWorld = Matrix4x4Translate(_localToWorld, _x, _y, 0);
+	if (_rotation)
+		_localToWorld = Matrix4x4Rotate(_localToWorld, _rotation, 0, 0, 1);
+	if (_scaleX != 1 || _scaleY != 1)
+		_localToWorld = Matrix4x4Scale(_localToWorld, _scaleX, _scaleY, 1);
 	if (_origin.x || _origin.y)
-		localToWorld = Matrix4x4Translate(localToWorld, -_origin.x, -_origin.y, 0);
-	worldToLocal = Matrix4x4Invert(localToWorld);
+		_localToWorld = Matrix4x4Translate(_localToWorld, -_origin.x, -_origin.y, 0);
+	_worldToLocal = Matrix4x4Invert(_localToWorld);
 }
 
 @end

@@ -73,7 +73,7 @@
 }
 
 - (void)draw {
-	if (text && buffer) {
+	if (text && _buffer) {
 		/*CGPoint textposition;
 		if (alignment == 1) {
 			float textwidth = [font getWidthForString:text] * scale;

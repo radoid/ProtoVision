@@ -20,11 +20,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-	Container2D *copy = [[Container2D allocWithZone:zone] init];
-	copy.position = self.position;
-	copy.scaleX = self.scaleX;
-	copy.scaleY = self.scaleY;
-	copy.rotation = self.rotation;
+	Container2D *copy = (Container2D *) [super copyWithZone:zone];
 	for (Object2D *child in children)
 		[copy add:[child copy]];
 	return copy;

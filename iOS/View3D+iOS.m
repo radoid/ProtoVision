@@ -19,15 +19,15 @@
 	/* OpenGL name for the depth buffer that is attached to viewFramebuffer, if it exists (0 if it does not exist) */
 	BOOL useDepthBuffer;
 
-	id displayLink;
+	id _displayLink;
 
 	NSMutableArray *_controllerStack;
 	Controller3D *_controller;
 	BOOL _initialized, _started, _redrawing;
-	Color2D color;
-	double last_time;
+	Color2D _color;
+	double _last_time;
 }
-@synthesize color;
+@synthesize _color;
 
 + (Class)layerClass {
 	return [CAEAGLLayer class];
@@ -58,7 +58,7 @@
 			GLenum err = glGetError(); if (err) NSLog(@"[View3D initWithFrame] Open GL ERROR %x", err);
 		}
 		//else NSLog(@"[View3D initWithFrame] Nije retina ekran! :(");
-		color = Color2DMake(.8, .8, .8, 1);
+		_color = Color2DMake(.8, .8, .8, 1);
 	}
 
 	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);  // TODO
@@ -116,7 +116,7 @@
 }
 
 - (void)setNeedsDisplay {
-	if (!displayLink)
+	if (!_displayLink)
 		[self draw];
 	else
 		_redrawing = YES;
@@ -140,7 +140,7 @@
 		//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND_SRC);
 		//glEnableClientState(GL_VERTEX_ARRAY);
 		//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glClearColor(color.r, color.g, color.b, 1);
+		glClearColor(_color.r, _color.g, _color.b, 1);
 
 		_initialized = YES;
 	}
@@ -154,8 +154,8 @@
 }
 
 - (void)setColor:(Color2D)newcolor	{
-	color = newcolor;
-	glClearColor(color.r, color.g, color.b, 1);
+	_color = newcolor;
+	glClearColor(_color.r, _color.g, _color.b, 1);
 	[self setNeedsDisplay];
 }
 
@@ -175,19 +175,19 @@
 	}
 	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);  // TODO
 
-	if (displayLink)
+	if (_displayLink)
 		return;
 	//NSLog(@"[View3D start] CADisplayLink starts");
-	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(loopAnimation)];
-	[displayLink setFrameInterval:2];
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	_displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(loopAnimation)];
+	[_displayLink setFrameInterval:2];
+	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 - (void)stopAnimation {
 	//NSLog(@"[View3D stop]");
-	if (displayLink)
-		[displayLink invalidate];
-	displayLink = nil;
+	if (_displayLink)
+		[_displayLink invalidate];
+	_displayLink = nil;
 
 	if (_started)
 		[_controller stop];
@@ -196,8 +196,8 @@
 - (void)loopAnimation {
 	NSAssert(_started, @"loopAnimation before start!"); // TODO
 	@synchronized (self) {
-		double time = CACurrentMediaTime(), delta = time - last_time;
-		last_time = time;
+		double time = CACurrentMediaTime(), delta = time - _last_time;
+		_last_time = time;
 		if (_initialized) {
 			if ([_controller update:delta])
 				[self setNeedsDisplay];

@@ -26,9 +26,9 @@ static inline Buffer3DVertex Buffer3DVertexMake(GLfloat x, GLfloat y, GLfloat z,
 
 - (void)updateVertices:(Buffer3DVertex *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount;
 
-- (void)setAttribForProgram:(Program3D *)program;
+- (void)setAttribArraysFromProgram:(Program3D *)program;
 
-- (void)setAttrib:(int)index size:(int)size type:(int)type stride:(int)stride offset:(int)offset;
+- (void)setAttribArray:(int)index size:(int)size type:(int)type stride:(int)stride offset:(int)offset;
 
 - (void)draw;
 

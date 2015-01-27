@@ -14,13 +14,13 @@
 	NSMutableArray *_controllerStack;
 	Controller3D *_controller;
 
-	Color2D color;
-	CVDisplayLinkRef displayLink;
+	Color2D _color;
+	CVDisplayLinkRef _displayLink;
 	BOOL _started;
-	CGRect backingFrame;
-	double last_time;
+	CGRect _backingFrame;
+	double _last_time;
 }
-@synthesize backingFrame, color;
+@synthesize backingFrame=_backingFrame, color=_color;
 
 
 - (id)initWithFrame:(NSRect)initframe {
@@ -61,8 +61,8 @@
 }
 
 - (void)reshape {
-	backingFrame = [self convertRectToBacking:[self frame]];
-	glViewport(0, 0, backingFrame.size.width, backingFrame.size.height);
+	_backingFrame = [self convertRectToBacking:[self frame]];
+	glViewport(0, 0, _backingFrame.size.width, _backingFrame.size.height);
 	@synchronized (self) {
 		[_controller reshape];
 	}
@@ -75,8 +75,8 @@
 
 - (void)prepareOpenGL {
 	self.wantsBestResolutionOpenGLSurface = YES;
-	backingFrame = [self convertRectToBacking:[self frame]];
-	glViewport(0, 0, backingFrame.size.width, backingFrame.size.height);
+	_backingFrame = [self convertRectToBacking:[self frame]];
+	glViewport(0, 0, _backingFrame.size.width, _backingFrame.size.height);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -97,8 +97,8 @@
 }
 
 - (void)setColor:(Color2D)newcolor	{
-	color = newcolor;
-	glClearColor(color.r, color.g, color.b, 1);
+	_color = newcolor;
+	glClearColor(_color.r, _color.g, _color.b, 1);
 	self.needsDisplay = YES;
 }
 
@@ -164,30 +164,30 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	else
 		[_controller resume];  // TODO only if stopped
 	_started = YES;
-	last_time = CACurrentMediaTime();
+	_last_time = CACurrentMediaTime();
 
 	GLint swapInt = 1;
 	[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
-	CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
-	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, (__bridge void *)self);
+	CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+	CVDisplayLinkSetOutputCallback(_displayLink, &MyDisplayLinkCallback, (__bridge void *)self);
 	CGLContextObj cglContext = [[self openGLContext] CGLContextObj];
 	CGLPixelFormatObj cglPixelFormat = [[self pixelFormat] CGLPixelFormatObj];
-	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
-	CVDisplayLinkStart(displayLink);
+	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(_displayLink, cglContext, cglPixelFormat);
+	CVDisplayLinkStart(_displayLink);
 }
 
 - (void)stopAnimation {
-	if (displayLink)
-		CVDisplayLinkRelease(displayLink);
-	displayLink = 0;
+	if (_displayLink)
+		CVDisplayLinkRelease(_displayLink);
+	_displayLink = 0;
 	if (_started)
 		[_controller stop];
 }
 
 - (void)updateAnimation {
 	NSAssert(_started, @"updateAnimation before start!"); // TODO
-	double time = CACurrentMediaTime(), delta = time - last_time;
-	last_time = time;
+	double time = CACurrentMediaTime(), delta = time - _last_time;
+	_last_time = time;
 	if ([_controller update:delta])
 		self.needsDisplay = YES;
 }

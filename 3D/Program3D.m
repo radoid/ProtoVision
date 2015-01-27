@@ -173,4 +173,8 @@
 	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);
 }
 
+- (void)dealloc {
+	NSLog(@"[Program3D dealloc] name %d", programname);
+}
+
 @end

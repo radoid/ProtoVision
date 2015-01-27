@@ -10,13 +10,13 @@
 
 @interface Spatial3D : NSObject <NSCopying>
 {
-	GLfloat x, y, z;
-	GLfloat rotationAngle;
-	Vector3D rotationAxis;
-	Quaternion3D rotation;
-	GLfloat scaleX, scaleY, scaleZ;
-	Spatial3D __weak *parent;
-	Matrix4x4 localToWorld, worldToLocal;
+	GLfloat _x, _y, _z;
+	GLfloat _rotationAngle;
+	Vector3D _rotationAxis;
+	Quaternion3D _rotation;
+	GLfloat _scaleX, _scaleY, _scaleZ;
+	Spatial3D __weak *_parent;
+	Matrix4x4 _localToWorld, _worldToLocal;
 }
 @property (nonatomic) GLfloat x, y, z;
 @property (nonatomic) Vector3D position;
@@ -28,11 +28,19 @@
 @property (nonatomic, weak) Spatial3D *parent;
 @property (nonatomic) Matrix4x4 localToWorld, worldToLocal;
 
+- (id)initWithPosition:(Vector3D)position direction:(Vector3D)forward up:(Vector3D)up;
+
 - (void)rotateByAxis:(Vector3D)axis angle:(float)angle;
 - (void)rotateByQuaternion:(Quaternion3D)q;
 - (void)rotateAround:(Vector3D)point byQuaternion:(Quaternion3D)q;
+
+- (void)rotateAround:(Vector3D)point byAxis:(Vector3D)axis angle:(float)angle;
+
 - (void)directTo:(Vector3D)forward up:(Vector3D)up;
 - (void)lookAt:(Vector3D)center up:(Vector3D)up;
+
+- (void)setPosition:(Vector3D)position direction:(Vector3D)forward up:(Vector3D)up;
+
 - (void)setPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up;
 
 - (void)recalculate;
