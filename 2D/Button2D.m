@@ -34,8 +34,8 @@
 
 - (id)initWithImageNamed:(NSString *)normalimagename hoverImageNamed:(NSString *)hoverimagename frame:(CGRect)newframe stretch:(CGRect)newstretch {
 	self = [super init];
-	x = newframe.origin.x;
-	y = newframe.origin.y;
+	_x = newframe.origin.x;
+	_y = newframe.origin.y;
 	width = newframe.size.width;
 	height = newframe.size.height;
 	normalimage = [[Image2D alloc] initWithImageNamed:normalimagename origin:CGPointZero frame:CGRectMake(0, 0, width, height) stretch:newstretch];

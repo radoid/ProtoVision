@@ -13,62 +13,62 @@
 
 - (id)init {
 	if ((self = [super init])) {
-		x = y = rotation = 0;
-		scaleX = scaleY = 1;
 		_color = Color2DMake(1, 1, 1, 1);
-		[self recalculate];
 	}
 	return self;
 }
 
 - (id)initWithProgram:(Program3D *)initprogram mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
-	Buffer3D *buffer = [[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:0 colorSize:colorsize isDynamic:dynamic];
-	[buffer setAttribForProgram:initprogram];
-	return [self initWithProgram:initprogram buffer:buffer];
+	return [self initWithProgram:initprogram buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:0 colorSize:colorsize isDynamic:dynamic]];
 }
 
 - (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
 	return [self initWithProgram:[Program3D defaultProgram2D] mode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize colorSize:colorsize isDynamic:dynamic];
 }
 
-- (id)initWithProgram:(Program3D *)initprogram buffer:(Buffer2D *)initbuffer {
+- (id)initWithProgram:(Program3D *)initprogram buffer:(Buffer3D *)initbuffer {
 	if ((self = [self init])) {
-		program = initprogram;
-		buffer = initbuffer;
+		_buffer = initbuffer;
+		[self setProgram:initprogram];
 	}
 	return self;
 }
 
-- (id)initWithBuffer:(Buffer2D *)initbuffer {
+- (id)initWithBuffer:(Buffer3D *)initbuffer {
 	return [self initWithProgram:[Program3D defaultProgram2D] buffer:initbuffer];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-	Object2D *copy = [[Object2D allocWithZone:zone] initWithProgram:program buffer:buffer];
-	copy.position = self.position;
-	copy.scaleX = self.scaleX;
-	copy.scaleY = self.scaleY;
-	copy.rotation = self.rotation;
-	copy.color = self.color;
+	Object2D *copy = (Object2D *) [super copyWithZone:zone];
+	copy.buffer = _buffer;
+	copy.program = _program;
+	copy.color = _color;
 	return copy;
+}
+
+- (void)setProgram:(Program3D *)initprogram {
+	_program = initprogram;
+	[_buffer setAttribArraysFromProgram:initprogram];
 }
 
 - (float)opacity {
 	return _color.alpha;
 }
 
-- (void)setOpacity:(float)newopacity {
-	_color.alpha = newopacity;
+- (void)setOpacity:(float)opacity {
+	_color.alpha = opacity;
 }
 
 - (void)drawWithCamera:(Camera2D *)camera {
-	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, localToWorld);
+	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
+
+	//NSLog(@"%@ %@", [self class], _buffer);
 
 	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[program useWithProjection:camera.projection modelView:modelview color:_color texture:texture];
-	[buffer draw];
+	[_program useWithProjection:camera.projection modelView:modelview color:_color texture:_texture];
+	[_buffer draw];
 
 	if (_color.alpha < 1)
 		glDisable(GL_BLEND);

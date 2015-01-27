@@ -12,10 +12,10 @@
 
 @interface Object3D : Spatial3D <NSCopying>
 {
-	Program3D *program;
-	Buffer3D *buffer;
-	Texture2D *texture;
-	Color2D color, colorDark, colorLight;
+	Program3D *_program;
+	Buffer3D *_buffer;
+	Texture2D *_texture;
+	Color2D _color, _colorDark, _colorLight;
 }
 @property (nonatomic) Color2D color, colorDark, colorLight;
 @property (nonatomic) Buffer3D *buffer;

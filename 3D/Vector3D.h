@@ -23,13 +23,15 @@ static const Vector3D Vector3DZero = { 0.f, 0.f, 0.f };
 static const Vector3D Vector3DX = { 1.f, 0.f, 0.f };
 static const Vector3D Vector3DY = { 0.f, 1.f, 0.f };
 static const Vector3D Vector3DZ = { 0.f, 0.f, 1.f };
+static const Vector3D Vector3DXFlip = { -1.f, 0.f, 0.f };
+static const Vector3D Vector3DYFlip = { 0.f, -1.f, 0.f };
 static const Vector3D Vector3DZFlip = { 0.f, 0.f, -1.f };
 
-static Vector3D Vector3DMake(float newx, float newy, float newz) {
+static Vector3D Vector3DMake(float x, float y, float z) {
 	Vector3D v;
-	v.x = newx;
-	v.y = newy;
-	v.z = newz;
+	v.x = x;
+	v.y = y;
+	v.z = z;
 	return v;
 }
 

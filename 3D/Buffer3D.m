@@ -21,15 +21,18 @@
 }
 
 - (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount vertexSize:(int)vsize texCoordsSize:(int)tsize normalSize:(int)nsize colorSize:(int)csize isDynamic:(BOOL)isDynamic {
+	glBindVertexArray(0);
+	_vboname = 0;
 	if (vcount)
 		glGenBuffers(1, &_vboname);
+	_iboname = 0;
 	if (icount)
 		glGenBuffers(1, &_iboname);
 	if ((self = [self initWithMode:drawmode vbo:_vboname vertexCount:vcount ibo:_iboname indexCount:icount vertexSize:vsize texCoordsSize:tsize normalSize:nsize colorSize:csize isDynamic:isDynamic])) {
 		if (_vertexcount)
 			glBufferData(GL_ARRAY_BUFFER, _vertexcount * _stride, vertices, _dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
 		if (_indexcount)
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indexcount * sizeof(GLshort), indices, _dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indexcount * sizeof(GLushort), indices, _dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);  // TODO
 
 		GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error %x", err);
 	}
@@ -51,16 +54,16 @@
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
 
-		if (vbo) {
-			_vboname = vbo;
+		_vboname = vbo;
+		//if (_vboname)
 			glBindBuffer(GL_ARRAY_BUFFER, _vboname);
-		}
-		if (ibo) {
-			_iboname = ibo;
+		_iboname = ibo;
+		//if (_iboname)
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboname);
-		}
 
-		GLenum err; NSAssert(!(err = glGetError()), @"[Buffer3D init] OpenGL error %x", err);
+		//NSLog(@"vao %d, vbo %d, ibo %d", _vao, _vboname, _iboname);
+
+		GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error %x", err);
 		NSAssert(_vao && _vboname && (_iboname || !_indexcount), @"Creating buffers failed!");
 	}
 	return self;
@@ -91,25 +94,27 @@
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboname);
 			GLvoid *tmpbuffer = glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, vcount * stride, GL_MAP_WRITE_BIT);
 			if (tmpbuffer)
-				memcpy(tmpbuffer, ibuffer, icount * sizeof(GLshort));
+				memcpy(tmpbuffer, ibuffer, icount * sizeof(GLushort));
 			glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 			indexcount = icount;
 		}
 	}*/
 }
 
-- (void)setAttribForProgram:(Program3D *)program {
+- (void)setAttribArraysFromProgram:(Program3D *)program {
 	if (program.aPosition > -1 && _vertexsize)
-		[self setAttrib:program.aPosition size:_vertexsize type:GL_FLOAT stride:_stride offset:0];
+		[self setAttribArray:program.aPosition size:_vertexsize type:GL_FLOAT stride:_stride offset:0];
 	if (program.aTexture > -1 && _texcoordssize)
-		[self setAttrib:program.aTexture size:_texcoordssize type:GL_FLOAT stride:_stride offset:_vertexsize * sizeof(GLfloat)];
+		[self setAttribArray:program.aTexture size:_texcoordssize type:GL_FLOAT stride:_stride offset:_vertexsize * sizeof(GLfloat)];
 	if (program.aNormal > -1 && _normalsize)
-		[self setAttrib:program.aNormal size:_normalsize type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize) * sizeof(GLfloat)];
+		[self setAttribArray:program.aNormal size:_normalsize type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize) * sizeof(GLfloat)];
 	if (program.aColor > -1 && _colorsize)
-		[self setAttrib:program.aColor size:_colorsize type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize + _normalsize) * sizeof(GLfloat)];
+		[self setAttribArray:program.aColor size:_colorsize type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize + _normalsize) * sizeof(GLfloat)];
 }
 
-- (void)setAttrib:(int)index size:(int)size type:(int)type stride:(int)stride offset:(int)offset {
+- (void)setAttribArray:(int)index size:(int)size type:(int)type stride:(int)stride offset:(int)offset {
+	glBindVertexArray(_vao);
+	glBindBuffer(GL_ARRAY_BUFFER, _vboname);
 	glEnableVertexAttribArray(index);
 	glVertexAttribPointer(index, size, type, GL_FALSE, stride, (const GLvoid *)offset);
 
@@ -134,7 +139,7 @@
 	//	glDeleteBuffers(1, &vboname);
 	//if (iboname)
 	//	glDeleteBuffers(1, &iboname);
-	//NSLog(@"[Buffer3D dealloc] VBO name %d, IBO name %d", vboname, iboname);
+	//NSLog(@"[Buffer3D dealloc] VAO %d, VBO %d, IBO %d", _vao, _vboname, _iboname);
 }
 
 @end

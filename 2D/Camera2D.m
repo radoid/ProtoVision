@@ -29,16 +29,16 @@
 }
 
 - (void)setOrientation:(float)orientation {
-	rotation = _orientation = orientation;
+	_rotation = _orientation = orientation;
 	if (_orientation == -90) {  // TODO
-		x = 0;
-		y = _frame.size.width;
+		_x = 0;
+		_y = _frame.size.width;
 	} else if (_orientation == +90) {
-		x = _frame.size.height;
-		y = 0;
+		_x = _frame.size.height;
+		_y = 0;
 	} else if (_orientation == 180) {
-		x = _frame.size.width;
-		y = _frame.size.height;
+		_x = _frame.size.width;
+		_y = _frame.size.height;
 	}
 	[self recalculate];
 }

@@ -50,17 +50,17 @@
 
 - (id)initWithTexture:(Texture2D *)newtexture origin:(CGPoint)neworigin frame:(CGRect)newframe stretch:(CGRect)newstretch buffer:(Buffer2D *)newvbo{
 	if ((self = [super init])) {
-		texture = newtexture;
+		_texture = newtexture;
 		_origin = neworigin;
-		x = (newframe.size.width && newframe.size.height ? newframe.origin.x : 0);
-		y = (newframe.size.width && newframe.size.height ? newframe.origin.y : 0);
-		width = (newframe.size.width && newframe.size.height ? newframe.size.width : texture.width);
-		height = (newframe.size.width && newframe.size.height ? newframe.size.height : texture.height);
+		_x = (newframe.size.width && newframe.size.height ? newframe.origin.x : 0);
+		_y = (newframe.size.width && newframe.size.height ? newframe.origin.y : 0);
+		width = (newframe.size.width && newframe.size.height ? newframe.size.width : _texture.width);
+		height = (newframe.size.width && newframe.size.height ? newframe.size.height : _texture.height);
 		CGRect stretch = newstretch;
 		if (stretch.size.width < 0)
-			stretch.size.width = texture.width + stretch.size.width - stretch.origin.x;
+			stretch.size.width = _texture.width + stretch.size.width - stretch.origin.x;
 		if (stretch.size.height < 0)
-			stretch.size.height = texture.height + stretch.size.height - stretch.origin.y;
+			stretch.size.height = _texture.height + stretch.size.height - stretch.origin.y;
 
 		if (stretch.size.width > 0 && stretch.size.height > 0 && (stretch.size.width < width || stretch.size.height < height)) {
 			/*CGPoint p1 = stretch.origin;
@@ -91,9 +91,9 @@
 				p2.x, 0, coord2.x, coord0.y,
 				width, 0, coord3.x, coord0.y };*/
 
-			CGRect coords = texture.coords;
-			CGRect subcoords = CGRectMake(coords.origin.x + stretch.origin.x * coords.size.width / texture.width, coords.origin.y + stretch.origin.y * coords.size.height / texture.height, stretch.size.width * coords.size.width / texture.width, stretch.size.height * coords.size.height / texture.height);
-			CGRect subframe = CGRectMake(stretch.origin.x, stretch.origin.y, stretch.size.width + (width - texture.width), stretch.size.height + (height - texture.height));
+			CGRect coords = _texture.coords;
+			CGRect subcoords = CGRectMake(coords.origin.x + stretch.origin.x * coords.size.width / _texture.width, coords.origin.y + stretch.origin.y * coords.size.height / _texture.height, stretch.size.width * coords.size.width / _texture.width, stretch.size.height * coords.size.height / _texture.height);
+			CGRect subframe = CGRectMake(stretch.origin.x, stretch.origin.y, stretch.size.width + (width - _texture.width), stretch.size.height + (height - _texture.height));
 
 			GLfloat vertices[] = {
 				0, height, coords.origin.x, coords.origin.y + coords.size.height,
@@ -132,9 +132,9 @@
 
 			GLfloat vertices[] = {
 				0.0, 0.0, 0, 0, 0,
-				width, 0.0, 0, newframe.size.width / texture.width, 0,
-				0.0, height, 0, 0, newframe.size.height / texture.height,
-				width, height, 0, newframe.size.width / texture.width, newframe.size.height / texture.height };
+				width, 0.0, 0, newframe.size.width / _texture.width, 0,
+				0.0, height, 0, 0, newframe.size.height / _texture.height,
+				width, height, 0, newframe.size.width / _texture.width, newframe.size.height / _texture.height };
 
 			return [self initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:sizeof(vertices)/sizeof(GLfloat)/5 indices:nil	 indexCount:0 vertexSize:3 texCoordsSize:2 colorSize:0 isDynamic:NO];
 		}

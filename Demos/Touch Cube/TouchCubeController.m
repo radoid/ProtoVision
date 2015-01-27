@@ -17,29 +17,25 @@
 }
 
 - (void)start {
-	if (!scene3d) {
-		scene3d = [[Container3D alloc] init];
-		camera3d = [[Camera3D alloc] initWithPosition:Vector3DMake(-2, 2, -2) lookAt:Vector3DZero up:Vector3DY fovy:60 aspect:_view.frame.size.width/_view.frame.size.height near:0.1f far:10];
-		light = Vector3DUnit(Vector3DMake(5.0, 5.0, 15.0));
+	scene3d = [[Container3D alloc] init];
+	camera3d = [[Camera3D alloc] initWithPerspectivePosition:Vector3DMake(-2, 2, -2) lookAt:Vector3DZero up:Vector3DY fovy:60 aspect:_view.frame.size.width / _view.frame.size.height near:0.1f far:10];
+	light = Vector3DUnit(Vector3DMake(5.0, 5.0, 15.0));
 
-		_view.color = ColorRGBFromHSL(.55, .3, .6, 1);
+	_view.color = ColorRGBFromHSL(.55, .3, .6, 1);
 
-		Box3D *box3d = [[Box3D alloc] initWithWidth:1 height:1 depth:1];
-		box3d.y = 0.1f;
-		box3d.color = Color2DMake(.14, .9, 0.1, 1);
-		[scene3d.children addObject:box3d];
+	Box3D *box3d = [[Box3D alloc] initWithWidth:1 height:1 depth:1];
+	box3d.y = 0.1f;
+	box3d.color = Color2DMake(.14, .9, 0.1, 1);
+	[scene3d.children addObject:box3d];
 
-		Sphere3D *sphere3d = [[Sphere3D alloc] initWithRadius:1 levels:10];
-		sphere3d.position = Vector3DMake(0.5f, 0.5f, 0.5f);
-		sphere3d.color = Color2DMake(0.1, 1, 0.3, 1);
-		[scene3d.children addObject:sphere3d];
-	}
+	Sphere3D *sphere3d = [[Sphere3D alloc] initWithRadius:1 levels:10];
+	sphere3d.position = Vector3DMake(0.5f, 0.5f, 0.5f);
+	sphere3d.color = Color2DMake(0.1, 1, 0.3, 1);
+	[scene3d.children addObject:sphere3d];
 }
 
 - (void)draw {
-	if (scene3d) {
-		[scene3d drawWithCamera:camera3d light:light];
-	}
+	[scene3d drawWithCamera:camera3d light:light];
 }
 
 - (BOOL)update {
@@ -50,12 +46,10 @@
 
 - (BOOL)touchDown:(Vector2D)location {
 	dragging = location;
-	return [super touchDown:location];
+	return NO;
 }
 
 - (BOOL)touchMove:(Vector2D)location {
-	[super touchMove:location];
-
 	float radius = 100;
 
 	float angle = (location.x - dragging.x) / radius * 180/M_PI;

@@ -5,6 +5,7 @@
 // http://www.radoid.com/protovision/
 //
 
+#import "ProtoVision.h"
 #import "Box2D.h"
 
 
@@ -14,15 +15,19 @@
 }
 
 - (id)initWithWidth:(float)initwidth height:(float)initheight {
-	GLfloat vertices[] = {
-		0, height, 0, 0, 1,
-		0, 0, 0, 0, 0,
-		width, height, 0, 1, 1,
-		width, 0, 0, 1, 0
- 	};
-    if ((self = [super initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:4 indices:nil indexCount:0 vertexSize:3 texCoordsSize:0 colorSize:0 isDynamic:NO])) {
-		width = initwidth;
-		height = initheight;
+	static Buffer3D *shared = nil;
+	if (!shared) {
+		GLfloat vertices[] = {
+			0, 1, 0, 0, 1,
+			0, 0, 0, 0, 0,
+			1, 1, 0, 1, 1,
+			1, 0, 0, 1, 0,
+		};
+		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:4 indices:nil indexCount:0 vertexSize:3 texCoordsSize:2 normalSize:0 colorSize:0 isDynamic:NO];
+	}
+	if ((self = [super initWithBuffer:shared])) {
+		self.scaleX = width = initwidth;
+		self.scaleY = height = initheight;
     }
     return self;
 }

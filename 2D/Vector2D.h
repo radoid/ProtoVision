@@ -20,8 +20,8 @@ static const Vector2D Vector2DZero = {0, 0};
 static const Vector2D Vector2DX = {1, 0};
 static const Vector2D Vector2DY = {0, 1};
 
-static inline Vector2D Vector2DMake(float newx, float newy) {
-	return (Vector2D) {newx, newy};
+static inline Vector2D Vector2DMake(float x, float y) {
+	return (Vector2D) {x, y};
 }
 
 static inline BOOL Vector2DEqual(Vector2D a, Vector2D b) {
