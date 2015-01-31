@@ -100,10 +100,17 @@
 }
 
 + (id)programNamed:(NSString *)filename {
+	NSBundle *b = [NSBundle bundleWithIdentifier:@"com.radoid.ProtoVisionOSX"];
+	if (!b)
+		b = [NSBundle bundleWithIdentifier:@"com.radoid.ProtoVisionIOS"];
 	for (int i = [Program3D glslVersion]; i >= 0; i--) {
 		NSString *version = (i ? [NSString stringWithFormat:@"%@.v%d", filename, i] : filename);
 		NSString *vs = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:version ofType:@"vsh"] encoding:NSUTF8StringEncoding error:nil];
 		NSString *fs = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:version ofType:@"fsh"] encoding:NSUTF8StringEncoding error:nil];
+		if (!vs || !fs) {
+			vs = [NSString stringWithContentsOfFile:[b pathForResource:version ofType:@"vsh"] encoding:NSUTF8StringEncoding error:nil];
+			fs = [NSString stringWithContentsOfFile:[b pathForResource:version ofType:@"fsh"] encoding:NSUTF8StringEncoding error:nil];
+		}
 		if (vs && fs)
 			return [[Program3D alloc] initWithVertexShader:vs fragmentShader:fs];
 	}

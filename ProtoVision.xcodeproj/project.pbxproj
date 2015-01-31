@@ -95,8 +95,6 @@
 		EF9755721A695BF1009FDB0B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9755701A695BF1009FDB0B /* MainMenu.xib */; };
 		EF9755871A695C49009FDB0B /* SpinningCubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755861A695C49009FDB0B /* SpinningCubeController.m */; };
 		EF9755881A695C7A009FDB0B /* ProtoVisionOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */; };
-		EF9755891A695C9C009FDB0B /* default.v3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7D1A695838009BD387 /* default.v3.fsh */; };
-		EF97558A1A695C9C009FDB0B /* default.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D801A695838009BD387 /* default.v3.vsh */; };
 		EF9755B31A695F1C009FDB0B /* View3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */; };
 		EF9755B41A695F1C009FDB0B /* Window3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AD1A695F1C009FDB0B /* Window3D+iOS.h */; };
 		EF9755B51A695F1C009FDB0B /* View3D+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755AE1A695F1C009FDB0B /* View3D+iOS.m */; };
@@ -128,8 +126,6 @@
 		EF9755DA1A69614E009FDB0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755D91A69614E009FDB0B /* main.m */; };
 		EF9755DD1A69614E009FDB0B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755DC1A69614E009FDB0B /* AppDelegate.m */; };
 		EF9755FD1A69619E009FDB0B /* ProtoVisionIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9755921A695EFA009FDB0B /* ProtoVisionIOS.framework */; };
-		EF9755FE1A6961B9009FDB0B /* default.v1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7F1A695838009BD387 /* default.v1.fsh */; };
-		EF9755FF1A6961B9009FDB0B /* default.v1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D811A695838009BD387 /* default.v1.vsh */; };
 		EF9756021A6961F3009FDB0B /* TouchCubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9756011A6961F3009FDB0B /* TouchCubeController.m */; };
 /* End PBXBuildFile section */
 
@@ -234,6 +230,7 @@
 		EF7E7D801A695838009BD387 /* default.v3.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v3.vsh; sourceTree = "<group>"; };
 		EF7E7D811A695838009BD387 /* default.v1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v1.vsh; sourceTree = "<group>"; };
 		EF7E7D8A1A69587A009BD387 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		EF85D8201A7CD895006CCCCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF9755651A695BF0009FDB0B /* Spinning Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spinning Cube.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9755681A695BF0009FDB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF9755691A695BF0009FDB0B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -307,6 +304,7 @@
 				EF7E7D321A695778009BD387 /* ProtoVision.h */,
 				EF7E7D331A695778009BD387 /* README.md */,
 				EF7E7D8A1A69587A009BD387 /* OpenGL.framework */,
+				EF85D81E1A7CD895006CCCCB /* Shaders */,
 				EF7E7CD11A695484009BD387 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -404,10 +402,10 @@
 		EF7E7D2B1A695778009BD387 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
-				EF7E7D2C1A695778009BD387 /* View3D+OSX.m */,
 				EF7E7D2D1A695778009BD387 /* View3D+OSX.h */,
-				EF7E7D2E1A695778009BD387 /* Window3D+OSX.m */,
+				EF7E7D2C1A695778009BD387 /* View3D+OSX.m */,
 				EF7E7D2F1A695778009BD387 /* Window3D+OSX.h */,
+				EF7E7D2E1A695778009BD387 /* Window3D+OSX.m */,
 				EF7E7D301A695778009BD387 /* Texture2D+OSX.m */,
 				EF7E7D311A695778009BD387 /* Info.plist */,
 			);
@@ -421,12 +419,28 @@
 				EF7E7D7A1A695838009BD387 /* unlit.v1.fsh */,
 				EF7E7D7C1A695838009BD387 /* unlit.v3.vsh */,
 				EF7E7D7B1A695838009BD387 /* unlit.v3.fsh */,
-				EF7E7D7D1A695838009BD387 /* default.v3.fsh */,
 				EF7E7D7F1A695838009BD387 /* default.v1.fsh */,
-				EF7E7D801A695838009BD387 /* default.v3.vsh */,
 				EF7E7D811A695838009BD387 /* default.v1.vsh */,
+				EF7E7D801A695838009BD387 /* default.v3.vsh */,
+				EF7E7D7D1A695838009BD387 /* default.v3.fsh */,
 			);
 			path = Shaders;
+			sourceTree = "<group>";
+		};
+		EF85D81E1A7CD895006CCCCB /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				EF85D81F1A7CD895006CCCCB /* Supporting Files */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		EF85D81F1A7CD895006CCCCB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EF85D8201A7CD895006CCCCB /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		EF9755601A695BA1009FDB0B /* Demos */ = {
@@ -505,6 +519,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF7E7D771A695778009BD387 /* ProtoVision.h in Headers */,
 				EF7E7D511A695778009BD387 /* Matrix3x3.h in Headers */,
 				EF7E7D451A695778009BD387 /* Object2D.h in Headers */,
 				EF7E7D491A695778009BD387 /* Controller2D.h in Headers */,
@@ -533,7 +548,6 @@
 				EF7E7D421A695778009BD387 /* Font2D.h in Headers */,
 				EF7E7D6F1A695778009BD387 /* Camera3D.h in Headers */,
 				EF7E7D361A695778009BD387 /* Texture2D.h in Headers */,
-				EF7E7D771A695778009BD387 /* ProtoVision.h in Headers */,
 				EF7E7D4D1A695778009BD387 /* Polygon2D.h in Headers */,
 				EF7E7D521A695778009BD387 /* Light3D.h in Headers */,
 				EF7E7D621A695778009BD387 /* Controller3D.h in Headers */,
@@ -701,8 +715,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9755891A695C9C009FDB0B /* default.v3.fsh in Resources */,
-				EF97558A1A695C9C009FDB0B /* default.v3.vsh in Resources */,
 				EF9755721A695BF1009FDB0B /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -718,8 +730,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9755FE1A6961B9009FDB0B /* default.v1.fsh in Resources */,
-				EF9755FF1A6961B9009FDB0B /* default.v1.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -874,8 +884,13 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../ProtoVision,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -912,8 +927,13 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../ProtoVision,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx10.9;
@@ -931,6 +951,11 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../ProtoVision,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/OSX/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
@@ -949,6 +974,11 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../ProtoVision,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/OSX/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";

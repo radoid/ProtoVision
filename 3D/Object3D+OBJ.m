@@ -20,7 +20,7 @@
 	Vector3D *normals = 0;
 	GLushort *indices = 0;
 	Vector3D min, max, center = Vector3DZero;
-	float scale;
+	float scale = 1;
 
 	FILE *f = fopen([path UTF8String], "rt");
 	if (!f)

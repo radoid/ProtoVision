@@ -5,6 +5,7 @@
 // http://www.radoid.com/protovision/
 //
 
+#import "ProtoVision.h"
 #import "Window3D+OSX.h"
 
 

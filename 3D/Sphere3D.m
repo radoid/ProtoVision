@@ -40,7 +40,7 @@
 	}
 	NSAssert(m == sizeof(indices)/sizeof(GLushort), nil);
 
-	return [super initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:sizeof(vertices)/sizeof(GLfloat)/8 indices:indices indexCount:sizeof(indices)/sizeof(GLushort) vertexSize:3 texCoordsSize:2 normalSize:3 colorSize:0 isDynamic:NO];
+	return [super initWithBuffer:[[Buffer3D alloc] initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:sizeof(vertices)/sizeof(GLfloat)/8 indices:indices indexCount:sizeof(indices)/sizeof(GLushort) vertexSize:3 texCoordsSize:2 normalSize:3 colorSize:0 isDynamic:NO]];
 }
 
 @end

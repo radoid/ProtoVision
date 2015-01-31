@@ -11,6 +11,7 @@
 @interface Controller3D : NSObject
 {
 	View3D *_view;
+	Window3D *_window;
 }
 
 @property (nonatomic) View3D *view;

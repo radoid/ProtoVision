@@ -65,4 +65,12 @@
 	[_view popWithObject:result];
 }
 
+#if TARGET_OS_IPHONE
+#else
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	_window = [[Window3D alloc] initWithFullScreen];
+	[_window.view pushController:self];
+}
+#endif
+
 @end

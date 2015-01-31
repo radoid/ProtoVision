@@ -27,7 +27,6 @@
 	Color2D _color;
 	double _last_time;
 }
-@synthesize _color;
 
 + (Class)layerClass {
 	return [CAEAGLLayer class];

@@ -324,7 +324,7 @@ static NSMutableDictionary *atlasDictionary;
 					}
 				}
 			}
-		} while (p.location != NSNotFound && p2.location != NSNotFound);
+		} while (p.location != NSNotFound && p2.location != NSNotFound);  // TODO p2.location is a garbage value?
 //	}
 }
 
