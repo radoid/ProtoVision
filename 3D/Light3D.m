@@ -11,23 +11,34 @@
 
 @implementation Light3D
 
-- (id)initWithDirection:(Vector3D)direction ambient:(GLfloat *)initambient diffuse:(GLfloat *)initdiffuse {
+- (id)initWithPosition:(Vector3D)position {
 	if ((self = [super init])) {
-		self.position = direction;
-		if (initambient) {
-			ambient[0] = initambient[0];
-			ambient[1] = initambient[1];
-			ambient[2] = initambient[2];
-			ambient[3] = initambient[3];
-		} else
-			ambient[0] = ambient[1] = ambient[2] = ambient[3] = 0;
-		if (initdiffuse) {
-			diffuse[0] = initdiffuse[0];
-			diffuse[1] = initdiffuse[1];
-			diffuse[2] = initdiffuse[2];
-			diffuse[3] = initdiffuse[3];
-		} else
-			diffuse[0] = diffuse[1] = diffuse[2] = diffuse[3] = 0;
+		_position = position;
+		_hasPosition = YES;
+	}
+	return self;
+}
+
+- (id)initWithDirection:(Vector3D)direction {
+	if ((self = [super init])) {
+		_direction = Vector3DUnit(direction);
+		_hasDirection = YES;
+	}
+	return self;
+}
+
+- (id)initWithPosition:(Vector3D)position ambient:(Color2D)ambient diffuse:(Color2D)diffuse {
+	if ((self = [self initWithPosition:position])) {
+		_ambient = ambient;
+		_diffuse = diffuse;
+	}
+	return self;
+}
+
+- (id)initWithDirection:(Vector3D)direction ambient:(Color2D)ambient diffuse:(Color2D)diffuse {
+	if ((self = [self initWithDirection:direction])) {
+		_ambient = ambient;
+		_diffuse = diffuse;
 	}
 	return self;
 }

@@ -12,14 +12,14 @@
 {
 	Camera3D *camera3d;
 	Container3D *scene3d;
-	Vector3D light;
+	Light3D *light;
 	Vector2D dragging;
 }
 
 - (void)start {
 	scene3d = [[Container3D alloc] init];
 	camera3d = [[Camera3D alloc] initWithPerspectivePosition:Vector3DMake(-2, 2, -2) lookAt:Vector3DZero up:Vector3DY fovy:60 aspect:_view.frame.size.width / _view.frame.size.height near:0.1f far:10];
-	light = Vector3DUnit(Vector3DMake(5.0, 5.0, 15.0));
+	light = [[Light3D alloc] initWithDirection:Vector3DMake(5.0, 5.0, 15.0)];
 
 	_view.color = ColorRGBFromHSL(.55, .3, .6, 1);
 

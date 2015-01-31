@@ -27,12 +27,10 @@
 
 - (id)initWithBuffer:(Buffer3D *)initbuffer;
 
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
-
 - (float)opacity;
 - (void)setOpacity:(float)opacity;
 
 - (void)drawWithCamera:(Camera3D *)camera;
-- (void)drawWithCamera:(Camera3D *)camera light:(Vector3D)direction;
+- (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light;
 
 @end

@@ -49,7 +49,7 @@ vec4 hsl2rgb(vec4 hsl) {
 }
 
 void main (void) {
-	float intensity = (dot(-uLight, normalize(uNormal * aNormal))+1.0)/2.0;
+	float intensity = (dot(-normalize(uLight), normalize(uNormal * aNormal))+1.0)/2.0;
 	vColor = hsl2rgb(mix(uColorDark, uColorLight, intensity));
 
 	gl_Position = uProjection * uModelView * vec4(aPosition, 1.0);

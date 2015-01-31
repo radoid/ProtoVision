@@ -75,18 +75,18 @@
 		child.colorLight = color;
 }
 
-- (void)drawWithCamera:(Camera3D *)camera light:(Vector3D)direction opacity:(float)opacity {
+- (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light opacity:(float)opacity {
 	for (Object3D *o in children)
 		if (o.opacity > 0) {
 			if ([o isKindOfClass:[Container3D class]])
-				[(Container3D *)o drawWithCamera:camera light:direction opacity:opacity * o.opacity];
+				[(Container3D *) o drawWithCamera:camera light:light opacity:opacity * o.opacity];
 			else
-				[o drawWithCamera:camera light:direction];
+				[o drawWithCamera:camera light:light];
 		}
 }
 
-- (void)drawWithCamera:(Camera3D *)camera light:(Vector3D)direction {
-	[self drawWithCamera:camera light:direction opacity:self.opacity];
+- (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light {
+	[self drawWithCamera:camera light:light opacity:self.opacity];
 }
 
 @end

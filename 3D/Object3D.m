@@ -99,7 +99,7 @@
 		glDisable(GL_BLEND);
 }
 
-- (void)drawWithCamera:(Camera3D *)camera light:(Vector3D)direction {
+- (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light {
 	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
 	Matrix3x3 normal = Matrix3x3Transpose(Matrix4x4Invert3x3(_localToWorld));
 
@@ -112,7 +112,7 @@
 					  colorDark:_colorDark
 					 colorLight:_colorLight
 						texture:_texture
-						  light:direction
+						  light:light.direction
 					   position:camera.position];
 	[_buffer draw];
 

@@ -30,6 +30,7 @@
 
 #import "3D/Buffer3D.h"
 #import "2D/Buffer2D.h"
+#import "3D/Light3D.h"
 
 #import "3D/VectorIJK.h"
 #import "3D/Plane3D.h"
@@ -39,7 +40,6 @@
 #import "3D/Object3D.h"
 #import "3D/Object3D+OBJ.h"
 #import "3D/Container3D.h"
-#import "3D/Light3D.h"
 #import "3D/Box3D.h"
 #import "3D/Line3D.h"
 #import "3D/Sphere3D.h"

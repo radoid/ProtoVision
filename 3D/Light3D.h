@@ -8,12 +8,15 @@
 #import "ProtoVision.h"
 
 
-@interface Light3D : Object3D
-{
-	int number;
-	float ambient[4], diffuse[4];
-}
+@interface Light3D : NSObject
 
-- (id)initWithDirection:(Vector3D)direction ambient:(GLfloat *)ambient diffuse:(GLfloat *)diffuse;
+@property (nonatomic) BOOL hasPosition, hasDirection;
+@property (nonatomic) Vector3D position, direction;
+@property (nonatomic) Color2D ambient, diffuse;
+
+- (id)initWithPosition:(Vector3D)position;
+- (id)initWithDirection:(Vector3D)direction;
+- (id)initWithPosition:(Vector3D)position ambient:(Color2D)ambient diffuse:(Color2D)diffuse;
+- (id)initWithDirection:(Vector3D)direction ambient:(Color2D)ambient diffuse:(Color2D)diffuse;
 
 @end
