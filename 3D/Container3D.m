@@ -57,6 +57,14 @@
 		[child recalculate];
 }
 
+- (float)radius {
+	float radius = _radius;
+	for (Object3D *child in children)
+		radius = max(radius, Vector3DLength(child.position) + child.radius);
+	NSAssert(!isnan(radius), nil);
+	return radius * self.scale;
+}
+
 - (void)setColor:(Color2D)color {
 	[super setColor:color];
 	for (Object3D *child in self.children)

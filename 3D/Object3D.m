@@ -30,6 +30,15 @@
 	return [self initWithProgram:[Program3D defaultProgram] buffer:initbuffer];
 }
 
+- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
+	for (int i=0, address = 0; i < vcount; i++, address += vertexsize+texcoordssize+normalsize+colorsize) {
+		Vector3D v = Vector3DMake(vbuffer[address+0], vbuffer[address+1], vbuffer[address+2]);
+		_radius = max(_radius, Vector3DLength(v));
+		NSAssert(!isnan(_radius) && isfinite(_radius), nil);
+	}
+	return [self initWithProgram:[Program3D defaultProgram] buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic]];
+}
+
 - (id)initWithProgram:(Program3D *)initprogram mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
 	return [self initWithProgram:initprogram buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic]];
 }
@@ -70,6 +79,10 @@
 	copy.colorLight = _colorLight;
 	copy.texture = _texture;
 	return copy;
+}
+
+- (float)radius {
+	return _radius * self.scale;
 }
 
 - (void)setColor:(Color2D)color {
