@@ -10,6 +10,6 @@
 
 @interface Box2D : Object2D
 
-- (id)initWithWidth:(float)initwidth height:(float)initheight;
+- (id)initWithWidth:(float)width height:(float)height;
 
 @end

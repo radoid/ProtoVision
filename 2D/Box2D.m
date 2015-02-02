@@ -10,11 +10,8 @@
 
 
 @implementation Box2D
-{
-	int width, height;
-}
 
-- (id)initWithWidth:(float)initwidth height:(float)initheight {
+- (id)initWithWidth:(float)width height:(float)height {
 	static Buffer3D *shared = nil;
 	if (!shared) {
 		GLfloat vertices[] = {
@@ -26,8 +23,8 @@
 		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:4 indices:nil indexCount:0 vertexSize:3 texCoordsSize:2 normalSize:0 colorSize:0 isDynamic:NO];
 	}
 	if ((self = [super initWithBuffer:shared])) {
-		self.scaleX = width = initwidth;
-		self.scaleY = height = initheight;
+		self.scaleX = width;
+		self.scaleY = height;
     }
     return self;
 }

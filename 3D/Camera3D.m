@@ -11,22 +11,22 @@
 
 @implementation Camera3D
 
-- (id)initWithPerspectiveFOVY:(float)initfovy aspect:(float)initaspect near:(float)initnear far:(float)initfar {
+- (id)initWithPerspectiveFOVY:(float)fovy aspect:(float)aspect near:(float)near far:(float)far {
 	if ((self = [super init])) {
-		_fovy = initfovy;
-		_near = initnear;
-		_far = initfar;
-		[self setAspect: initaspect];
+		_fovy = fovy;
+		_near = near;
+		_far = far;
+		[self setAspect:aspect];
 	}
 	return self;
 }
 
-- (id)initWithPerspectivePosition:(Vector3D)initposition lookAt:(Vector3D)center up:(Vector3D)up fovy:(float)initfovy aspect:(float)initaspect near:(float)initnear far:(float)initfar {
-	if ((self = [super initWithPosition:initposition direction:Vector3DSubtract(center, initposition) up:up])) {
-		_near = initnear;
-		_far = initfar;
-		_fovy = initfovy;
-		[self setAspect: initaspect];
+- (id)initWithPerspectivePosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up fovy:(float)fovy aspect:(float)aspect near:(float)near far:(float)far {
+	if ((self = [super initWithPosition:position direction:Vector3DSubtract(center, position) up:up])) {
+		_near = near;
+		_far = far;
+		_fovy = fovy;
+		[self setAspect:aspect];
 	}
 	return self;
 }
@@ -41,8 +41,8 @@
 	return self;
 }
 
-- (id)initWithOrtographicPosition:(Vector3D)initposition lookAt:(Vector3D)center up:(Vector3D)up frame:(CGRect)frame near:(float)near far:(float)far {
-	if ((self = [super initWithPosition:initposition direction:Vector3DSubtract(center, initposition) up:up])) {
+- (id)initWithOrtographicPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up frame:(CGRect)frame near:(float)near far:(float)far {
+	if ((self = [super initWithPosition:position direction:Vector3DSubtract(center, position) up:up])) {
 		_fovy = 0;
 		_near = near;
  		_far = far;
@@ -66,9 +66,9 @@
 		_projection = Matrix4x4Ortho(frame.origin.x, frame.origin.x+frame.size.width, frame.origin.y, frame.origin.y+frame.size.height, _near, _far);
 }
 
-- (void)setAspect:(float)initaspect {
+- (void)setAspect:(float)aspect {
 	if (_fovy)
-		_projection = Matrix4x4Perspective(_fovy, initaspect, _near, _far);
+		_projection = Matrix4x4Perspective(_fovy, aspect, _near, _far);
 }
 
 - (void)setOrientation:(float)orientation {

@@ -18,7 +18,7 @@
 
 - (void)start {
 	scene3d = [[Container3D alloc] init];
-	camera3d = [[Camera3D alloc] initWithPerspectivePosition:Vector3DMake(-2, 2, -2) lookAt:Vector3DZero up:Vector3DY fovy:60 aspect:_view.frame.size.width / _view.frame.size.height near:0.1f far:10];
+	camera3d = [[Camera3D alloc] initWithPerspectivePosition:Vector3DMake(-2, 2, -2) lookAt:Vector3DMake(0, 0.5, 0) up:Vector3DY fovy:60 aspect:_view.frame.size.width / _view.frame.size.height near:0.1f far:10];
 	light = [[Light3D alloc] initWithDirection:Vector3DMake(5.0, 5.0, 15.0)];
 
 	_view.color = ColorRGBFromHSL(.55, .3, .6, 1);
@@ -28,7 +28,7 @@
 	box3d.color = Color2DMake(.14, .9, 0.1, 1);
 	[scene3d.children addObject:box3d];
 
-	Sphere3D *sphere3d = [[Sphere3D alloc] initWithRadius:1 levels:10];
+	Sphere3D *sphere3d = [[Sphere3D alloc] initWithRadius:1 levels:30];
 	sphere3d.position = Vector3DMake(0.5f, 0.5f, 0.5f);
 	sphere3d.color = Color2DMake(0.1, 1, 0.3, 1);
 	[scene3d.children addObject:sphere3d];
