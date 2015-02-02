@@ -7,6 +7,10 @@
 
 #import "Object3D+OBJ.h"
 
+typedef struct {
+	Vector3D position, normal;
+} Vertex;
+
 
 @implementation Object3D (OBJ)
 
@@ -16,7 +20,7 @@
 
 - (Object3D *)initWithOBJ:(NSString *)path size:(float)size rotation:(Quaternion3D)correction {
 	int vertexcount, indexcount, normalcount;
-	Buffer3DVertex *vertices = 0;
+	Vertex *vertices = 0;
 	Vector3D *normals = 0;
 	GLushort *indices = 0;
 	Vector3D min, max, center = Vector3DZero;
@@ -34,7 +38,7 @@
 		while (fgets(line, sizeof(line), f)) {
 			if (sscanf(line, "v %f %f %f", &v.x, &v.y, &v.z) == 3) {
 				if (vertices)
-					vertices[vertexcount++].vertex = Vector3DScale(Vector3DRotateByQuaternion(Vector3DSubtract(v, center), correction), scale);  // v.subtract (center).rotate (rotation).scale (scale);
+					vertices[vertexcount++].position = Vector3DScale(Vector3DRotateByQuaternion(Vector3DSubtract(v, center), correction), scale);  // v.subtract (center).rotate (rotation).scale (scale);
 				else
 					if (vertexcount++) {
 						min = Vector3DMake(min(v.x, min.x), min(v.y, min.y), min(v.z, min.z));
@@ -77,12 +81,12 @@
 		if (phase == 0) {
 			printf("%d vrhova, %d indeksa, %d normala\n", vertexcount, indexcount, normalcount);
 			if (vertexcount > 0xffff || !vertexcount || !indexcount)
-				return nil;// TODO new IOException ("Too much vertices (" + vertexcount + " > " + 0x7fff + ") in model");
+				return nil;// TODO new IOException ("Too many vertices (" + vertexcount + " > " + 0x7fff + ") in model");
 			scale = (size > 0 ? size / max (max.x - min.x, max (max.y - min.y, max.z - min.z)) : 1);
 			//if (Math.signum (max.x) == Math.signum (min.x) || Math.signum (max.y) == Math.signum (min.y) || Math.signum (max.z) == Math.signum (min.z))
 			center = Vector3DScale(Vector3DAdd(min, max), 0.5f);
 
-			vertices = calloc(vertexcount, sizeof(Buffer3DVertex));
+			vertices = calloc(vertexcount, sizeof(Vertex));
 			indices = malloc(indexcount * sizeof(GLushort));
 			if (normalcount)
 				normals = malloc(normalcount * sizeof(Vector3D));

@@ -14,8 +14,7 @@
 	GLuint _vao;
 	GLuint _vboname, _iboname;
 	GLenum _mode;
-	int _vertexcount, _maxvertexcount, _indexcount, _maxindexcount;
-	int _vertexsize, _texcoordssize, _normalsize, _colorsize;
+	int _maxvertexcount, _maxindexcount;
 	int _stride;
 	BOOL _dynamic;
 }
@@ -73,7 +72,7 @@
 	return [[Buffer3D allocWithZone:zone] initWithMode:_mode vbo:_vboname vertexCount:_vertexcount ibo:_iboname indexCount:_indexcount vertexSize:_vertexsize texCoordsSize:_texcoordssize normalSize:_normalsize colorSize:_colorsize isDynamic:_dynamic];
 }
 
-- (void)updateVertices:(Buffer3DVertex *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount  {
+- (void)updateVertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount  {
 /*	if (vcount > maxvertexcount || icount > maxindexcount) {
 		if (vboname)
 			glDeleteBuffers(1, &vboname);
@@ -108,8 +107,13 @@
 		[self setAttribArray:program.aTexture size:_texcoordssize type:GL_FLOAT stride:_stride offset:_vertexsize * sizeof(GLfloat)];
 	if (program.aNormal > -1 && _normalsize)
 		[self setAttribArray:program.aNormal size:_normalsize type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize) * sizeof(GLfloat)];
-	if (program.aColor > -1 && _colorsize)
+	if (_colorsize == 8 && program.aColorDark > -1 && program.aColorLight > -1) {
+		[self setAttribArray:program.aColorDark size:4 type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize + _normalsize) * sizeof(GLfloat)];
+		[self setAttribArray:program.aColorLight size:4 type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize + _normalsize + 4) * sizeof(GLfloat)];
+	} else if (_colorsize == 4 && program.aColor > -1)
 		[self setAttribArray:program.aColor size:_colorsize type:GL_FLOAT stride:_stride offset:(_vertexsize + _texcoordssize + _normalsize) * sizeof(GLfloat)];
+	else if (_colorsize == 1 && program.aColorIndex > -1)
+		[self setAttribArray:program.aColorIndex size:_colorsize type:GL_INT stride:_stride offset:(_vertexsize + _texcoordssize + _normalsize) * sizeof(GLfloat)];
 }
 
 - (void)setAttribArray:(int)index size:(int)size type:(int)type stride:(int)stride offset:(int)offset {

@@ -230,7 +230,6 @@
 		EF7E7D801A695838009BD387 /* default.v3.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v3.vsh; sourceTree = "<group>"; };
 		EF7E7D811A695838009BD387 /* default.v1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v1.vsh; sourceTree = "<group>"; };
 		EF7E7D8A1A69587A009BD387 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		EF85D8201A7CD895006CCCCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF9755651A695BF0009FDB0B /* Spinning Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spinning Cube.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9755681A695BF0009FDB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF9755691A695BF0009FDB0B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -304,7 +303,6 @@
 				EF7E7D321A695778009BD387 /* ProtoVision.h */,
 				EF7E7D331A695778009BD387 /* README.md */,
 				EF7E7D8A1A69587A009BD387 /* OpenGL.framework */,
-				EF85D81E1A7CD895006CCCCB /* Shaders */,
 				EF7E7CD11A695484009BD387 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -425,22 +423,6 @@
 				EF7E7D7D1A695838009BD387 /* default.v3.fsh */,
 			);
 			path = Shaders;
-			sourceTree = "<group>";
-		};
-		EF85D81E1A7CD895006CCCCB /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				EF85D81F1A7CD895006CCCCB /* Supporting Files */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
-		EF85D81F1A7CD895006CCCCB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				EF85D8201A7CD895006CCCCB /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		EF9755601A695BA1009FDB0B /* Demos */ = {

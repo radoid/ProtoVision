@@ -11,13 +11,6 @@
 
 
 @implementation Program3D
-{
-	GLuint programname;
-	GLint uProjection, uModelView, uNormal;
-	GLint uColor, uColorLight, uColorDark, uLight, uEye, uTexture, uTexSampler;
-	GLint aPosition, aNormal, aColor, aTexture;
-}
-@synthesize programname, uProjection, uModelView, uNormal, uColor, uColorDark, uColorLight, uLight, uEye, uTexture, uTexSampler, uTime, aPosition, aNormal, aColor, aTexture;
 
 - (id)initWithVertexShader:(NSString *)vs fragmentShader:(NSString *)fs {
 	if ((self = [super init])) {
@@ -25,40 +18,43 @@
 		GLuint vsname = [self compileSource:vs as:GL_VERTEX_SHADER];
 		GLuint fsname = [self compileSource:fs as:GL_FRAGMENT_SHADER];
 
-		programname = glCreateProgram();
-		NSAssert(programname, @"glCreateProgram failed!");
+		_programname = glCreateProgram();
+		NSAssert(_programname, @"glCreateProgram failed!");
 
-		glAttachShader(programname, vsname);
-		glAttachShader(programname, fsname);
-		//glBindFragDataLocation(programname, 0, "fragColor");  // TODO
-		glLinkProgram(programname);
+		glAttachShader(_programname, vsname);
+		glAttachShader(_programname, fsname);
+		//glBindFragDataLocation(_programname, 0, "fragColor");  // TODO
+		glLinkProgram(_programname);
 
 		GLint status, logLen; GLchar *log;
-		glGetProgramiv(programname, GL_INFO_LOG_LENGTH, &logLen);
+		glGetProgramiv(_programname, GL_INFO_LOG_LENGTH, &logLen);
 		if (logLen > 0) {
-			glGetProgramInfoLog(programname, logLen, &logLen, (log = calloc(1, logLen)));
+			glGetProgramInfoLog(_programname, logLen, &logLen, (log = calloc(1, logLen)));
 			fprintf(stderr, "%s\n", log);
 			NSAssert(NO, @"Shader program link error!");
 		}
-		glGetProgramiv(programname, GL_VALIDATE_STATUS, &status);
+		glGetProgramiv(_programname, GL_VALIDATE_STATUS, &status);
 		NSAssert(!status, @"Invalid program!");
 
-		uProjection = glGetUniformLocation(programname, "uProjection");
-		uModelView = glGetUniformLocation(programname, "uModelView");
-		uNormal = glGetUniformLocation(programname, "uNormal");
-		uLight = glGetUniformLocation(programname, "uLight");
-		uEye = glGetUniformLocation(programname, "uEye");
-		uColor = glGetUniformLocation(programname, "uColor");
-		uColorLight = glGetUniformLocation(programname, "uColorLight");
-		uColorDark = glGetUniformLocation(programname, "uColorDark");
-		uTexture = glGetUniformLocation(programname, "uTexture");
-		uTexSampler = glGetUniformLocation(programname, "uTexSampler");
-		uTime = glGetUniformLocation(programname, "uTime");
+		_uProjection = glGetUniformLocation(_programname, "uProjection");
+		_uModelView = glGetUniformLocation(_programname, "uModelView");
+		_uNormal = glGetUniformLocation(_programname, "uNormal");
+		_uLight = glGetUniformLocation(_programname, "uLight");
+		_uEye = glGetUniformLocation(_programname, "uEye");
+		_uColor = glGetUniformLocation(_programname, "uColor");
+		_uColorLight = glGetUniformLocation(_programname, "uColorLight");
+		_uColorDark = glGetUniformLocation(_programname, "uColorDark");
+		_uColorSize = glGetUniformLocation(_programname, "uColorSize");
+		_uTexture = glGetUniformLocation(_programname, "uTexture");
+		_uTexSampler = glGetUniformLocation(_programname, "uTexSampler");
+		_uTime = glGetUniformLocation(_programname, "uTime");
 
-		aPosition = glGetAttribLocation(programname, "aPosition");
-		aNormal = glGetAttribLocation(programname, "aNormal");
-		aColor = glGetAttribLocation(programname, "aColor");
-		aTexture = glGetAttribLocation(programname, "aTexture");
+		_aPosition = glGetAttribLocation(_programname, "aPosition");
+		_aNormal = glGetAttribLocation(_programname, "aNormal");
+		_aTexture = glGetAttribLocation(_programname, "aTexture");
+		_aColor = glGetAttribLocation(_programname, "aColor");
+		_aColorDark = glGetAttribLocation(_programname, "aColorDark");
+		_aColorLight = glGetAttribLocation(_programname, "aColorLight");
 
 		glDeleteShader(vsname);
 		glDeleteShader(fsname);
@@ -133,31 +129,32 @@
 }
 
 - (void)use {
-	glUseProgram(programname);
+	glUseProgram(_programname);
 }
 
 - (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
-	[self useWithProjection:projection modelView:modelview normal:normal colorDark:color colorLight:color texture:texture light:direction position:position];
+	[self useWithProjection:projection modelView:modelview normal:normal colorDark:color colorLight:color colorSize:0 texture:texture light:direction position:position];
 }
 
-- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal colorDark:(Color2D)colorDark colorLight:(Color2D)colorLight texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
-	glUseProgram(programname);
-	glUniformMatrix4fv(uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
-	glUniformMatrix4fv(uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
-	glUniformMatrix3fv(uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
-	//glUniform4fv(uColor, 1, (const GLfloat *)&color);
-	glUniform4fv(uColorDark, 1, (const GLfloat *)&colorDark);
-	glUniform4fv(uColorLight, 1, (const GLfloat *)&colorLight);
-	if (uLight > -1)
-		glUniform3fv(uLight, 1, (const GLfloat *)&direction);
-	if (uEye > -1)
-		glUniform3fv(uEye, 1, (const GLfloat *)&position);
-	if (uTime > -1)
-		glUniform1f(uTime, (float)CACurrentMediaTime());
-	if (uTexture > -1)
-		glUniform1i(uTexture, texture ? GL_TRUE : GL_FALSE);
-	if (texture && uTexture > -1 && uTexSampler > -1) {
-		glUniform1i(uTexSampler, 0);
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal colorDark:(Color2D)colorDark colorLight:(Color2D)colorLight colorSize:(int)colorSize texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
+	glUseProgram(_programname);
+	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
+	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
+	glUniformMatrix3fv(_uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
+	//glUniform4fv(_uColor, 1, (const GLfloat *)&color);
+	glUniform4fv(_uColorDark, 1, (const GLfloat *)&colorDark);
+	glUniform4fv(_uColorLight, 1, (const GLfloat *)&colorLight);
+	glUniform1i(_uColorSize, colorSize);
+	if (_uLight > -1)
+		glUniform3fv(_uLight, 1, (const GLfloat *)&direction);
+	if (_uEye > -1)
+		glUniform3fv(_uEye, 1, (const GLfloat *)&position);
+	if (_uTime > -1)
+		glUniform1f(_uTime, (float)CACurrentMediaTime());
+	if (_uTexture > -1)
+		glUniform1i(_uTexture, texture ? GL_TRUE : GL_FALSE);
+	if (texture && _uTexture > -1 && _uTexSampler > -1) {
+		glUniform1i(_uTexSampler, 0);
 		glActiveTexture (GL_TEXTURE0);
 		[texture bind];
 	}
@@ -166,13 +163,13 @@
 }
 
 - (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview color:(Color2D)color texture:(Texture2D *)texture {
-	glUseProgram(programname);
-	glUniformMatrix4fv(uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
-	glUniformMatrix4fv(uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
-	glUniform4fv(uColor, 1, (const GLfloat *)&color);
-	glUniform1i(uTexture, texture ? GL_TRUE : GL_FALSE);
+	glUseProgram(_programname);
+	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
+	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
+	glUniform4fv(_uColor, 1, (const GLfloat *)&color);
+	glUniform1i(_uTexture, texture ? GL_TRUE : GL_FALSE);
 	if (texture) {
-		glUniform1i(uTexSampler, 0);
+		glUniform1i(_uTexSampler, 0);
 		glActiveTexture (GL_TEXTURE0);
 		[texture bind];
 	}
@@ -181,9 +178,9 @@
 }
 
 - (void)dealloc {
-	if (programname)
-		glDeleteProgram(programname);
-	//NSLog(@"[Program3D dealloc] name %d", programname);
+	if (_programname)
+		glDeleteProgram(_programname);
+	//NSLog(@"[Program3D dealloc] name %d", _programname);
 }
 
 @end

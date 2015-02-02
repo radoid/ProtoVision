@@ -3,10 +3,12 @@
 uniform mat4 uProjection;
 uniform mat4 uModelView;
 uniform mat3 uNormal;
-uniform vec4 uColor, uColorDark, uColorLight;
 uniform vec3 uLight, uEye;
+uniform vec4 uColor, uColorDark, uColorLight;
+uniform int uColorSize;
 in vec3 aPosition;
 in vec3 aNormal;
+in vec4 aColorDark, aColorLight;
 out vec4 vColor;
 
 vec3 hsv2rgb(vec3 c) {
@@ -50,7 +52,11 @@ vec4 hsl2rgb(vec4 hsl) {
 
 void main (void) {
 	float intensity = (dot(-normalize(uLight), normalize(uNormal * aNormal))+1.0)/2.0;
-	vColor = hsl2rgb(mix(uColorDark, uColorLight, intensity));
+	if (uColorSize == 8) {
+		vColor = hsl2rgb(mix(aColorDark, aColorLight, intensity));
+	} else {
+		vColor = hsl2rgb(mix(uColorDark, uColorLight, intensity));
+	}
 
 	gl_Position = uProjection * uModelView * vec4(aPosition, 1.0);
 }

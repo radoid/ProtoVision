@@ -124,6 +124,7 @@
 						 normal:normal
 					  colorDark:_colorDark
 					 colorLight:_colorLight
+					  colorSize:_buffer.colorsize
 						texture:_texture
 						  light:light.direction
 					   position:camera.position];
