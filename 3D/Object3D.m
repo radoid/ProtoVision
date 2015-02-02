@@ -13,125 +13,151 @@
 
 - (id)init {
 	if ((self = [super init])) {
-		[self setColor:Color2DMake(1, 0, 1, 1)];
+		_rotation = Quaternion3DZero;
+		_scaleX = _scaleY = _scaleZ = 1;
+		[self recalculate];
 	}
 	return self;
 }
 
-- (id)initWithProgram:(Program3D *)initprogram buffer:(Buffer3D *)initbuffer {
+- (id)initWithPosition:(Vector3D)position direction:(Vector3D)forward up:(Vector3D)up {
 	if ((self = [self init])) {
-		_buffer = initbuffer;
-		[self setProgram:initprogram];
+		[self setPosition:position direction:forward up:up];
 	}
 	return self;
 }
-
-- (id)initWithBuffer:(Buffer3D *)initbuffer {
-	return [self initWithProgram:[Program3D defaultProgram] buffer:initbuffer];
-}
-
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
-	for (int i=0, address = 0; i < vcount; i++, address += vertexsize+texcoordssize+normalsize+colorsize) {
-		Vector3D v = Vector3DMake(vbuffer[address+0], vbuffer[address+1], vbuffer[address+2]);
-		_radius = max(_radius, Vector3DLength(v));
-		NSAssert(!isnan(_radius) && isfinite(_radius), nil);
-	}
-	return [self initWithProgram:[Program3D defaultProgram] buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic]];
-}
-
-- (id)initWithProgram:(Program3D *)initprogram mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
-	return [self initWithProgram:initprogram buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic]];
-}
-
-- (void)setProgram:(Program3D *)initprogram {
-	_program = initprogram;
-	[_buffer setAttribArraysFromProgram:initprogram];
-}
-/*
-- (id)initWithNormalsCalculatedAsSharp:(BOOL)sharpen vertexBuffer:(Buffer3DVertex *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount isDynamic:(BOOL)dynamic {
-	for (int i=0; i < icount; i += 3) {
-		Vector3D a = vertices[indices[i+0]].vertex;
-		Vector3D b = vertices[indices[i+1]].vertex;
-		Vector3D c = vertices[indices[i+2]].vertex;
-		Vector3D normal = Vector3DUnit(Vector3DCross(Vector3DSubtract(b, a), Vector3DSubtract(c, b)));
-		if (sharpen) {
-			vertices[indices[i+0]].normal = normal;
-			vertices[indices[i+1]].normal = normal;
-			vertices[indices[i+2]].normal = normal;
-		} else {
-			vertices[indices[i+0]].normal = Vector3DAdd(normal, vertices[indices[i+0]].normal);
-			vertices[indices[i+1]].normal = Vector3DAdd(normal, vertices[indices[i+1]].normal);
-			vertices[indices[i+2]].normal = Vector3DAdd(normal, vertices[indices[i+2]].normal);
-		}
-	}
-	if (!sharpen)
-		for (int i=0; i < vcount; i++)
-			vertices[i].normal = Vector3DUnit(vertices[i].normal);
-	return [self initWithMode:GL_TRIANGLES vertices:vertices vertexCount:vcount indices:indices indexCount:icount isDynamic:dynamic];
-}*/
 
 - (id)copyWithZone:(NSZone *)zone {
-	Object3D *copy = [super copyWithZone:zone];
-	copy.buffer = _buffer;
-	copy.program = _program;
-	copy.color = _color;
-	copy.colorDark = _colorDark;
-	copy.colorLight = _colorLight;
-	copy.texture = _texture;
+	Object3D *copy = (Object3D *) [[[self class] allocWithZone:zone] init];
+	copy.position = self.position;
+	copy.scaleX = _scaleX;
+	copy.scaleY = _scaleY;
+	copy.scaleZ = _scaleZ;
+	copy.rotation = _rotation;
 	return copy;
 }
 
-- (float)radius {
-	return _radius * self.scale;
+- (Vector3D)position {
+	return Vector3DMake(_x, _y, _z);
 }
 
-- (void)setColor:(Color2D)color {
-	_color = color;
-	_colorDark =  Color2DMake(color.r+.03*(color.r < 0.17 ? -1 : +1), color.g, color.b/2., color.alpha);
- 	_colorLight = Color2DMake(color.r+.03*(color.r < 0.17 ? +1 : -1), color.g, 1-(1-color.b)/2., color.alpha);  // TODO
+- (void)setPosition:(Vector3D)position {
+	_x = position.x;
+	_y = position.y;
+	_z = position.z;
+	[self recalculate];
 }
 
-- (float)opacity {
-	return _color.alpha;  // TODO
+- (void)setX:(float)x {
+	_x = x;
+	[self recalculate];
 }
 
-- (void)setOpacity:(float)opacity {
-	_color.alpha = opacity;  // TODO
+- (void)setY:(float)y {
+	_y = y;
+	[self recalculate];
 }
 
-- (void)drawWithCamera:(Camera3D *)camera {
-	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
-
-	if (_color.alpha < 1)
-		glEnable(GL_BLEND);
-
-	[_program useWithProjection:camera.projection modelView:modelview color:_color texture:_texture];
-	[_buffer draw];
-
-	if (_color.alpha < 1)
-		glDisable(GL_BLEND);
+- (void)setZ:(float)z {
+	_z = z;
+	[self recalculate];
 }
 
-- (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light {
-	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
-	Matrix3x3 normal = Matrix3x3Transpose(Matrix4x4Invert3x3(_localToWorld));
+- (float)scale {
+	return (_scaleX+ _scaleY + _scaleZ)/3;
+}
 
-	if (_color.alpha < 1 || _colorDark.alpha < 1 || _colorLight.alpha < 1)
-		glEnable(GL_BLEND);
+- (void)setScale:(float)scale {
+	_scaleX = scale;
+	_scaleY = scale;
+	_scaleZ = scale;
+	[self recalculate];
+}
 
-	[_program useWithProjection:camera.projection
-					  modelView:modelview
-						 normal:normal
-					  colorDark:_colorDark
-					 colorLight:_colorLight
-					  colorSize:_buffer.colorsize
-						texture:_texture
-						  light:light.direction
-					   position:camera.position];
-	[_buffer draw];
+- (void)setScaleX:(float)x {
+	_scaleX = x;
+	[self recalculate];
+}
 
-	if (_color.alpha < 1 || _colorDark.alpha < 1 || _colorLight.alpha < 1)
-		glDisable(GL_BLEND);
+- (void)setScaleY:(float)y {
+	_scaleY = y;
+	[self recalculate];
+}
+
+- (void)setScaleZ:(float)z {
+	_scaleZ = z;
+	[self recalculate];
+}
+
+- (Vector3D)forward {
+	return Vector3DRotateByQuaternion(Vector3DZFlip, _rotation);
+}
+
+- (Vector3D)up {
+	return Vector3DRotateByQuaternion(Vector3DY, _rotation);
+}
+
+- (Vector3D)right {
+	return Vector3DRotateByQuaternion(Vector3DX, _rotation);
+}
+
+- (void)setRotation:(Quaternion3D)rotation {
+	_rotation = rotation;
+	_rotationAxis = Quaternion3DAxis(_rotation);
+	_rotationAngle = Quaternion3DAngle(_rotation);
+	[self recalculate];
+}
+
+- (void)rotateByAxis:(Vector3D)axis angle:(float)angle {
+	self.rotation = Quaternion3DMultiply(Quaternion3DMakeWithAxisAngle(axis, angle), _rotation);
+}
+
+- (void)rotateByQuaternion:(Quaternion3D)q {
+	self.rotation = Quaternion3DMultiply(q, _rotation);
+}
+
+- (void)rotateAround:(Vector3D)point byQuaternion:(Quaternion3D)q {
+	self.position = Vector3DAdd(point, Vector3DRotateByQuaternion(Vector3DSubtract(self.position, point), q));
+	self.rotation = Quaternion3DMultiply(q, _rotation);
+}
+
+- (void)rotateAround:(Vector3D)point byAxis:(Vector3D)axis angle:(float)angle {
+	[self rotateAround:point byQuaternion:Quaternion3DMakeWithAxisAngle(axis, angle)];
+}
+
+- (void)directTo:(Vector3D)forward up:(Vector3D)up {
+	up = Vector3DCross(forward, Vector3DCross(up, forward));
+	Vector3D right = Vector3DCross(forward, up);
+	self.rotation = Quaternion3DMakeWithThreeVectors(right, up, Vector3DFlip(forward));
+}
+
+- (void)lookAt:(Vector3D)center up:(Vector3D)up {
+	Vector3D forward = Vector3DSubtract(center, self.position);
+	[self directTo:forward up:up];
+}
+
+- (void)setPosition:(Vector3D)position direction:(Vector3D)forward up:(Vector3D)up {
+	_x = position.x;
+	_y = position.y;
+	_z = position.z;
+	[self directTo:forward up:up];
+}
+
+- (void)setPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up {
+	Vector3D forward = Vector3DSubtract(center, self.position);
+	[self setPosition:position direction:forward up:up];
+}
+
+- (void)recalculate {
+	_localToWorld = (_parent ? _parent.localToWorld : Matrix4x4Identity);
+	_localToWorld = Matrix4x4Translate(_localToWorld, _x, _y, _z);
+	if (_rotationAngle)
+		_localToWorld = Matrix4x4Rotate(_localToWorld, _rotationAngle, _rotationAxis.x, _rotationAxis.y, _rotationAxis.z);
+	if (_scaleX != 1 || _scaleY != 1 || _scaleZ != 1)
+		_localToWorld = Matrix4x4Scale(_localToWorld, _scaleX, _scaleY, _scaleZ);
+	//if (origin.x || origin.y || origin.z)
+	//	localToWorld = Matrix4x4Translate(localToWorld, -origin.x, -origin.y, -origin.z);
+	_worldToLocal = Matrix4x4Invert(_localToWorld);
 }
 
 @end

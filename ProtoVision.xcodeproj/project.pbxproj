@@ -7,18 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DC350AA273D437E9855C81A /* Spatial2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC357DB066F033C761AD314 /* Spatial2D.m */; };
-		2DC3558471AFC659CEF0184A /* Spatial2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC357DB066F033C761AD314 /* Spatial2D.m */; };
-		2DC35744D3F68128FABE32CC /* Spatial3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3508C2567415E673B8440 /* Spatial3D.m */; };
-		2DC357560C78CFBF30DBD55B /* Spatial3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC3547052F31DC443191CD7 /* Spatial3D.h */; };
-		2DC35758298CC124DD121BA3 /* Spatial2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC351669829C21A5A35985F /* Spatial2D.h */; };
-		2DC3576B829F7032233142FD /* Spatial3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC3547052F31DC443191CD7 /* Spatial3D.h */; };
-		2DC357A829191268806C67C8 /* Spatial3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3508C2567415E673B8440 /* Spatial3D.m */; };
-		2DC3594E14C6993C3B0290E8 /* Spatial2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC351669829C21A5A35985F /* Spatial2D.h */; };
+		2DC350AA273D437E9855C81A /* Object2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC357DB066F033C761AD314 /* Object2D.m */; };
+		2DC35577AA4ABE62988BD907 /* Controller3D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC35A9E0FCF2705987616E3 /* Controller3D+OSX.m */; };
+		2DC3558471AFC659CEF0184A /* Object2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC357DB066F033C761AD314 /* Object2D.m */; };
+		2DC3563C485E683226613CE4 /* normalmap.v3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3546BFDF1B932AAFA44F5 /* normalmap.v3.fsh */; };
+		2DC35744D3F68128FABE32CC /* Object3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3508C2567415E673B8440 /* Object3D.m */; };
+		2DC357560C78CFBF30DBD55B /* Object3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC3547052F31DC443191CD7 /* Object3D.h */; };
+		2DC35758298CC124DD121BA3 /* Object2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC351669829C21A5A35985F /* Object2D.h */; };
+		2DC3576B829F7032233142FD /* Object3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC3547052F31DC443191CD7 /* Object3D.h */; };
+		2DC357A829191268806C67C8 /* Object3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3508C2567415E673B8440 /* Object3D.m */; };
+		2DC35926042FA1ACAE258EA1 /* Controller3D+OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC355161528F6D6DC7B05DF /* Controller3D+OSX.h */; };
+		2DC3594E14C6993C3B0290E8 /* Object2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC351669829C21A5A35985F /* Object2D.h */; };
+		2DC35EA7B7DB4A8F330954DE /* normalmap.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3587FED835DE1D1F31D7C /* normalmap.v3.vsh */; };
 		EF0BB2451A6E443400713C2E /* Circle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF0BB2431A6E443400713C2E /* Circle2D.h */; };
 		EF0BB2461A6E443400713C2E /* Circle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF0BB2431A6E443400713C2E /* Circle2D.h */; };
 		EF0BB2471A6E443400713C2E /* Circle2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0BB2441A6E443400713C2E /* Circle2D.m */; };
 		EF0BB2481A6E443400713C2E /* Circle2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0BB2441A6E443400713C2E /* Circle2D.m */; };
+		EF1F34211A81375A00E15A6D /* normalmap-dots.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1F34201A81375A00E15A6D /* normalmap-dots.png */; };
 		EF7E7D341A695778009BD387 /* Camera2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CED1A695778009BD387 /* Camera2D.m */; };
 		EF7E7D361A695778009BD387 /* Texture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CEF1A695778009BD387 /* Texture2D.h */; };
 		EF7E7D371A695778009BD387 /* Polygon2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CF01A695778009BD387 /* Polygon2D.m */; };
@@ -33,14 +38,14 @@
 		EF7E7D421A695778009BD387 /* Font2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CFB1A695778009BD387 /* Font2D.h */; };
 		EF7E7D431A695778009BD387 /* Color2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CFC1A695778009BD387 /* Color2D.h */; };
 		EF7E7D441A695778009BD387 /* Image2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CFD1A695778009BD387 /* Image2D.h */; };
-		EF7E7D451A695778009BD387 /* Object2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CFE1A695778009BD387 /* Object2D.h */; };
+		EF7E7D451A695778009BD387 /* Mesh2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CFE1A695778009BD387 /* Mesh2D.h */; };
 		EF7E7D461A695778009BD387 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CFF1A695778009BD387 /* Box2D.h */; };
 		EF7E7D471A695778009BD387 /* Buffer2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D001A695778009BD387 /* Buffer2D.h */; };
 		EF7E7D481A695778009BD387 /* Line2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D011A695778009BD387 /* Line2D.h */; };
 		EF7E7D491A695778009BD387 /* Controller2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D021A695778009BD387 /* Controller2D.h */; };
 		EF7E7D4A1A695778009BD387 /* Container2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D031A695778009BD387 /* Container2D.h */; };
 		EF7E7D4B1A695778009BD387 /* Container2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D041A695778009BD387 /* Container2D.m */; };
-		EF7E7D4C1A695778009BD387 /* Object2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D051A695778009BD387 /* Object2D.m */; };
+		EF7E7D4C1A695778009BD387 /* Mesh2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D051A695778009BD387 /* Mesh2D.m */; };
 		EF7E7D4D1A695778009BD387 /* Polygon2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D061A695778009BD387 /* Polygon2D.h */; };
 		EF7E7D4E1A695778009BD387 /* Button2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D071A695778009BD387 /* Button2D.h */; };
 		EF7E7D4F1A695778009BD387 /* Controller2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D081A695778009BD387 /* Controller2D.m */; };
@@ -52,29 +57,28 @@
 		EF7E7D551A695778009BD387 /* Program3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D0F1A695778009BD387 /* Program3D.m */; };
 		EF7E7D561A695778009BD387 /* Pyramid3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D101A695778009BD387 /* Pyramid3D.m */; };
 		EF7E7D571A695778009BD387 /* Box3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D111A695778009BD387 /* Box3D.h */; };
-		EF7E7D581A695778009BD387 /* Object3D+OBJ.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D121A695778009BD387 /* Object3D+OBJ.h */; };
+		EF7E7D581A695778009BD387 /* Mesh3D+OBJ.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D121A695778009BD387 /* Mesh3D+OBJ.h */; };
 		EF7E7D591A695778009BD387 /* Sphere3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D131A695778009BD387 /* Sphere3D.m */; };
 		EF7E7D5A1A695778009BD387 /* Container3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D141A695778009BD387 /* Container3D.m */; };
-		EF7E7D5B1A695778009BD387 /* Object3D+OBJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D151A695778009BD387 /* Object3D+OBJ.m */; };
-		EF7E7D5C1A695778009BD387 /* Object3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D161A695778009BD387 /* Object3D.m */; };
+		EF7E7D5B1A695778009BD387 /* Mesh3D+OBJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D151A695778009BD387 /* Mesh3D+OBJ.m */; };
+		EF7E7D5C1A695778009BD387 /* Mesh3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D161A695778009BD387 /* Mesh3D.m */; };
 		EF7E7D5D1A695778009BD387 /* Buffer3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D171A695778009BD387 /* Buffer3D.h */; };
 		EF7E7D5E1A695778009BD387 /* Container3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D181A695778009BD387 /* Container3D.h */; };
 		EF7E7D5F1A695778009BD387 /* Vector3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D191A695778009BD387 /* Vector3D.h */; };
 		EF7E7D601A695778009BD387 /* Sphere3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D1A1A695778009BD387 /* Sphere3D.h */; };
 		EF7E7D611A695778009BD387 /* Line3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D1B1A695778009BD387 /* Line3D.h */; };
-		EF7E7D621A695778009BD387 /* Controller3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D1C1A695778009BD387 /* Controller3D.h */; };
+		EF7E7D621A695778009BD387 /* Controller3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D1C1A695778009BD387 /* Controller3D+iOS.h */; };
 		EF7E7D631A695778009BD387 /* Ray3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D1D1A695778009BD387 /* Ray3D.h */; };
 		EF7E7D641A695778009BD387 /* Matrix4x4.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D1E1A695778009BD387 /* Matrix4x4.h */; };
 		EF7E7D651A695778009BD387 /* VectorIJK.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D1F1A695778009BD387 /* VectorIJK.h */; };
 		EF7E7D661A695778009BD387 /* Camera3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D201A695778009BD387 /* Camera3D.m */; };
-		EF7E7D671A695778009BD387 /* Controller3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D211A695778009BD387 /* Controller3D.m */; };
 		EF7E7D681A695778009BD387 /* Line3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D221A695778009BD387 /* Line3D.m */; };
 		EF7E7D691A695778009BD387 /* Light3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D231A695778009BD387 /* Light3D.m */; };
 		EF7E7D6B1A695778009BD387 /* Quaternion3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D251A695778009BD387 /* Quaternion3D.h */; };
 		EF7E7D6D1A695778009BD387 /* Buffer3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D271A695778009BD387 /* Buffer3D.m */; };
 		EF7E7D6E1A695778009BD387 /* Box3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D281A695778009BD387 /* Box3D.m */; };
 		EF7E7D6F1A695778009BD387 /* Camera3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D291A695778009BD387 /* Camera3D.h */; };
-		EF7E7D701A695778009BD387 /* Object3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2A1A695778009BD387 /* Object3D.h */; };
+		EF7E7D701A695778009BD387 /* Mesh3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2A1A695778009BD387 /* Mesh3D.h */; };
 		EF7E7D711A695778009BD387 /* View3D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D2C1A695778009BD387 /* View3D+OSX.m */; };
 		EF7E7D721A695778009BD387 /* View3D+OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2D1A695778009BD387 /* View3D+OSX.h */; };
 		EF7E7D731A695778009BD387 /* Window3D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D2E1A695778009BD387 /* Window3D+OSX.m */; };
@@ -90,9 +94,6 @@
 		EF7E7D881A695838009BD387 /* default.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D801A695838009BD387 /* default.v3.vsh */; };
 		EF7E7D891A695838009BD387 /* default.v1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D811A695838009BD387 /* default.v1.vsh */; };
 		EF7E7D8B1A69587A009BD387 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7E7D8A1A69587A009BD387 /* OpenGL.framework */; };
-		EF97556B1A695BF0009FDB0B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97556A1A695BF0009FDB0B /* AppDelegate.m */; };
-		EF97556D1A695BF0009FDB0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97556C1A695BF0009FDB0B /* main.m */; };
-		EF9755721A695BF1009FDB0B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9755701A695BF1009FDB0B /* MainMenu.xib */; };
 		EF9755871A695C49009FDB0B /* SpinningCubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755861A695C49009FDB0B /* SpinningCubeController.m */; };
 		EF9755881A695C7A009FDB0B /* ProtoVisionOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */; };
 		EF9755B31A695F1C009FDB0B /* View3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */; };
@@ -109,16 +110,16 @@
 		EF9755BF1A696022009FDB0B /* Line2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CF51A695778009BD387 /* Line2D.m */; };
 		EF9755C01A696022009FDB0B /* Image2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CF81A695778009BD387 /* Image2D.m */; };
 		EF9755C11A696022009FDB0B /* Container2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D041A695778009BD387 /* Container2D.m */; };
-		EF9755C21A696022009FDB0B /* Object2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D051A695778009BD387 /* Object2D.m */; };
+		EF9755C21A696022009FDB0B /* Mesh2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D051A695778009BD387 /* Mesh2D.m */; };
 		EF9755C31A696022009FDB0B /* Controller2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D081A695778009BD387 /* Controller2D.m */; };
 		EF9755C41A696022009FDB0B /* Program3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D0F1A695778009BD387 /* Program3D.m */; };
 		EF9755C51A696022009FDB0B /* Pyramid3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D101A695778009BD387 /* Pyramid3D.m */; };
 		EF9755C61A696022009FDB0B /* Sphere3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D131A695778009BD387 /* Sphere3D.m */; };
 		EF9755C71A696022009FDB0B /* Container3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D141A695778009BD387 /* Container3D.m */; };
-		EF9755C81A696022009FDB0B /* Object3D+OBJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D151A695778009BD387 /* Object3D+OBJ.m */; };
-		EF9755C91A696022009FDB0B /* Object3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D161A695778009BD387 /* Object3D.m */; };
+		EF9755C81A696022009FDB0B /* Mesh3D+OBJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D151A695778009BD387 /* Mesh3D+OBJ.m */; };
+		EF9755C91A696022009FDB0B /* Mesh3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D161A695778009BD387 /* Mesh3D.m */; };
 		EF9755CA1A696022009FDB0B /* Camera3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D201A695778009BD387 /* Camera3D.m */; };
-		EF9755CB1A696022009FDB0B /* Controller3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D211A695778009BD387 /* Controller3D.m */; };
+		EF9755CB1A696022009FDB0B /* Controller3D+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D211A695778009BD387 /* Controller3D+iOS.m */; };
 		EF9755CC1A696022009FDB0B /* Line3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D221A695778009BD387 /* Line3D.m */; };
 		EF9755CD1A696022009FDB0B /* Light3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D231A695778009BD387 /* Light3D.m */; };
 		EF9755CF1A696022009FDB0B /* Buffer3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D271A695778009BD387 /* Buffer3D.m */; };
@@ -147,12 +148,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2DC3508C2567415E673B8440 /* Spatial3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spatial3D.m; sourceTree = "<group>"; };
-		2DC351669829C21A5A35985F /* Spatial2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spatial2D.h; sourceTree = "<group>"; };
-		2DC3547052F31DC443191CD7 /* Spatial3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spatial3D.h; sourceTree = "<group>"; };
-		2DC357DB066F033C761AD314 /* Spatial2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spatial2D.m; sourceTree = "<group>"; };
+		2DC3508C2567415E673B8440 /* Object3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Object3D.m; sourceTree = "<group>"; };
+		2DC351669829C21A5A35985F /* Object2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object2D.h; sourceTree = "<group>"; };
+		2DC3546BFDF1B932AAFA44F5 /* normalmap.v3.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = normalmap.v3.fsh; sourceTree = "<group>"; };
+		2DC3547052F31DC443191CD7 /* Object3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object3D.h; sourceTree = "<group>"; };
+		2DC355161528F6D6DC7B05DF /* Controller3D+OSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Controller3D+OSX.h"; sourceTree = "<group>"; };
+		2DC357DB066F033C761AD314 /* Object2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Object2D.m; sourceTree = "<group>"; };
+		2DC3587FED835DE1D1F31D7C /* normalmap.v3.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = normalmap.v3.vsh; sourceTree = "<group>"; };
+		2DC35A9E0FCF2705987616E3 /* Controller3D+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Controller3D+OSX.m"; sourceTree = "<group>"; };
 		EF0BB2431A6E443400713C2E /* Circle2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle2D.h; sourceTree = "<group>"; };
 		EF0BB2441A6E443400713C2E /* Circle2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circle2D.m; sourceTree = "<group>"; };
+		EF1F34201A81375A00E15A6D /* normalmap-dots.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "normalmap-dots.png"; sourceTree = "<group>"; };
 		EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtoVisionOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF7E7CED1A695778009BD387 /* Camera2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera2D.m; sourceTree = "<group>"; };
 		EF7E7CEE1A695778009BD387 /* Button2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button2D.m; sourceTree = "<group>"; };
@@ -171,14 +177,14 @@
 		EF7E7CFB1A695778009BD387 /* Font2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Font2D.h; sourceTree = "<group>"; };
 		EF7E7CFC1A695778009BD387 /* Color2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color2D.h; sourceTree = "<group>"; };
 		EF7E7CFD1A695778009BD387 /* Image2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image2D.h; sourceTree = "<group>"; };
-		EF7E7CFE1A695778009BD387 /* Object2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object2D.h; sourceTree = "<group>"; };
+		EF7E7CFE1A695778009BD387 /* Mesh2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh2D.h; sourceTree = "<group>"; };
 		EF7E7CFF1A695778009BD387 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		EF7E7D001A695778009BD387 /* Buffer2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buffer2D.h; sourceTree = "<group>"; };
 		EF7E7D011A695778009BD387 /* Line2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Line2D.h; sourceTree = "<group>"; };
 		EF7E7D021A695778009BD387 /* Controller2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller2D.h; sourceTree = "<group>"; };
 		EF7E7D031A695778009BD387 /* Container2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container2D.h; sourceTree = "<group>"; };
 		EF7E7D041A695778009BD387 /* Container2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Container2D.m; sourceTree = "<group>"; };
-		EF7E7D051A695778009BD387 /* Object2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Object2D.m; sourceTree = "<group>"; };
+		EF7E7D051A695778009BD387 /* Mesh2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mesh2D.m; sourceTree = "<group>"; };
 		EF7E7D061A695778009BD387 /* Polygon2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Polygon2D.h; sourceTree = "<group>"; };
 		EF7E7D071A695778009BD387 /* Button2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button2D.h; sourceTree = "<group>"; };
 		EF7E7D081A695778009BD387 /* Controller2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller2D.m; sourceTree = "<group>"; };
@@ -190,29 +196,29 @@
 		EF7E7D0F1A695778009BD387 /* Program3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Program3D.m; sourceTree = "<group>"; };
 		EF7E7D101A695778009BD387 /* Pyramid3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pyramid3D.m; sourceTree = "<group>"; };
 		EF7E7D111A695778009BD387 /* Box3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box3D.h; sourceTree = "<group>"; };
-		EF7E7D121A695778009BD387 /* Object3D+OBJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Object3D+OBJ.h"; sourceTree = "<group>"; };
+		EF7E7D121A695778009BD387 /* Mesh3D+OBJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mesh3D+OBJ.h"; sourceTree = "<group>"; };
 		EF7E7D131A695778009BD387 /* Sphere3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sphere3D.m; sourceTree = "<group>"; };
 		EF7E7D141A695778009BD387 /* Container3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Container3D.m; sourceTree = "<group>"; };
-		EF7E7D151A695778009BD387 /* Object3D+OBJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Object3D+OBJ.m"; sourceTree = "<group>"; };
-		EF7E7D161A695778009BD387 /* Object3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Object3D.m; sourceTree = "<group>"; };
+		EF7E7D151A695778009BD387 /* Mesh3D+OBJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Mesh3D+OBJ.m"; sourceTree = "<group>"; };
+		EF7E7D161A695778009BD387 /* Mesh3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mesh3D.m; sourceTree = "<group>"; };
 		EF7E7D171A695778009BD387 /* Buffer3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buffer3D.h; sourceTree = "<group>"; };
 		EF7E7D181A695778009BD387 /* Container3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container3D.h; sourceTree = "<group>"; };
 		EF7E7D191A695778009BD387 /* Vector3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3D.h; sourceTree = "<group>"; };
 		EF7E7D1A1A695778009BD387 /* Sphere3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere3D.h; sourceTree = "<group>"; };
 		EF7E7D1B1A695778009BD387 /* Line3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Line3D.h; sourceTree = "<group>"; };
-		EF7E7D1C1A695778009BD387 /* Controller3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller3D.h; sourceTree = "<group>"; };
+		EF7E7D1C1A695778009BD387 /* Controller3D+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Controller3D+iOS.h"; sourceTree = "<group>"; };
 		EF7E7D1D1A695778009BD387 /* Ray3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ray3D.h; sourceTree = "<group>"; };
 		EF7E7D1E1A695778009BD387 /* Matrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4x4.h; sourceTree = "<group>"; };
 		EF7E7D1F1A695778009BD387 /* VectorIJK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorIJK.h; sourceTree = "<group>"; };
 		EF7E7D201A695778009BD387 /* Camera3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera3D.m; sourceTree = "<group>"; };
-		EF7E7D211A695778009BD387 /* Controller3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller3D.m; sourceTree = "<group>"; };
+		EF7E7D211A695778009BD387 /* Controller3D+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Controller3D+iOS.m"; sourceTree = "<group>"; };
 		EF7E7D221A695778009BD387 /* Line3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Line3D.m; sourceTree = "<group>"; };
 		EF7E7D231A695778009BD387 /* Light3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Light3D.m; sourceTree = "<group>"; };
 		EF7E7D251A695778009BD387 /* Quaternion3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion3D.h; sourceTree = "<group>"; };
 		EF7E7D271A695778009BD387 /* Buffer3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Buffer3D.m; sourceTree = "<group>"; };
 		EF7E7D281A695778009BD387 /* Box3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Box3D.m; sourceTree = "<group>"; };
 		EF7E7D291A695778009BD387 /* Camera3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera3D.h; sourceTree = "<group>"; };
-		EF7E7D2A1A695778009BD387 /* Object3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object3D.h; sourceTree = "<group>"; };
+		EF7E7D2A1A695778009BD387 /* Mesh3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh3D.h; sourceTree = "<group>"; };
 		EF7E7D2C1A695778009BD387 /* View3D+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View3D+OSX.m"; sourceTree = "<group>"; };
 		EF7E7D2D1A695778009BD387 /* View3D+OSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View3D+OSX.h"; sourceTree = "<group>"; };
 		EF7E7D2E1A695778009BD387 /* Window3D+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Window3D+OSX.m"; sourceTree = "<group>"; };
@@ -232,10 +238,6 @@
 		EF7E7D8A1A69587A009BD387 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		EF9755651A695BF0009FDB0B /* Spinning Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spinning Cube.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9755681A695BF0009FDB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF9755691A695BF0009FDB0B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		EF97556A1A695BF0009FDB0B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EF97556C1A695BF0009FDB0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		EF9755711A695BF1009FDB0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		EF9755851A695C49009FDB0B /* SpinningCubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpinningCubeController.h; sourceTree = "<group>"; };
 		EF9755861A695C49009FDB0B /* SpinningCubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpinningCubeController.m; sourceTree = "<group>"; };
 		EF9755921A695EFA009FDB0B /* ProtoVisionIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtoVisionIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -343,12 +345,12 @@
 				EF7E7D011A695778009BD387 /* Line2D.h */,
 				EF7E7CF51A695778009BD387 /* Line2D.m */,
 				EF7E7CFA1A695778009BD387 /* Matrix2x2.h */,
-				EF7E7CFE1A695778009BD387 /* Object2D.h */,
-				EF7E7D051A695778009BD387 /* Object2D.m */,
+				EF7E7CFE1A695778009BD387 /* Mesh2D.h */,
+				EF7E7D051A695778009BD387 /* Mesh2D.m */,
 				EF7E7D061A695778009BD387 /* Polygon2D.h */,
 				EF7E7CF01A695778009BD387 /* Polygon2D.m */,
-				2DC351669829C21A5A35985F /* Spatial2D.h */,
-				2DC357DB066F033C761AD314 /* Spatial2D.m */,
+				2DC351669829C21A5A35985F /* Object2D.h */,
+				2DC357DB066F033C761AD314 /* Object2D.m */,
 				EF7E7CF31A695778009BD387 /* Text2D.h */,
 				EF7E7CF21A695778009BD387 /* Text2D.m */,
 				EF7E7CEF1A695778009BD387 /* Texture2D.h */,
@@ -368,18 +370,16 @@
 				EF7E7D201A695778009BD387 /* Camera3D.m */,
 				EF7E7D181A695778009BD387 /* Container3D.h */,
 				EF7E7D141A695778009BD387 /* Container3D.m */,
-				EF7E7D1C1A695778009BD387 /* Controller3D.h */,
-				EF7E7D211A695778009BD387 /* Controller3D.m */,
 				EF7E7D0C1A695778009BD387 /* Light3D.h */,
 				EF7E7D231A695778009BD387 /* Light3D.m */,
 				EF7E7D1B1A695778009BD387 /* Line3D.h */,
 				EF7E7D221A695778009BD387 /* Line3D.m */,
 				EF7E7D0B1A695778009BD387 /* Matrix3x3.h */,
 				EF7E7D1E1A695778009BD387 /* Matrix4x4.h */,
-				EF7E7D2A1A695778009BD387 /* Object3D.h */,
-				EF7E7D161A695778009BD387 /* Object3D.m */,
-				EF7E7D121A695778009BD387 /* Object3D+OBJ.h */,
-				EF7E7D151A695778009BD387 /* Object3D+OBJ.m */,
+				EF7E7D2A1A695778009BD387 /* Mesh3D.h */,
+				EF7E7D161A695778009BD387 /* Mesh3D.m */,
+				EF7E7D121A695778009BD387 /* Mesh3D+OBJ.h */,
+				EF7E7D151A695778009BD387 /* Mesh3D+OBJ.m */,
 				EF7E7D0A1A695778009BD387 /* Plane3D.h */,
 				EF7E7D0D1A695778009BD387 /* Program3D.h */,
 				EF7E7D0F1A695778009BD387 /* Program3D.m */,
@@ -387,8 +387,8 @@
 				EF7E7D101A695778009BD387 /* Pyramid3D.m */,
 				EF7E7D251A695778009BD387 /* Quaternion3D.h */,
 				EF7E7D1D1A695778009BD387 /* Ray3D.h */,
-				2DC3547052F31DC443191CD7 /* Spatial3D.h */,
-				2DC3508C2567415E673B8440 /* Spatial3D.m */,
+				2DC3547052F31DC443191CD7 /* Object3D.h */,
+				2DC3508C2567415E673B8440 /* Object3D.m */,
 				EF7E7D1A1A695778009BD387 /* Sphere3D.h */,
 				EF7E7D131A695778009BD387 /* Sphere3D.m */,
 				EF7E7D191A695778009BD387 /* Vector3D.h */,
@@ -400,12 +400,14 @@
 		EF7E7D2B1A695778009BD387 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
+				EF7E7D311A695778009BD387 /* Info.plist */,
 				EF7E7D2D1A695778009BD387 /* View3D+OSX.h */,
 				EF7E7D2C1A695778009BD387 /* View3D+OSX.m */,
 				EF7E7D2F1A695778009BD387 /* Window3D+OSX.h */,
 				EF7E7D2E1A695778009BD387 /* Window3D+OSX.m */,
 				EF7E7D301A695778009BD387 /* Texture2D+OSX.m */,
-				EF7E7D311A695778009BD387 /* Info.plist */,
+				2DC355161528F6D6DC7B05DF /* Controller3D+OSX.h */,
+				2DC35A9E0FCF2705987616E3 /* Controller3D+OSX.m */,
 			);
 			path = OSX;
 			sourceTree = "<group>";
@@ -437,30 +439,23 @@
 		EF9755661A695BF0009FDB0B /* Spinning Cube */ = {
 			isa = PBXGroup;
 			children = (
-				EF9755691A695BF0009FDB0B /* AppDelegate.h */,
-				EF97556A1A695BF0009FDB0B /* AppDelegate.m */,
 				EF9755851A695C49009FDB0B /* SpinningCubeController.h */,
 				EF9755861A695C49009FDB0B /* SpinningCubeController.m */,
-				EF9755701A695BF1009FDB0B /* MainMenu.xib */,
-				EF9755671A695BF0009FDB0B /* Supporting Files */,
+				EF9755681A695BF0009FDB0B /* Info.plist */,
+				EF1F34201A81375A00E15A6D /* normalmap-dots.png */,
+				2DC3587FED835DE1D1F31D7C /* normalmap.v3.vsh */,
+				2DC3546BFDF1B932AAFA44F5 /* normalmap.v3.fsh */,
 			);
 			name = "Spinning Cube";
 			path = "Demos/Spinning Cube";
-			sourceTree = "<group>";
-		};
-		EF9755671A695BF0009FDB0B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				EF9755681A695BF0009FDB0B /* Info.plist */,
-				EF97556C1A695BF0009FDB0B /* main.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		EF9755AB1A695F1C009FDB0B /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				EF9755951A695EFA009FDB0B /* Info.plist */,
+				EF7E7D1C1A695778009BD387 /* Controller3D+iOS.h */,
+				EF7E7D211A695778009BD387 /* Controller3D+iOS.m */,
 				EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */,
 				EF9755AD1A695F1C009FDB0B /* Window3D+iOS.h */,
 				EF9755AE1A695F1C009FDB0B /* View3D+iOS.m */,
@@ -503,16 +498,16 @@
 			files = (
 				EF7E7D771A695778009BD387 /* ProtoVision.h in Headers */,
 				EF7E7D511A695778009BD387 /* Matrix3x3.h in Headers */,
-				EF7E7D451A695778009BD387 /* Object2D.h in Headers */,
+				EF7E7D451A695778009BD387 /* Mesh2D.h in Headers */,
 				EF7E7D491A695778009BD387 /* Controller2D.h in Headers */,
 				EF7E7D601A695778009BD387 /* Sphere3D.h in Headers */,
 				EF7E7D571A695778009BD387 /* Box3D.h in Headers */,
-				EF7E7D581A695778009BD387 /* Object3D+OBJ.h in Headers */,
+				EF7E7D581A695778009BD387 /* Mesh3D+OBJ.h in Headers */,
 				EF7E7D631A695778009BD387 /* Ray3D.h in Headers */,
 				EF7E7D4E1A695778009BD387 /* Button2D.h in Headers */,
 				EF7E7D531A695778009BD387 /* Program3D.h in Headers */,
 				EF7E7D6B1A695778009BD387 /* Quaternion3D.h in Headers */,
-				EF7E7D701A695778009BD387 /* Object3D.h in Headers */,
+				EF7E7D701A695778009BD387 /* Mesh3D.h in Headers */,
 				EF0BB2451A6E443400713C2E /* Circle2D.h in Headers */,
 				EF7E7D541A695778009BD387 /* Pyramid3D.h in Headers */,
 				EF7E7D741A695778009BD387 /* Window3D+OSX.h in Headers */,
@@ -532,7 +527,7 @@
 				EF7E7D361A695778009BD387 /* Texture2D.h in Headers */,
 				EF7E7D4D1A695778009BD387 /* Polygon2D.h in Headers */,
 				EF7E7D521A695778009BD387 /* Light3D.h in Headers */,
-				EF7E7D621A695778009BD387 /* Controller3D.h in Headers */,
+				EF7E7D621A695778009BD387 /* Controller3D+iOS.h in Headers */,
 				EF7E7D4A1A695778009BD387 /* Container2D.h in Headers */,
 				EF7E7D3E1A695778009BD387 /* Vector2D.h in Headers */,
 				EF7E7D461A695778009BD387 /* Box2D.h in Headers */,
@@ -540,8 +535,9 @@
 				EF7E7D611A695778009BD387 /* Line3D.h in Headers */,
 				EF7E7D3D1A695778009BD387 /* Camera2D.h in Headers */,
 				EF7E7D431A695778009BD387 /* Color2D.h in Headers */,
-				2DC3576B829F7032233142FD /* Spatial3D.h in Headers */,
-				2DC35758298CC124DD121BA3 /* Spatial2D.h in Headers */,
+				2DC3576B829F7032233142FD /* Object3D.h in Headers */,
+				2DC35758298CC124DD121BA3 /* Object2D.h in Headers */,
+				2DC35926042FA1ACAE258EA1 /* Controller3D+OSX.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,8 +549,8 @@
 				EF9755B41A695F1C009FDB0B /* Window3D+iOS.h in Headers */,
 				EF9755B31A695F1C009FDB0B /* View3D+iOS.h in Headers */,
 				EF9755B71A695F1C009FDB0B /* Gyro3D+iOS.h in Headers */,
-				2DC357560C78CFBF30DBD55B /* Spatial3D.h in Headers */,
-				2DC3594E14C6993C3B0290E8 /* Spatial2D.h in Headers */,
+				2DC357560C78CFBF30DBD55B /* Object3D.h in Headers */,
+				2DC3594E14C6993C3B0290E8 /* Object2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,6 +686,8 @@
 				EF7E7D821A695838009BD387 /* unlit.v1.fsh in Resources */,
 				EF7E7D841A695838009BD387 /* unlit.v3.vsh in Resources */,
 				EF7E7D831A695838009BD387 /* unlit.v3.fsh in Resources */,
+				2DC35EA7B7DB4A8F330954DE /* normalmap.v3.vsh in Resources */,
+				2DC3563C485E683226613CE4 /* normalmap.v3.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,7 +695,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9755721A695BF1009FDB0B /* MainMenu.xib in Resources */,
+				EF1F34211A81375A00E15A6D /* normalmap-dots.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,19 +720,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF7E7D4C1A695778009BD387 /* Object2D.m in Sources */,
+				EF7E7D4C1A695778009BD387 /* Mesh2D.m in Sources */,
 				EF7E7D691A695778009BD387 /* Light3D.m in Sources */,
 				EF7E7D5A1A695778009BD387 /* Container3D.m in Sources */,
 				EF7E7D341A695778009BD387 /* Camera2D.m in Sources */,
 				EF7E7D4F1A695778009BD387 /* Controller2D.m in Sources */,
-				EF7E7D5C1A695778009BD387 /* Object3D.m in Sources */,
+				EF7E7D5C1A695778009BD387 /* Mesh3D.m in Sources */,
 				EF0BB2471A6E443400713C2E /* Circle2D.m in Sources */,
 				EF7E7D381A695778009BD387 /* Box2D.m in Sources */,
 				EF7E7D3B1A695778009BD387 /* Buffer2D.m in Sources */,
-				EF7E7D5B1A695778009BD387 /* Object3D+OBJ.m in Sources */,
+				EF7E7D5B1A695778009BD387 /* Mesh3D+OBJ.m in Sources */,
 				EF7E7D661A695778009BD387 /* Camera3D.m in Sources */,
 				EF7E7D751A695778009BD387 /* Texture2D+OSX.m in Sources */,
-				EF7E7D671A695778009BD387 /* Controller3D.m in Sources */,
 				EF7E7D3F1A695778009BD387 /* Image2D.m in Sources */,
 				EF7E7D561A695778009BD387 /* Pyramid3D.m in Sources */,
 				EF7E7D681A695778009BD387 /* Line3D.m in Sources */,
@@ -747,8 +744,9 @@
 				EF7E7D6D1A695778009BD387 /* Buffer3D.m in Sources */,
 				EF7E7D711A695778009BD387 /* View3D+OSX.m in Sources */,
 				EF7E7D551A695778009BD387 /* Program3D.m in Sources */,
-				2DC357A829191268806C67C8 /* Spatial3D.m in Sources */,
-				2DC350AA273D437E9855C81A /* Spatial2D.m in Sources */,
+				2DC357A829191268806C67C8 /* Object3D.m in Sources */,
+				2DC350AA273D437E9855C81A /* Object2D.m in Sources */,
+				2DC35577AA4ABE62988BD907 /* Controller3D+OSX.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,8 +754,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF97556D1A695BF0009FDB0B /* main.m in Sources */,
-				EF97556B1A695BF0009FDB0B /* AppDelegate.m in Sources */,
 				EF9755871A695C49009FDB0B /* SpinningCubeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -774,16 +770,16 @@
 				EF9755BF1A696022009FDB0B /* Line2D.m in Sources */,
 				EF9755C01A696022009FDB0B /* Image2D.m in Sources */,
 				EF9755C11A696022009FDB0B /* Container2D.m in Sources */,
-				EF9755C21A696022009FDB0B /* Object2D.m in Sources */,
+				EF9755C21A696022009FDB0B /* Mesh2D.m in Sources */,
 				EF9755C31A696022009FDB0B /* Controller2D.m in Sources */,
 				EF9755C41A696022009FDB0B /* Program3D.m in Sources */,
 				EF9755C51A696022009FDB0B /* Pyramid3D.m in Sources */,
 				EF9755C61A696022009FDB0B /* Sphere3D.m in Sources */,
 				EF9755C71A696022009FDB0B /* Container3D.m in Sources */,
-				EF9755C81A696022009FDB0B /* Object3D+OBJ.m in Sources */,
-				EF9755C91A696022009FDB0B /* Object3D.m in Sources */,
+				EF9755C81A696022009FDB0B /* Mesh3D+OBJ.m in Sources */,
+				EF9755C91A696022009FDB0B /* Mesh3D.m in Sources */,
 				EF9755CA1A696022009FDB0B /* Camera3D.m in Sources */,
-				EF9755CB1A696022009FDB0B /* Controller3D.m in Sources */,
+				EF9755CB1A696022009FDB0B /* Controller3D+iOS.m in Sources */,
 				EF9755CC1A696022009FDB0B /* Line3D.m in Sources */,
 				EF9755CD1A696022009FDB0B /* Light3D.m in Sources */,
 				EF9755CF1A696022009FDB0B /* Buffer3D.m in Sources */,
@@ -792,8 +788,8 @@
 				EF9755B81A695F1C009FDB0B /* Window3D+iOS.m in Sources */,
 				EF9755B61A695F1C009FDB0B /* Texture2D+iOS.m in Sources */,
 				EF9755B51A695F1C009FDB0B /* View3D+iOS.m in Sources */,
-				2DC35744D3F68128FABE32CC /* Spatial3D.m in Sources */,
-				2DC3558471AFC659CEF0184A /* Spatial2D.m in Sources */,
+				2DC35744D3F68128FABE32CC /* Object3D.m in Sources */,
+				2DC3558471AFC659CEF0184A /* Object2D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,17 +817,6 @@
 			targetProxy = EF9755FB1A696199009FDB0B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		EF9755701A695BF1009FDB0B /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EF9755711A695BF1009FDB0B /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		EF7E7CE41A695484009BD387 /* Debug */ = {

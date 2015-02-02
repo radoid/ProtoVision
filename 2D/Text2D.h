@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Text2D : Object2D
+@interface Text2D : Mesh2D
 {
 	NSString *text;
 	Font2D *font;

@@ -72,6 +72,7 @@
  */
 
 - (void)prepareOpenGL {
+	NSAssert(!_controller, nil);
 	self.wantsBestResolutionOpenGLSurface = YES;
 	_backingFrame = [self convertRectToBacking:[self frame]];
 	glViewport(0, 0, _backingFrame.size.width, _backingFrame.size.height);
@@ -83,7 +84,7 @@
 	self.color = Color2DMake(0.8, 0.8, 0.8, 1);
 
 	_initialized = YES;
-	if (_controller && !_started) {
+	if (_controller && !_started) {  // TODO remove?
 		[_controller start];
 		_started = YES;
 	}
@@ -144,13 +145,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime {
 	@autoreleasepool {
-		[self updateAnimation];
+		if (_controller && _started)
+			[self updateAnimation];
 	}
 	return kCVReturnSuccess;
 }
 
 - (void)startAnimation {
-	NSAssert(_initialized && _started, nil);
+	NSAssert(_initialized, nil);
 	CGLLockContext([self.openGLContext CGLContextObj]);
 	[self.openGLContext makeCurrentContext];
 

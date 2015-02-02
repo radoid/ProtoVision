@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Pyramid3D : Object3D
+@interface Pyramid3D : Mesh3D
 
 - (id)initWithWidth:(float)width height:(float)height;
 

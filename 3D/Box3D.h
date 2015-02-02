@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Box3D : Object3D
+@interface Box3D : Mesh3D
 
 - (id)initWithWidth:(float)width height:(float)height depth:(float)depth;
 

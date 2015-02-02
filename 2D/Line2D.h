@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Line2D : Object2D
+@interface Line2D : Mesh2D
 
 - (id)initWithStart:(Vector2D)point1 end:(Vector2D)point2;
 

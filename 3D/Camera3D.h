@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Camera3D : Spatial3D <NSCopying>
+@interface Camera3D : Object3D <NSCopying>
 
 @property (nonatomic) float fovy, near, far, orientation;
 @property (nonatomic) Matrix4x4 projection;

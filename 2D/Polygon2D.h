@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Polygon2D : Object2D
+@interface Polygon2D : Mesh2D
 
 - (id)initWithRadius:(float)radius corners:(int)corners;
 

@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Image2D : Object2D <NSCopying>
+@interface Image2D : Mesh2D <NSCopying>
 {
 	int width, height;
 }

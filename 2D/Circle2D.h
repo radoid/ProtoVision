@@ -7,7 +7,7 @@
 
 #import "ProtoVision.h"
 
-@interface Circle2D : Object2D
+@interface Circle2D : Mesh2D
 
 - (id)initWithRadius:(float)radius steps:(int)steps;
 

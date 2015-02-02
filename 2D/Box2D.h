@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Box2D : Object2D
+@interface Box2D : Mesh2D
 
 - (id)initWithWidth:(float)width height:(float)height;
 

@@ -26,25 +26,25 @@
 	copy.scaleY = self.scaleY;
 	copy.scaleZ = self.scaleZ;
 	copy.rotation = self.rotation;
-	for (Object3D *child in children)
+	for (Mesh3D *child in children)
 		[copy add:[child copy]];
 	return copy;
 }
 
-- (void)add:(Object3D *)child {
+- (void)add:(Mesh3D *)child {
 	[children addObject:child];
 	child.parent = self;
 	[child recalculate];
 }
 
-- (void)remove:(Object3D *)child {
+- (void)remove:(Mesh3D *)child {
 	child.parent = nil;
 	[child recalculate];
 	[children removeObject:child];
 }
 
 - (void)removeAll {
-	for (Object3D *child in children) {
+	for (Mesh3D *child in children) {
 		child.parent = nil;
 		[child recalculate];
 	}
@@ -53,13 +53,13 @@
 
 - (void)recalculate {
 	[super recalculate];
-	for (Object3D *child in children)
+	for (Mesh3D *child in children)
 		[child recalculate];
 }
 
 - (float)radius {
 	float radius = _radius;
-	for (Object3D *child in children)
+	for (Mesh3D *child in children)
 		radius = max(radius, Vector3DLength(child.position) + child.radius);
 	NSAssert(!isnan(radius), nil);
 	return radius * self.scale;
@@ -67,24 +67,24 @@
 
 - (void)setColor:(Color2D)color {
 	[super setColor:color];
-	for (Object3D *child in self.children)
+	for (Mesh3D *child in self.children)
 		child.color = color;
 }
 
 - (void)setColorDark:(Color2D)color {
 	[super setColorDark:color];
-	for (Object3D *child in self.children)
+	for (Mesh3D *child in self.children)
 		child.colorDark = color;
 }
 
 - (void)setColorLight:(Color2D)color {
 	[super setColorLight:color];
-	for (Object3D *child in self.children)
+	for (Mesh3D *child in self.children)
 		child.colorLight = color;
 }
 
 - (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light opacity:(float)opacity {
-	for (Object3D *o in children)
+	for (Mesh3D *o in children)
 		if (o.opacity > 0) {
 			if ([o isKindOfClass:[Container3D class]])
 				[(Container3D *) o drawWithCamera:camera light:light opacity:opacity * o.opacity];

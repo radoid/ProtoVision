@@ -5,20 +5,20 @@
 // http://www.radoid.com/protovision/
 //
 
-#import "Object3D+OBJ.h"
+#import "Mesh3D+OBJ.h"
 
 typedef struct {
 	Vector3D position, normal;
 } Vertex;
 
 
-@implementation Object3D (OBJ)
+@implementation Mesh3D (OBJ)
 
-- (Object3D *)initWithOBJ:(NSString *)path {
+- (Mesh3D *)initWithOBJ:(NSString *)path {
 	return [self initWithOBJ:path size:0 rotation:Quaternion3DZero];
 }
 
-- (Object3D *)initWithOBJ:(NSString *)path size:(float)size rotation:(Quaternion3D)correction {
+- (Mesh3D *)initWithOBJ:(NSString *)path size:(float)size rotation:(Quaternion3D)correction {
 	int vertexcount, indexcount, normalcount;
 	Vertex *vertices = 0;
 	Vector3D *normals = 0;
@@ -105,7 +105,7 @@ typedef struct {
 
 @end
 /*
-public static Object3D loadOBJModel (GL2ES2 gl, String resourcepath, float size, Quaternion3D rotation, Program3D material) throws IOException {
+public static Mesh3D loadOBJModel (GL2ES2 gl, String resourcepath, float size, Quaternion3D rotation, Program3D material) throws IOException {
 	float scale = 1;
 
 	for (int phase = 0; phase < 2; phase++) {

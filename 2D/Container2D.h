@@ -8,15 +8,15 @@
 #import "ProtoVision.h"
 
 
-@interface Container2D : Object2D <NSCopying>
+@interface Container2D : Mesh2D <NSCopying>
 {
 //	@private
 	NSMutableArray *children;
 }
 @property (nonatomic, readonly) NSMutableArray *children;
 
-- (void)add:(Object2D *)child;
-- (void)remove:(Object2D *)child;
+- (void)add:(Mesh2D *)child;
+- (void)remove:(Mesh2D *)child;
 - (void)removeAll;
 
 - (id)findButtonAtLocation:(Vector2D)location;

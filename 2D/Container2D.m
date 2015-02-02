@@ -21,25 +21,25 @@
 
 - (id)copyWithZone:(NSZone *)zone {
 	Container2D *copy = (Container2D *) [super copyWithZone:zone];
-	for (Object2D *child in children)
+	for (Mesh2D *child in children)
 		[copy add:[child copy]];
 	return copy;
 }
 
-- (void)add:(Object2D *)child {
+- (void)add:(Mesh2D *)child {
 	[children addObject:child];
 	child.parent = self;
 	[child recalculate];
 }
 
-- (void)remove:(Object2D *)child {
+- (void)remove:(Mesh2D *)child {
 	child.parent = nil;
 	[child recalculate];
 	[children removeObject:child];
 }
 
 - (void)removeAll {
-	for (Object2D *child in children) {
+	for (Mesh2D *child in children) {
 		child.parent = nil;
 		[child recalculate];
 	}
@@ -48,12 +48,12 @@
 
 - (void)recalculate {
 	[super recalculate];
-	for (Object2D *child in children)
+	for (Mesh2D *child in children)
 		[child recalculate];
 }
 
 - (void)drawWithCamera:(Camera2D *)camera alpha:(float)alpha {
-	for (Object2D *o in children)
+	for (Mesh2D *o in children)
 		if (o.color.alpha > 0) {
 			if ([o isKindOfClass:[Container2D class]])
 				[(Container2D *)o drawWithCamera:camera alpha:alpha*o.color.alpha];

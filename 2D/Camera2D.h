@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Camera2D : Spatial2D
+@interface Camera2D : Object2D
 {
 	CGRect _frame;
 	float _near, _far;

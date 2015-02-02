@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Sphere3D : Object3D
+@interface Sphere3D : Mesh3D
 
 - (id)initWithRadius:(float)radius levels:(int)n;
 

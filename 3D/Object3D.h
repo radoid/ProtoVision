@@ -7,34 +7,42 @@
 
 #import "ProtoVision.h"
 
-@class Camera3D;
 
-
-@interface Object3D : Spatial3D <NSCopying>
+@interface Object3D : NSObject <NSCopying>
 {
-	Program3D *_program;
-	Buffer3D *_buffer;
-	Texture2D *_texture;
-	float _radius;
-	Color2D _color, _colorDark, _colorLight;
+	GLfloat _x, _y, _z;
+	GLfloat _rotationAngle;
+	Vector3D _rotationAxis;
+	Quaternion3D _rotation;
+	GLfloat _scaleX, _scaleY, _scaleZ;
+	Object3D __weak *_parent;
+	Matrix4x4 _localToWorld, _worldToLocal;
 }
-@property (nonatomic) Color2D color, colorDark, colorLight;
-@property (nonatomic) Buffer3D *buffer;
-@property (nonatomic) Program3D *program;
-@property (nonatomic) Texture2D *texture;
+@property (nonatomic) GLfloat x, y, z;
+@property (nonatomic) Vector3D position;
+@property (nonatomic, readonly) Vector3D forward, up, right;
+@property (nonatomic) GLfloat scale, scaleX, scaleY, scaleZ;
+@property (nonatomic) Vector3D rotationAxis;
+@property (nonatomic) GLfloat rotationAngle;
+@property (nonatomic) Quaternion3D rotation;
+@property (nonatomic, weak) Object3D *parent;
+@property (nonatomic) Matrix4x4 localToWorld, worldToLocal;
 
-- (id)initWithProgram:(Program3D *)initprogram buffer:(Buffer3D *)initbuffer;
-- (id)initWithBuffer:(Buffer3D *)initbuffer;
+- (id)initWithPosition:(Vector3D)position direction:(Vector3D)forward up:(Vector3D)up;
 
-- (id)initWithProgram:(Program3D *)initprogram mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
+- (void)rotateByAxis:(Vector3D)axis angle:(float)angle;
+- (void)rotateByQuaternion:(Quaternion3D)q;
+- (void)rotateAround:(Vector3D)point byQuaternion:(Quaternion3D)q;
 
-- (float)radius;
+- (void)rotateAround:(Vector3D)point byAxis:(Vector3D)axis angle:(float)angle;
 
-- (float)opacity;
-- (void)setOpacity:(float)opacity;
+- (void)directTo:(Vector3D)forward up:(Vector3D)up;
+- (void)lookAt:(Vector3D)center up:(Vector3D)up;
 
-- (void)drawWithCamera:(Camera3D *)camera;
-- (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light;
+- (void)setPosition:(Vector3D)position direction:(Vector3D)forward up:(Vector3D)up;
+
+- (void)setPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up;
+
+- (void)recalculate;
 
 @end

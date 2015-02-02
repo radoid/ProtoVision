@@ -8,14 +8,14 @@
 #import "ProtoVision.h"
 
 
-@interface Container3D : Object3D <NSCopying>
+@interface Container3D : Mesh3D <NSCopying>
 {
 	NSMutableArray *children;
 }
 @property (nonatomic, readonly) NSMutableArray *children;
 
-- (void)add:(Object3D *)child;
-- (void)remove:(Object3D *)child;
+- (void)add:(Mesh3D *)child;
+- (void)remove:(Mesh3D *)child;
 - (void)removeAll;
 
 @end

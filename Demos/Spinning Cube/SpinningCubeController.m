@@ -48,14 +48,14 @@
 	float radius = _view.frame.size.height/5;
 
 	float angle = (location.x - dragging.x) / radius * 180/M_PI;
-	[(Object3D *)[scene.children objectAtIndex:0] rotateByAxis:camera.up angle:angle];
+	[(Mesh3D *)[scene.children objectAtIndex:0] rotateByAxis:camera.up angle:angle];
 	angle = - (location.y - dragging.y) / radius * 180/M_PI;
-	[(Object3D *)[scene.children objectAtIndex:0] rotateByAxis:camera.right angle:angle];
+	[(Mesh3D *)[scene.children objectAtIndex:0] rotateByAxis:camera.right angle:angle];
 
 	/*Vector3D movement = { location.x - dragging.x, location.y - dragging.y, 0 };
 	 Vector3D axis = Vector3DRotateWithAxisAngle(camera3d.up, camera3d.forward, - atan2f(movement.y, movement.x) * 180/M_PI);
 	 float angle = Vector3DLength(movement) / radius / M_PI * 180;
-	 [(Object3D *)[scene3d.children objectAtIndex:0] rotateByAxis:axis angle:angle];*/
+	 [(Mesh3D *)[scene3d.children objectAtIndex:0] rotateByAxis:axis angle:angle];*/
 
 	dragging = location;
 	return YES;

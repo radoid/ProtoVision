@@ -20,8 +20,8 @@ static Button2D *_button;
 	return self;
 }
 
-- (void)setView:(View3D *)initview {
-	_view = initview;
+- (void)setView:(View3D *)view {
+	_view = view;
 	[self reshape];
 }
 

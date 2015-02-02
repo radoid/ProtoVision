@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Object3D (OBJ)
+@interface Mesh3D (OBJ)
 
 - (id)initWithOBJ:(NSString *)path;
 - (id)initWithOBJ:(NSString *)path size:(float)size rotation:(Quaternion3D)correction;
