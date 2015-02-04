@@ -12,11 +12,11 @@
 
 @property (nonatomic) BOOL hasPosition, hasDirection;
 @property (nonatomic) Vector3D position, direction;
-@property (nonatomic) Color2D ambient, diffuse;
+@property (nonatomic) Color2D color;
 
 - (id)initWithPosition:(Vector3D)position;
 - (id)initWithDirection:(Vector3D)direction;
-- (id)initWithPosition:(Vector3D)position ambient:(Color2D)ambient diffuse:(Color2D)diffuse;
-- (id)initWithDirection:(Vector3D)direction ambient:(Color2D)ambient diffuse:(Color2D)diffuse;
+- (id)initWithPosition:(Vector3D)position color:(Color2D)ambient;
+- (id)initWithDirection:(Vector3D)direction color:(Color2D)ambient;
 
 @end

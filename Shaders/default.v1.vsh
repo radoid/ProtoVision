@@ -1,7 +1,7 @@
 uniform mat4 uProjection;
 uniform mat4 uModelView;
 uniform mat3 uNormal;
-uniform highp vec4 uColor, uColorDark, uColorLight;
+uniform highp vec4 uColor, uColorAmbient;
 uniform highp vec3 uLight, uEye;
 attribute vec3 aPosition;
 attribute vec3 aNormal;
@@ -48,7 +48,7 @@ vec4 hsl2rgb(vec4 hsl) {
 
 void main (void) {
 	float intensity = (dot(-uLight, normalize(uNormal * aNormal)) + 1.0)/2.0;
-	vColor = hsl2rgb(mix(uColorDark, uColorLight, intensity));
+	vColor = hsl2rgb(mix(uColorAmbient, uColor, intensity));
 
 	gl_Position = uProjection * uModelView * vec4(aPosition, 1.0);
 }

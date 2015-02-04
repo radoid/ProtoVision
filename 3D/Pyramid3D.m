@@ -42,7 +42,7 @@
 			10, 11, 12,
 			13, 14, 15,
 		};
-		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLES vertices:vertices vertexCount:sizeof(vertices)/sizeof(GLfloat)/8 indices:indices indexCount:sizeof(indices)/sizeof(GLushort) vertexSize:3 texCoordsSize:2 normalSize:3 colorSize:0 isDynamic:NO];
+		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLES vertices:vertices vertexCount:sizeof(vertices) / sizeof(GLfloat) / 8 indices:indices indexCount:sizeof(indices) / sizeof(GLushort) vertexSize:3 texCoordsSize:2 normalSize:3 tangentSize:0 colorSize:0 isDynamic:NO];
 	}
 	if ((self = [super initWithBuffer:shared])) {
 		self.scaleX = width;

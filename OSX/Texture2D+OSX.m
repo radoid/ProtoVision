@@ -57,8 +57,100 @@
 - (NSString*)description {
 	return [NSString stringWithFormat:@"<%@ = %8@ | Name = %i | Dimensions = %.0dx%.0d | Scale = %0.f | Coordinates = (%.2f, %.2f, %.2f x %.2f)>", [self class], self, name, width, height, scale, coords.origin.x, coords.origin.y, coords.size.width, coords.size.height];
 }
+/*
+typedef struct {
+	void *data;
+	GLfloat width;
+	GLfloat height;
+} TextureData;
 
-- (id)initWithImageNamed:(NSString *)imagename {
++ (TextureData)loadPngTexture:(NSString *)fileName {
+	CFURLRef textureURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(),
+												  (CFStringRef)fileName,
+												  CFSTR("png"),
+												  NULL);
+	NSAssert(textureURL, @"Texture name invalid");
+
+	CGImageSourceRef imageSource = CGImageSourceCreateWithURL(textureURL, NULL);
+	NSAssert(imageSource, @"Invalid Image Path.");
+	NSAssert((CGImageSourceGetCount(imageSource) > 0), @"No Image in Image Source.");
+	CFRelease(textureURL);
+
+	CGImageRef image = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
+	NSAssert(image, @"Image not created.");
+	CFRelease(imageSource);
+
+	GLuint width = CGImageGetWidth(image);
+	GLuint height = CGImageGetHeight(image);
+
+	void *data = malloc(width * height * 4);
+
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	NSAssert(colorSpace, @"Colorspace not created.");
+
+	CGContextRef context = CGBitmapContextCreate(data,
+												 width,
+												 height,
+												 8,
+												 width * 4,
+												 colorSpace,
+												 kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Host);
+	NSAssert(context, @"Context not created.");
+
+	CGColorSpaceRelease(colorSpace);
+	// Flip so that it isn't upside-down
+	CGContextTranslateCTM(context, 0, height);
+	CGContextScaleCTM(context, 1.0f, -1.0f);
+	CGContextSetBlendMode(context, kCGBlendModeCopy);
+	CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
+	CGImageRelease(image);
+	CGContextRelease(context);
+
+	return (TextureData) {data, width, height};
+}
+*/
+- (id)initWithImageNamed:(NSString *)filename {
+	if ((self = [super init])) {
+		CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[[NSBundle mainBundle] URLForImageResource:filename], NULL);
+		NSAssert(imageSource, @"Image not found");
+		CGImageRef image = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
+		CFRelease(imageSource);
+		width  = CGImageGetWidth (image);
+		height = CGImageGetHeight(image);
+		CGRect rect = CGRectMake(0.0f, 0.0f, width, height);
+
+		void *imageData = malloc(width * height * 4);
+		CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
+		CGContextRef ctx = CGBitmapContextCreate(imageData, width, height, 8, width * 4, colourSpace, kCGBitmapByteOrder32Host | kCGImageAlphaPremultipliedFirst);
+		CFRelease(colourSpace);
+
+		CGContextTranslateCTM(ctx, 0, height);
+		CGContextScaleCTM(ctx, 1.0f, -1.0f);
+
+		CGContextSetBlendMode(ctx, kCGBlendModeCopy);
+		CGContextDrawImage(ctx, rect, image);
+		CGContextRelease(ctx);
+		CFRelease(image);
+
+		glGenTextures(1, &name);
+		glBindTexture(GL_TEXTURE_2D, name);
+
+		glPixelStorei(GL_UNPACK_ROW_LENGTH, (GLint)width);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, (int)width, (int)height, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, imageData);
+		free(imageData);
+
+		GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error %x", err);
+	}
+	return self;
+}
+
+- (id)initWithImageNamed0:(NSString *)imagename {
 	if ((self = [super init])) {
 		NSImage *image = [NSImage imageNamed:imagename];
 		if (!image) {

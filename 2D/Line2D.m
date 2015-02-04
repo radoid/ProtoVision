@@ -18,7 +18,7 @@
 			0, 0, 0,
 			1, 1, 0,
 		};
-		shared = [[Buffer3D alloc] initWithMode:GL_LINES vertices:vertices vertexCount:2 indices:nil indexCount:0 vertexSize:3 texCoordsSize:0 normalSize:0 colorSize:0 isDynamic:NO];
+		shared = [[Buffer3D alloc] initWithMode:GL_LINES vertices:vertices vertexCount:2 indices:nil indexCount:0 vertexSize:3 texCoordsSize:0 normalSize:0 tangentSize:0 colorSize:0 isDynamic:NO];
 	}
 	if ((self = [super initWithBuffer:shared])) {
 		Vector2D scale = Vector2DSubtract(point2, point1);

@@ -13,7 +13,8 @@
 
 - (id)init {
 	if ((self = [super init])) {
-		[self setColor:Color2DMake(1, 0, 1, 1)];
+		_color = _color = Color2DMake(1, 1, 1, 1);
+		_colorAmbient = Color2DMake(0, 0, 0, 1);
 	}
 	return self;
 }
@@ -30,17 +31,19 @@
 	return [self initWithProgram:[Program3D defaultProgram] buffer:buffer];
 }
 
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
-	for (int i=0, address = 0; i < vcount; i++, address += vertexsize+texcoordssize+normalsize+colorsize) {
+- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize tangentSize:(int)tansize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
+	int stride = vertexsize+texcoordssize+normalsize+tansize+colorsize;
+	for (int i=0, address = 0; i < vcount; i++, address += stride) {
 		Vector3D v = Vector3DMake(vbuffer[address+0], vbuffer[address+1], vbuffer[address+2]);
 		_radius = max(_radius, Vector3DLength(v));
 		NSAssert(!isnan(_radius) && isfinite(_radius), nil);
 	}
-	return [self initWithProgram:[Program3D defaultProgram] buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic]];
+	//[Mesh3D calculateTangentsWithVertices:vbuffer vertexCount:vcount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize tangentSize:tansize colorSize:colorsize];
+	return [self initWithProgram:[Program3D defaultProgram] buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize tangentSize:tansize colorSize:colorsize isDynamic:dynamic]];
 }
 
-- (id)initWithProgram:(Program3D *)program mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
-	return [self initWithProgram:program buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize colorSize:colorsize isDynamic:dynamic]];
+- (id)initWithProgram:(Program3D *)program mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize tangentSize:(int)tansize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
+	return [self initWithProgram:program buffer:[[Buffer3D alloc] initWithMode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize normalSize:normalsize tangentSize:tansize colorSize:colorsize isDynamic:dynamic]];
 }
 
 - (void)setProgram:(Program3D *)program {
@@ -74,11 +77,19 @@
 	Mesh3D *copy = [super copyWithZone:zone];
 	copy.buffer = _buffer;
 	copy.program = _program;
+	copy.colorAmbient = _colorAmbient;
 	copy.color = _color;
-	copy.colorDark = _colorDark;
-	copy.colorLight = _colorLight;
-	copy.texture = _texture;
+	copy.colorMap = _colorMap;
 	return copy;
+}
+
++ (void)calculateTangentsWithVertices:(GLfloat *)vbuffer vertexCount:(int)vcount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize tangentSize:(int)tansize colorSize:(int)colorsize {
+	int stride = vertexsize+texcoordssize+normalsize+tansize+colorsize;
+	for (int i=0; i < vcount; i++) {
+		vbuffer[i*stride + vertexsize+texcoordssize+normalsize + 0] = -1;
+		vbuffer[i*stride + vertexsize+texcoordssize+normalsize + 1] = 0;
+		vbuffer[i*stride + vertexsize+texcoordssize+normalsize + 2] = 0;
+	}
 }
 
 - (float)radius {
@@ -87,8 +98,8 @@
 
 - (void)setColor:(Color2D)color {
 	_color = color;
-	_colorDark =  Color2DMake(color.r+.03*(color.r < 0.17 ? -1 : +1), color.g, color.b/2., color.alpha);
- 	_colorLight = Color2DMake(color.r+.03*(color.r < 0.17 ? +1 : -1), color.g, 1-(1-color.b)/2., color.alpha);  // TODO
+	//_colorAmbient =  Color2DMake(color.r+.03*(color.r < 0.17 ? -1 : +1), color.g, color.b/2., color.alpha);
+ 	//_color = Color2DMake(color.r+.03*(color.r < 0.17 ? +1 : -1), color.g, 1-(1-color.b)/2., color.alpha);  // TODO
 }
 
 - (float)opacity {
@@ -105,7 +116,7 @@
 	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[_program useWithProjection:camera.projection modelView:modelview color:_color texture:_texture];
+	[_program useWithProjection:camera.projection modelView:modelview color:_color texture:_colorMap];
 	[_buffer draw];
 
 	if (_color.alpha < 1)
@@ -116,21 +127,13 @@
 	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
 	Matrix3x3 normal = Matrix3x3Transpose(Matrix4x4Invert3x3(_localToWorld));
 
-	if (_color.alpha < 1 || _colorDark.alpha < 1 || _colorLight.alpha < 1)
+	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[_program useWithProjection:camera.projection
-					  modelView:modelview
-						 normal:normal
-					  colorDark:_colorDark
-					 colorLight:_colorLight
-					  colorSize:_buffer.colorsize
-						texture:_texture
-						  light:light.direction
-					   position:camera.position];
+	[_program useWithProjection:camera.projection modelView:modelview normal:normal colorAmbient:_colorAmbient color:_color colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap light:light.direction position:camera.position];
 	[_buffer draw];
 
-	if (_color.alpha < 1 || _colorDark.alpha < 1 || _colorLight.alpha < 1)
+	if (_color.alpha < 1)
 		glDisable(GL_BLEND);
 }
 

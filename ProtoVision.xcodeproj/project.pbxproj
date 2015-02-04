@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2DC350AA273D437E9855C81A /* Object2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC357DB066F033C761AD314 /* Object2D.m */; };
+		2DC35215D5C528C52C5702C7 /* Disc3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC357D00E404A7A76CC6CCD /* Disc3D.h */; };
 		2DC35577AA4ABE62988BD907 /* Controller3D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC35A9E0FCF2705987616E3 /* Controller3D+OSX.m */; };
 		2DC3558471AFC659CEF0184A /* Object2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC357DB066F033C761AD314 /* Object2D.m */; };
 		2DC3563C485E683226613CE4 /* normalmap.v3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3546BFDF1B932AAFA44F5 /* normalmap.v3.fsh */; };
@@ -18,12 +19,17 @@
 		2DC357A829191268806C67C8 /* Object3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC3508C2567415E673B8440 /* Object3D.m */; };
 		2DC35926042FA1ACAE258EA1 /* Controller3D+OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC355161528F6D6DC7B05DF /* Controller3D+OSX.h */; };
 		2DC3594E14C6993C3B0290E8 /* Object2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC351669829C21A5A35985F /* Object2D.h */; };
+		2DC35AC21F263578B1FB1BF3 /* Disc3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC357D00E404A7A76CC6CCD /* Disc3D.h */; };
+		2DC35CD10820BD562C4BD2D1 /* Disc3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC35BF954A7C843C2B9A3B6 /* Disc3D.m */; };
+		2DC35DA15B1F65988715C01C /* Disc3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC35BF954A7C843C2B9A3B6 /* Disc3D.m */; };
 		2DC35EA7B7DB4A8F330954DE /* normalmap.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3587FED835DE1D1F31D7C /* normalmap.v3.vsh */; };
 		EF0BB2451A6E443400713C2E /* Circle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF0BB2431A6E443400713C2E /* Circle2D.h */; };
 		EF0BB2461A6E443400713C2E /* Circle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF0BB2431A6E443400713C2E /* Circle2D.h */; };
 		EF0BB2471A6E443400713C2E /* Circle2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0BB2441A6E443400713C2E /* Circle2D.m */; };
 		EF0BB2481A6E443400713C2E /* Circle2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0BB2441A6E443400713C2E /* Circle2D.m */; };
 		EF1F34211A81375A00E15A6D /* normalmap-dots.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1F34201A81375A00E15A6D /* normalmap-dots.png */; };
+		EF1F34301A81611100E15A6D /* normalmap-10pence.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF1F342E1A81611100E15A6D /* normalmap-10pence.jpg */; };
+		EF1F34311A81611100E15A6D /* normalmap-10pence2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF1F342F1A81611100E15A6D /* normalmap-10pence2.jpg */; };
 		EF7E7D341A695778009BD387 /* Camera2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CED1A695778009BD387 /* Camera2D.m */; };
 		EF7E7D361A695778009BD387 /* Texture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CEF1A695778009BD387 /* Texture2D.h */; };
 		EF7E7D371A695778009BD387 /* Polygon2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CF01A695778009BD387 /* Polygon2D.m */; };
@@ -94,6 +100,8 @@
 		EF7E7D881A695838009BD387 /* default.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D801A695838009BD387 /* default.v3.vsh */; };
 		EF7E7D891A695838009BD387 /* default.v1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D811A695838009BD387 /* default.v1.vsh */; };
 		EF7E7D8B1A69587A009BD387 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7E7D8A1A69587A009BD387 /* OpenGL.framework */; };
+		EF7F1E641A8204AE009C8E01 /* normalmap-coin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF7F1E631A8204AE009C8E01 /* normalmap-coin.jpg */; };
+		EF7F1E6A1A829894009C8E01 /* blender.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF7F1E691A829894009C8E01 /* blender.jpg */; };
 		EF9755871A695C49009FDB0B /* SpinningCubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755861A695C49009FDB0B /* SpinningCubeController.m */; };
 		EF9755881A695C7A009FDB0B /* ProtoVisionOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */; };
 		EF9755B31A695F1C009FDB0B /* View3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */; };
@@ -153,12 +161,16 @@
 		2DC3546BFDF1B932AAFA44F5 /* normalmap.v3.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = normalmap.v3.fsh; sourceTree = "<group>"; };
 		2DC3547052F31DC443191CD7 /* Object3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object3D.h; sourceTree = "<group>"; };
 		2DC355161528F6D6DC7B05DF /* Controller3D+OSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Controller3D+OSX.h"; sourceTree = "<group>"; };
+		2DC357D00E404A7A76CC6CCD /* Disc3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Disc3D.h; sourceTree = "<group>"; };
 		2DC357DB066F033C761AD314 /* Object2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Object2D.m; sourceTree = "<group>"; };
 		2DC3587FED835DE1D1F31D7C /* normalmap.v3.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = normalmap.v3.vsh; sourceTree = "<group>"; };
 		2DC35A9E0FCF2705987616E3 /* Controller3D+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Controller3D+OSX.m"; sourceTree = "<group>"; };
+		2DC35BF954A7C843C2B9A3B6 /* Disc3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Disc3D.m; sourceTree = "<group>"; };
 		EF0BB2431A6E443400713C2E /* Circle2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle2D.h; sourceTree = "<group>"; };
 		EF0BB2441A6E443400713C2E /* Circle2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circle2D.m; sourceTree = "<group>"; };
 		EF1F34201A81375A00E15A6D /* normalmap-dots.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "normalmap-dots.png"; sourceTree = "<group>"; };
+		EF1F342E1A81611100E15A6D /* normalmap-10pence.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "normalmap-10pence.jpg"; sourceTree = "<group>"; };
+		EF1F342F1A81611100E15A6D /* normalmap-10pence2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "normalmap-10pence2.jpg"; sourceTree = "<group>"; };
 		EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtoVisionOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF7E7CED1A695778009BD387 /* Camera2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera2D.m; sourceTree = "<group>"; };
 		EF7E7CEE1A695778009BD387 /* Button2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button2D.m; sourceTree = "<group>"; };
@@ -236,6 +248,8 @@
 		EF7E7D801A695838009BD387 /* default.v3.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v3.vsh; sourceTree = "<group>"; };
 		EF7E7D811A695838009BD387 /* default.v1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v1.vsh; sourceTree = "<group>"; };
 		EF7E7D8A1A69587A009BD387 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		EF7F1E631A8204AE009C8E01 /* normalmap-coin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "normalmap-coin.jpg"; sourceTree = "<group>"; };
+		EF7F1E691A829894009C8E01 /* blender.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blender.jpg; sourceTree = "<group>"; };
 		EF9755651A695BF0009FDB0B /* Spinning Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spinning Cube.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9755681A695BF0009FDB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF9755851A695C49009FDB0B /* SpinningCubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpinningCubeController.h; sourceTree = "<group>"; };
@@ -347,10 +361,10 @@
 				EF7E7CFA1A695778009BD387 /* Matrix2x2.h */,
 				EF7E7CFE1A695778009BD387 /* Mesh2D.h */,
 				EF7E7D051A695778009BD387 /* Mesh2D.m */,
-				EF7E7D061A695778009BD387 /* Polygon2D.h */,
-				EF7E7CF01A695778009BD387 /* Polygon2D.m */,
 				2DC351669829C21A5A35985F /* Object2D.h */,
 				2DC357DB066F033C761AD314 /* Object2D.m */,
+				EF7E7D061A695778009BD387 /* Polygon2D.h */,
+				EF7E7CF01A695778009BD387 /* Polygon2D.m */,
 				EF7E7CF31A695778009BD387 /* Text2D.h */,
 				EF7E7CF21A695778009BD387 /* Text2D.m */,
 				EF7E7CEF1A695778009BD387 /* Texture2D.h */,
@@ -380,6 +394,8 @@
 				EF7E7D161A695778009BD387 /* Mesh3D.m */,
 				EF7E7D121A695778009BD387 /* Mesh3D+OBJ.h */,
 				EF7E7D151A695778009BD387 /* Mesh3D+OBJ.m */,
+				2DC3547052F31DC443191CD7 /* Object3D.h */,
+				2DC3508C2567415E673B8440 /* Object3D.m */,
 				EF7E7D0A1A695778009BD387 /* Plane3D.h */,
 				EF7E7D0D1A695778009BD387 /* Program3D.h */,
 				EF7E7D0F1A695778009BD387 /* Program3D.m */,
@@ -387,12 +403,12 @@
 				EF7E7D101A695778009BD387 /* Pyramid3D.m */,
 				EF7E7D251A695778009BD387 /* Quaternion3D.h */,
 				EF7E7D1D1A695778009BD387 /* Ray3D.h */,
-				2DC3547052F31DC443191CD7 /* Object3D.h */,
-				2DC3508C2567415E673B8440 /* Object3D.m */,
 				EF7E7D1A1A695778009BD387 /* Sphere3D.h */,
 				EF7E7D131A695778009BD387 /* Sphere3D.m */,
 				EF7E7D191A695778009BD387 /* Vector3D.h */,
 				EF7E7D1F1A695778009BD387 /* VectorIJK.h */,
+				2DC35BF954A7C843C2B9A3B6 /* Disc3D.m */,
+				2DC357D00E404A7A76CC6CCD /* Disc3D.h */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -442,7 +458,11 @@
 				EF9755851A695C49009FDB0B /* SpinningCubeController.h */,
 				EF9755861A695C49009FDB0B /* SpinningCubeController.m */,
 				EF9755681A695BF0009FDB0B /* Info.plist */,
+				EF7F1E631A8204AE009C8E01 /* normalmap-coin.jpg */,
 				EF1F34201A81375A00E15A6D /* normalmap-dots.png */,
+				EF1F342E1A81611100E15A6D /* normalmap-10pence.jpg */,
+				EF1F342F1A81611100E15A6D /* normalmap-10pence2.jpg */,
+				EF7F1E691A829894009C8E01 /* blender.jpg */,
 				2DC3587FED835DE1D1F31D7C /* normalmap.v3.vsh */,
 				2DC3546BFDF1B932AAFA44F5 /* normalmap.v3.fsh */,
 			);
@@ -538,6 +558,7 @@
 				2DC3576B829F7032233142FD /* Object3D.h in Headers */,
 				2DC35758298CC124DD121BA3 /* Object2D.h in Headers */,
 				2DC35926042FA1ACAE258EA1 /* Controller3D+OSX.h in Headers */,
+				2DC35AC21F263578B1FB1BF3 /* Disc3D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +572,7 @@
 				EF9755B71A695F1C009FDB0B /* Gyro3D+iOS.h in Headers */,
 				2DC357560C78CFBF30DBD55B /* Object3D.h in Headers */,
 				2DC3594E14C6993C3B0290E8 /* Object2D.h in Headers */,
+				2DC35215D5C528C52C5702C7 /* Disc3D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,7 +717,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF1F34301A81611100E15A6D /* normalmap-10pence.jpg in Resources */,
 				EF1F34211A81375A00E15A6D /* normalmap-dots.png in Resources */,
+				EF7F1E641A8204AE009C8E01 /* normalmap-coin.jpg in Resources */,
+				EF1F34311A81611100E15A6D /* normalmap-10pence2.jpg in Resources */,
+				EF7F1E6A1A829894009C8E01 /* blender.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,6 +773,7 @@
 				2DC357A829191268806C67C8 /* Object3D.m in Sources */,
 				2DC350AA273D437E9855C81A /* Object2D.m in Sources */,
 				2DC35577AA4ABE62988BD907 /* Controller3D+OSX.m in Sources */,
+				2DC35CD10820BD562C4BD2D1 /* Disc3D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +817,7 @@
 				EF9755B51A695F1C009FDB0B /* View3D+iOS.m in Sources */,
 				2DC35744D3F68128FABE32CC /* Object3D.m in Sources */,
 				2DC3558471AFC659CEF0184A /* Object2D.m in Sources */,
+				2DC35DA15B1F65988715C01C /* Disc3D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

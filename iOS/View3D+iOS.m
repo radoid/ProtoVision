@@ -152,8 +152,8 @@
 	[context presentRenderbuffer:GL_RENDERBUFFER];
 }
 
-- (void)setColor:(Color2D)newcolor	{
-	_color = newcolor;
+- (void)setColor:(Color2D)color	{
+	_color = color;
 	glClearColor(_color.r, _color.g, _color.b, 1);
 	[self setNeedsDisplay];
 }

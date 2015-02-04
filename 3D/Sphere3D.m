@@ -42,7 +42,7 @@ typedef struct {
 		indices[m++] = (short) (sizeof(vertices)/sizeof(Vertex) - 1);
 	}
 
-	return [super initWithMode:GL_TRIANGLE_STRIP vertices:(GLfloat*)vertices vertexCount:sizeof(vertices)/sizeof(Vertex) indices:indices indexCount:sizeof(indices)/sizeof(GLushort) vertexSize:3 texCoordsSize:0 normalSize:3 colorSize:0 isDynamic:NO];
+	return [super initWithMode:GL_TRIANGLE_STRIP vertices:(GLfloat *) vertices vertexCount:sizeof(vertices) / sizeof(Vertex) indices:indices indexCount:sizeof(indices) / sizeof(GLushort) vertexSize:3 texCoordsSize:0 normalSize:3 tangentSize:0 colorSize:0 isDynamic:NO];
 }
 
 @end

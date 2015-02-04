@@ -1,12 +1,12 @@
-uniform bool uTexture;
-uniform sampler2D uTexSampler;
+uniform bool uUseColorMap;
+uniform sampler2D uColorMapSampler;
 varying vec4 vColor;
-varying vec2 vTexture;
+varying vec2 vTextureUV;
 out vec4 fragColor;
 
 void main(void) {
-	if (uTexture)
-		gl_FragColor = vec4(texture(uTexSampler, vTexture).xyz, vColor.w);
+	if (uUseColorMap)
+		gl_FragColor = vec4(texture(uColorMapSampler, vTextureUV).xyz, vColor.w);
 	else
 		gl_FragColor = vColor;
 }

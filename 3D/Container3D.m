@@ -71,16 +71,10 @@
 		child.color = color;
 }
 
-- (void)setColorDark:(Color2D)color {
-	[super setColorDark:color];
+- (void)setColorAmbient:(Color2D)color {
+	[super setColorAmbient:color];
 	for (Mesh3D *child in self.children)
-		child.colorDark = color;
-}
-
-- (void)setColorLight:(Color2D)color {
-	[super setColorLight:color];
-	for (Mesh3D *child in self.children)
-		child.colorLight = color;
+		child.colorAmbient = color;
 }
 
 - (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light opacity:(float)opacity {

@@ -12,22 +12,19 @@
 
 @interface Mesh3D : Object3D <NSCopying>
 {
-	Program3D *_program;
-	Buffer3D *_buffer;
-	Texture2D *_texture;
 	float _radius;
-	Color2D _color, _colorDark, _colorLight;
 }
-@property (nonatomic) Color2D color, colorDark, colorLight;
 @property (nonatomic) Buffer3D *buffer;
 @property (nonatomic) Program3D *program;
-@property (nonatomic) Texture2D *texture;
+@property (nonatomic) Texture2D *colorMap, *normalMap;
+@property (nonatomic) Color2D colorAmbient, color;
 
 - (id)initWithProgram:(Program3D *)program buffer:(Buffer3D *)buffer;
 - (id)initWithBuffer:(Buffer3D *)buffer;
 
-- (id)initWithProgram:(Program3D *)program mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
+- (id)initWithProgram:(Program3D *)program mode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize tangentSize:(int)tansize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
+
+- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize tangentSize:(int)tansize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
 
 - (float)radius;
 

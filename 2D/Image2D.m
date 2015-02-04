@@ -96,20 +96,20 @@
 			CGRect subframe = CGRectMake(stretch.origin.x, stretch.origin.y, stretch.size.width + (width - _texture.width), stretch.size.height + (height - _texture.height));
 
 			GLfloat vertices[] = {
-				0, height, coords.origin.x, coords.origin.y + coords.size.height,
-				subframe.origin.x, height, subcoords.origin.x, coords.origin.y + coords.size.height,
-				subframe.origin.x + subframe.size.width, height, subcoords.origin.x + subcoords.size.width, coords.origin.y + coords.size.height,
-				width, height, coords.origin.x + coords.size.width, coords.origin.y + coords.size.height,
+				0, height, 0, coords.origin.x, coords.origin.y + coords.size.height,
+				subframe.origin.x, height, 0, subcoords.origin.x, coords.origin.y + coords.size.height,
+				subframe.origin.x + subframe.size.width, 0, height, subcoords.origin.x + subcoords.size.width, coords.origin.y + coords.size.height,
+				width, height, 0, coords.origin.x + coords.size.width, coords.origin.y + coords.size.height,
 
-				0, subframe.origin.y + subframe.size.height, coords.origin.x, subcoords.origin.y + subcoords.size.height,
-				subframe.origin.x, subframe.origin.y + subframe.size.height, subcoords.origin.x, subcoords.origin.y + subcoords.size.height,
-				subframe.origin.x + subframe.size.width, subframe.origin.y + subframe.size.height, subcoords.origin.x + subcoords.size.width, subcoords.origin.y + subcoords.size.height,
-				width, subframe.origin.y + subframe.size.height, coords.origin.x + coords.size.width, subcoords.origin.y + subcoords.size.height,
+				0, subframe.origin.y + subframe.size.height, 0, coords.origin.x, subcoords.origin.y + subcoords.size.height,
+				subframe.origin.x, subframe.origin.y + subframe.size.height, 0, subcoords.origin.x, subcoords.origin.y + subcoords.size.height,
+				subframe.origin.x + subframe.size.width, subframe.origin.y + subframe.size.height, 0, subcoords.origin.x + subcoords.size.width, subcoords.origin.y + subcoords.size.height,
+				width, subframe.origin.y + subframe.size.height, 0, coords.origin.x + coords.size.width, subcoords.origin.y + subcoords.size.height,
 
-				0, subframe.origin.y, coords.origin.x, subcoords.origin.y,
-				subframe.origin.x, subframe.origin.y, subcoords.origin.x, subcoords.origin.y,
-				subframe.origin.x + subframe.size.width, subframe.origin.y, subcoords.origin.x + subcoords.size.width, subcoords.origin.y,
-				width, subframe.origin.y, coords.origin.x + coords.size.width, subcoords.origin.y,
+				0, subframe.origin.y, 0, coords.origin.x, subcoords.origin.y,
+				subframe.origin.x, subframe.origin.y, 0, subcoords.origin.x, subcoords.origin.y,
+				subframe.origin.x + subframe.size.width, subframe.origin.y, 0, subcoords.origin.x + subcoords.size.width, subcoords.origin.y,
+				width, subframe.origin.y, 0, coords.origin.x + coords.size.width, subcoords.origin.y,
 
 				0, 0, 0, coords.origin.x, coords.origin.y,
 				subframe.origin.x, 0, 0, subcoords.origin.x, coords.origin.y,

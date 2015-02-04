@@ -3,11 +3,11 @@
 uniform mat4 uProjection;
 uniform mat4 uModelView;
 uniform vec4 uColor;
-uniform bool uTexture;
+uniform bool uUseColorMap;
 in vec3 aPosition;
-in vec2 aTexture;
+in vec2 aTextureUV;
 out vec4 vColor;
-out vec2 vTexture;
+out vec2 vTextureUV;
 
 float hue2rgb(float tmp2, float tmp1, float H) {
 	float ret;
@@ -44,7 +44,7 @@ vec4 hsl2rgb(vec4 hsl) {
 
 void main (void) {
 	vColor = hsl2rgb(uColor);
-	if (uTexture)
-		vTexture = aTexture;
+	if (uUseColorMap)
+		vTextureUV = aTextureUV;
 	gl_Position = uProjection * uModelView * vec4(aPosition, 1.0);
 }

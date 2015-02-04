@@ -10,9 +10,9 @@
 
 @interface Buffer3D : NSObject <NSCopying>
 
-@property (nonatomic, readonly) int vertexcount, indexcount, vertexsize, texcoordssize, normalsize, colorsize;
+@property (nonatomic, readonly) int vertexcount, indexcount, vertexsize, texcoordssize, normalsize, tangentsize, colorsize;
 
-- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount vertexSize:(int)vsize texCoordsSize:(int)tsize normalSize:(int)nsize colorSize:(int)csize isDynamic:(BOOL)dynamic;
+- (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vertices vertexCount:(int)vcount indices:(GLushort *)indices indexCount:(int)icount vertexSize:(int)vsize texCoordsSize:(int)tsize normalSize:(int)nsize tangentSize:(int)tansize colorSize:(int)csize isDynamic:(BOOL)dynamic;
 
 - (void)updateVertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount;
 

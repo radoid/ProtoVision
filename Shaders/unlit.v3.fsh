@@ -1,14 +1,14 @@
 #version 150
 
-uniform bool uTexture;
-uniform sampler2D uTexSampler;
+uniform bool uUseColorMap;
+uniform sampler2D uColorMapSampler;
 in vec4 vColor;
-in vec2 vTexture;
+in vec2 vTextureUV;
 out vec4 fragColor;
 
 void main(void) {
-	if (uTexture)
-		fragColor = vec4(texture(uTexSampler, vTexture).xyz, vColor.w);
+	if (uUseColorMap)
+		fragColor = vec4(texture(uColorMapSampler, vTextureUV).xyz, vColor.w);
 	else
 		fragColor = vColor;
 }

@@ -20,7 +20,7 @@
 			1, 1, 0, 1, 1,
 			1, 0, 0, 1, 0,
 		};
-		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:4 indices:nil indexCount:0 vertexSize:3 texCoordsSize:2 normalSize:0 colorSize:0 isDynamic:NO];
+		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:4 indices:nil indexCount:0 vertexSize:3 texCoordsSize:2 normalSize:0 tangentSize:0 colorSize:0 isDynamic:NO];
 	}
 	if ((self = [super initWithBuffer:shared])) {
 		self.scaleX = width;

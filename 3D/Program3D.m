@@ -31,7 +31,7 @@
 		if (logLen > 0) {
 			glGetProgramInfoLog(_programname, logLen, &logLen, (log = calloc(1, logLen)));
 			fprintf(stderr, "%s\n", log);
-			NSAssert(NO, @"Shader program link error!");
+			//NSAssert(NO, @"Shader program link error!");
 		}
 		glGetProgramiv(_programname, GL_VALIDATE_STATUS, &status);
 		NSAssert(!status, @"Invalid program!");
@@ -42,19 +42,23 @@
 		_uLight = glGetUniformLocation(_programname, "uLight");
 		_uEye = glGetUniformLocation(_programname, "uEye");
 		_uColor = glGetUniformLocation(_programname, "uColor");
-		_uColorLight = glGetUniformLocation(_programname, "uColorLight");
-		_uColorDark = glGetUniformLocation(_programname, "uColorDark");
+		_uColor = glGetUniformLocation(_programname, "uColor");
+		_uColorAmbient = glGetUniformLocation(_programname, "uColorAmbient");
 		_uColorSize = glGetUniformLocation(_programname, "uColorSize");
-		_uTexture = glGetUniformLocation(_programname, "uTexture");
-		_uTexSampler = glGetUniformLocation(_programname, "uTexSampler");
+		_uUseColorMap = glGetUniformLocation(_programname, "uUseColorMap");
+		_uColorMapSampler = glGetUniformLocation(_programname, "uColorMapSampler");
+		_uUseNormalMap = glGetUniformLocation(_programname, "uUseNormalMap");
+		_uNormalMapSampler = glGetUniformLocation(_programname, "uNormalMapSampler");
 		_uTime = glGetUniformLocation(_programname, "uTime");
 
 		_aPosition = glGetAttribLocation(_programname, "aPosition");
 		_aNormal = glGetAttribLocation(_programname, "aNormal");
-		_aTexture = glGetAttribLocation(_programname, "aTexture");
+		_aTangent = glGetAttribLocation(_programname, "aTangent");
 		_aColor = glGetAttribLocation(_programname, "aColor");
-		_aColorDark = glGetAttribLocation(_programname, "aColorDark");
-		_aColorLight = glGetAttribLocation(_programname, "aColorLight");
+		_aColorAmbient = glGetAttribLocation(_programname, "aColorAmbient");
+		_aColor = glGetAttribLocation(_programname, "aColor");
+		_aTextureUV = glGetAttribLocation(_programname, "aTextureUV");
+		_aNormalMapUV = glGetAttribLocation(_programname, "aNormalMapUV");
 
 		glDeleteShader(vsname);
 		glDeleteShader(fsname);
@@ -132,32 +136,36 @@
 	glUseProgram(_programname);
 }
 
-- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
-	[self useWithProjection:projection modelView:modelview normal:normal colorDark:color colorLight:color colorSize:0 texture:texture light:direction position:position];
-}
-
-- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal colorDark:(Color2D)colorDark colorLight:(Color2D)colorLight colorSize:(int)colorSize texture:(Texture2D *)texture light:(Vector3D)direction position:(Vector3D)position {
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal colorAmbient:(Color2D)colorAmbient color:(Color2D)color colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap light:(Vector3D)direction position:(Vector3D)position {
 	glUseProgram(_programname);
 	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
 	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
 	glUniformMatrix3fv(_uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
-	//glUniform4fv(_uColor, 1, (const GLfloat *)&color);
-	glUniform4fv(_uColorDark, 1, (const GLfloat *)&colorDark);
-	glUniform4fv(_uColorLight, 1, (const GLfloat *)&colorLight);
-	glUniform1i(_uColorSize, colorSize);
 	if (_uLight > -1)
 		glUniform3fv(_uLight, 1, (const GLfloat *)&direction);
 	if (_uEye > -1)
 		glUniform3fv(_uEye, 1, (const GLfloat *)&position);
 	if (_uTime > -1)
 		glUniform1f(_uTime, (float)CACurrentMediaTime());
-	if (_uTexture > -1)
-		glUniform1i(_uTexture, texture ? GL_TRUE : GL_FALSE);
-	if (texture && _uTexture > -1 && _uTexSampler > -1) {
-		glUniform1i(_uTexSampler, 0);
-		glActiveTexture (GL_TEXTURE0);
-		[texture bind];
-	}
+
+	glUniform4fv(_uColorAmbient, 1, (const GLfloat *)&colorAmbient);
+	glUniform4fv(_uColor, 1, (const GLfloat *)&color);
+	glUniform1i(_uColorSize, colorSize);
+	if (colorMap && _uUseColorMap > -1 && _uColorMapSampler > -1) {
+		glUniform1i(_uUseColorMap, GL_TRUE);
+		glUniform1i(_uColorMapSampler, 0);
+		glActiveTexture(GL_TEXTURE0);
+		[colorMap bind];
+	} else
+		glUniform1i(_uUseColorMap, GL_FALSE);
+
+	if (normalMap && _uUseNormalMap > -1 && _uNormalMapSampler > -1) {
+		glUniform1i(_uUseNormalMap, GL_TRUE);
+		glUniform1i(_uNormalMapSampler, 1);
+		glActiveTexture(GL_TEXTURE1);
+		[normalMap bind];
+	} else
+		glUniform1i(_uUseNormalMap, GL_FALSE);
 
 	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);
 }
@@ -167,9 +175,9 @@
 	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
 	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
 	glUniform4fv(_uColor, 1, (const GLfloat *)&color);
-	glUniform1i(_uTexture, texture ? GL_TRUE : GL_FALSE);
+	glUniform1i(_uUseColorMap, texture ? GL_TRUE : GL_FALSE);
 	if (texture) {
-		glUniform1i(_uTexSampler, 0);
+		glUniform1i(_uColorMapSampler, 0);
 		glActiveTexture (GL_TEXTURE0);
 		[texture bind];
 	}

@@ -15,6 +15,7 @@
 	if ((self = [super init])) {
 		_position = position;
 		_hasPosition = YES;
+		_color = Color2DMake(1, 1, 1, 1);
 	}
 	return self;
 }
@@ -23,22 +24,21 @@
 	if ((self = [super init])) {
 		_direction = Vector3DUnit(direction);
 		_hasDirection = YES;
+		_color = Color2DMake(1, 1, 1, 1);
 	}
 	return self;
 }
 
-- (id)initWithPosition:(Vector3D)position ambient:(Color2D)ambient diffuse:(Color2D)diffuse {
+- (id)initWithPosition:(Vector3D)position color:(Color2D)color {
 	if ((self = [self initWithPosition:position])) {
-		_ambient = ambient;
-		_diffuse = diffuse;
+		_color = color;
 	}
 	return self;
 }
 
-- (id)initWithDirection:(Vector3D)direction ambient:(Color2D)ambient diffuse:(Color2D)diffuse {
+- (id)initWithDirection:(Vector3D)direction color:(Color2D)color {
 	if ((self = [self initWithDirection:direction])) {
-		_ambient = ambient;
-		_diffuse = diffuse;
+		_color = color;
 	}
 	return self;
 }

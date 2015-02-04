@@ -19,7 +19,7 @@
 			vertices[3+i*3+0] = cosf(i*M_PI*2/steps);
 			vertices[3+i*3+1] = sinf(i*M_PI*2/steps);
 		}
-		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLE_FAN vertices:vertices vertexCount:vertexcount indices:nil indexCount:0 vertexSize:3 texCoordsSize:0 normalSize:0 colorSize:0 isDynamic:NO];
+		shared = [[Buffer3D alloc] initWithMode:GL_TRIANGLE_FAN vertices:vertices vertexCount:vertexcount indices:nil indexCount:0 vertexSize:3 texCoordsSize:0 normalSize:0 tangentSize:0 colorSize:0 isDynamic:NO];
 	}
 	if ((self = [super initWithBuffer:shared])) {
 		self.scaleX = self.scaleY = radius;
