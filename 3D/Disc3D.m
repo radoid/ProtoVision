@@ -17,11 +17,11 @@ typedef struct {
 	Vertex vertices[(n+1)*2];
 	int m = 0;
 	for (int side = +1; side >= -1; side -= 2) {
-		vertices[m++] = (Vertex) {0, side*height/2, 0, 0.5, 0.5, 0, side, 0, -side, 0, 0};
+		vertices[m++] = (Vertex) {0, side*height/2, 0, 0.5, 0.5, 0, side, 0, side, 0, 0};
 		for (int a=0; a < n; a++) {
 			float vx = cosf(a * 2*M_PI / n);
 			float vz = sinf(a * 2*M_PI / n);
-			vertices[m++] = (Vertex) {radius * vx, side*height/2, -radius * vz, 0.5+vx*0.5, 0.5+vz*0.5, 0, side, 0, -side, 0, 0};
+			vertices[m++] = (Vertex) {radius * vx, side*height/2, -radius * vz, 0.5+vx*0.5, 0.5+vz*0.5, 0, side, 0, side, 0, 0};
 		}
 	}
 

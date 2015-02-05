@@ -16,8 +16,8 @@
 }
 @property (nonatomic) Buffer3D *buffer;
 @property (nonatomic) Program3D *program;
-@property (nonatomic) Texture2D *colorMap, *normalMap;
-@property (nonatomic) Color2D colorAmbient, color;
+@property (nonatomic) Texture2D *colorMap, *normalMap, *specularMap;
+@property (nonatomic) Color2D color, colorAmbient, colorSpecular;
 
 - (id)initWithProgram:(Program3D *)program buffer:(Buffer3D *)buffer;
 - (id)initWithBuffer:(Buffer3D *)buffer;

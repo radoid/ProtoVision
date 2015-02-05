@@ -37,19 +37,23 @@
 		NSAssert(!status, @"Invalid program!");
 
 		_uProjection = glGetUniformLocation(_programname, "uProjection");
+		_uModel = glGetUniformLocation(_programname, "uModel");
 		_uModelView = glGetUniformLocation(_programname, "uModelView");
 		_uNormal = glGetUniformLocation(_programname, "uNormal");
 		_uLight = glGetUniformLocation(_programname, "uLight");
 		_uEye = glGetUniformLocation(_programname, "uEye");
+		_uTime = glGetUniformLocation(_programname, "uTime");
 		_uColor = glGetUniformLocation(_programname, "uColor");
 		_uColor = glGetUniformLocation(_programname, "uColor");
 		_uColorAmbient = glGetUniformLocation(_programname, "uColorAmbient");
+		_uColorSpecular = glGetUniformLocation(_programname, "uColorSpecular");
 		_uColorSize = glGetUniformLocation(_programname, "uColorSize");
 		_uUseColorMap = glGetUniformLocation(_programname, "uUseColorMap");
 		_uColorMapSampler = glGetUniformLocation(_programname, "uColorMapSampler");
 		_uUseNormalMap = glGetUniformLocation(_programname, "uUseNormalMap");
 		_uNormalMapSampler = glGetUniformLocation(_programname, "uNormalMapSampler");
-		_uTime = glGetUniformLocation(_programname, "uTime");
+		_uUseSpecularMap = glGetUniformLocation(_programname, "uUseSpecularMap");
+		_uSpecularMapSampler = glGetUniformLocation(_programname, "uSpecularMapSampler");
 
 		_aPosition = glGetAttribLocation(_programname, "aPosition");
 		_aNormal = glGetAttribLocation(_programname, "aNormal");
@@ -58,7 +62,6 @@
 		_aColorAmbient = glGetAttribLocation(_programname, "aColorAmbient");
 		_aColor = glGetAttribLocation(_programname, "aColor");
 		_aTextureUV = glGetAttribLocation(_programname, "aTextureUV");
-		_aNormalMapUV = glGetAttribLocation(_programname, "aNormalMapUV");
 
 		glDeleteShader(vsname);
 		glDeleteShader(fsname);
@@ -136,9 +139,10 @@
 	glUseProgram(_programname);
 }
 
-- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal colorAmbient:(Color2D)colorAmbient color:(Color2D)color colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap light:(Vector3D)direction position:(Vector3D)position {
+- (void)useWithProjection:(Matrix4x4)projection model:(Matrix4x4)model modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color colorAmbient:(Color2D)colorAmbient colorSpecular:(Color2D)colorSpecular colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap specularMap:(Texture2D *)specularMap light:(Vector3D)direction position:(Vector3D)position {
 	glUseProgram(_programname);
 	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
+	glUniformMatrix4fv(_uModel, 1, GL_FALSE, (const GLfloat *)&model);
 	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
 	glUniformMatrix3fv(_uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
 	if (_uLight > -1)
@@ -148,24 +152,34 @@
 	if (_uTime > -1)
 		glUniform1f(_uTime, (float)CACurrentMediaTime());
 
-	glUniform4fv(_uColorAmbient, 1, (const GLfloat *)&colorAmbient);
 	glUniform4fv(_uColor, 1, (const GLfloat *)&color);
+	glUniform4fv(_uColorAmbient, 1, (const GLfloat *)&colorAmbient);
+	glUniform4fv(_uColorSpecular, 1, (const GLfloat *)&colorSpecular);
 	glUniform1i(_uColorSize, colorSize);
-	if (colorMap && _uUseColorMap > -1 && _uColorMapSampler > -1) {
-		glUniform1i(_uUseColorMap, GL_TRUE);
+
+	if (_uUseColorMap > -1)
+		glUniform1i(_uUseColorMap, colorMap && _uColorMapSampler > -1 ? GL_TRUE : GL_FALSE);
+	if (colorMap && _uColorMapSampler > -1) {
 		glUniform1i(_uColorMapSampler, 0);
 		glActiveTexture(GL_TEXTURE0);
 		[colorMap bind];
-	} else
-		glUniform1i(_uUseColorMap, GL_FALSE);
+	}
 
-	if (normalMap && _uUseNormalMap > -1 && _uNormalMapSampler > -1) {
-		glUniform1i(_uUseNormalMap, GL_TRUE);
+	if (_uUseNormalMap > -1)
+		glUniform1i(_uUseNormalMap, normalMap && _uNormalMapSampler > -1 ? GL_TRUE : GL_FALSE);
+	if (normalMap && _uNormalMapSampler > -1) {
 		glUniform1i(_uNormalMapSampler, 1);
 		glActiveTexture(GL_TEXTURE1);
 		[normalMap bind];
-	} else
-		glUniform1i(_uUseNormalMap, GL_FALSE);
+	}
+
+	if (_uUseSpecularMap > -1)
+		glUniform1i(_uUseSpecularMap, specularMap && _uSpecularMapSampler > -1 ? GL_TRUE : GL_FALSE);
+	if (specularMap && _uSpecularMapSampler > -1) {
+		glUniform1i(_uSpecularMapSampler, 2);
+		glActiveTexture(GL_TEXTURE2);
+		[specularMap bind];
+	}
 
 	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);
 }

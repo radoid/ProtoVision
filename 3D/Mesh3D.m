@@ -13,8 +13,9 @@
 
 - (id)init {
 	if ((self = [super init])) {
-		_color = _color = Color2DMake(1, 1, 1, 1);
-		_colorAmbient = Color2DMake(0, 0, 0, 1);
+		_color = Color2DMake(1, 1, 1, 1);
+		_colorAmbient = Color2DMake(0, 0, 0, 0);
+		_colorSpecular = Color2DMake(0, 0, 0, 0);
 	}
 	return self;
 }
@@ -130,7 +131,7 @@
 	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[_program useWithProjection:camera.projection modelView:modelview normal:normal colorAmbient:_colorAmbient color:_color colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap light:light.direction position:camera.position];
+	[_program useWithProjection:camera.projection model:_localToWorld modelView:modelview normal:normal color:_color colorAmbient:_colorAmbient colorSpecular:_colorSpecular colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap specularMap:_specularMap light:light.direction position:camera.position];
 	[_buffer draw];
 
 	if (_color.alpha < 1)
