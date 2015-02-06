@@ -144,8 +144,7 @@
 }
 
 - (void)setPosition:(Vector3D)position lookAt:(Vector3D)center up:(Vector3D)up {
-	Vector3D forward = Vector3DSubtract(center, self.position);
-	[self setPosition:position direction:forward up:up];
+	[self setPosition:position direction:Vector3DSubtract(center, position) up:up];
 }
 
 - (void)recalculate {
