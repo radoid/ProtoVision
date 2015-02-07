@@ -10,6 +10,9 @@
 
 
 @implementation Controller3D
+{
+	BOOL _animated;
+}
 
 - (void)start {}
 - (void)stop {}
@@ -41,9 +44,16 @@
 - (BOOL)keyPress:(NSString *)key modifiers:(int)flags {return NO;}
 
 - (int)run {
-	[[NSApplication sharedApplication] setDelegate:self];
-	[[NSApplication sharedApplication] run];
+	@autoreleasepool {
+		[[NSApplication sharedApplication] setDelegate:self];
+		[[NSApplication sharedApplication] run];
+	}
 	return 0;
+}
+
+- (int)runAnimated {
+	_animated = YES;
+	return [self run];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -52,11 +62,13 @@
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification {
-	[_window.view startAnimation];
+	if (_animated)
+		[_window.view startAnimation];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)aNotification {
-	[_window.view stopAnimation];
+	if (_animated)
+		[_window.view stopAnimation];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {

@@ -6,10 +6,10 @@
 //
 
 #import "ProtoVision.h"
-#import "Box3D.h"
+#import "Cube3D.h"
 
 
-@implementation Box3D
+@implementation Cube3D
 
 - (id)initWithWidth:(float)width height:(float)height depth:(float)depth {
 	static Buffer3D *shared = nil;

@@ -8,7 +8,7 @@
 #import "ProtoVision.h"
 
 
-@interface Controller3D : NSObject <NSApplicationDelegate>
+@interface Controller3D : NSObject
 {
 	View3D *_view;
 	Window3D *_window;
@@ -22,6 +22,10 @@
 - (void)resumeWithObject:(id)result;
 - (BOOL)update:(float)delta;
 
+- (BOOL)touchDown:(Vector2D)location;
+- (BOOL)touchMove:(Vector2D)location;
+- (BOOL)touchUp:(Vector2D)location;
+
 - (void)reshape;
 - (void)draw;
 
@@ -29,15 +33,5 @@
 - (void)popWithObject:(NSObject *)result;
 
 - (int)run;
-
-- (int)runAnimated;
-
-- (BOOL)keyDown:(int)keyCode modifiers:(int)flags;
-- (BOOL)keyUp:(int)keyCode modifiers:(int)flags;
-- (BOOL)keyPress:(NSString *)key modifiers:(int)flags;
-
-- (BOOL)touchDown:(Vector2D)location modifiers:(int)flags;
-- (BOOL)touchMove:(Vector2D)location modifiers:(int)flags;
-- (BOOL)touchUp:(Vector2D)location modifiers:(int)flags;
 
 @end

@@ -97,10 +97,14 @@
 	return _radius * self.scale;
 }
 
-- (void)setColor:(Color2D)color {
+- (Color2D)colorDiffuse {
+	return _color;
+}
+
+- (void)setColorDiffuse:(Color2D)color {
 	_color = color;
 	//_colorAmbient =  Color2DMake(color.r+.03*(color.r < 0.17 ? -1 : +1), color.g, color.b/2., color.alpha);
- 	//_color = Color2DMake(color.r+.03*(color.r < 0.17 ? +1 : -1), color.g, 1-(1-color.b)/2., color.alpha);  // TODO
+	//_color = Color2DMake(color.r+.03*(color.r < 0.17 ? +1 : -1), color.g, 1-(1-color.b)/2., color.alpha);  // TODO
 }
 
 - (float)opacity {
@@ -131,7 +135,7 @@
 	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[_program useWithProjection:camera.projection model:_localToWorld modelView:modelview normal:normal color:_color colorAmbient:_colorAmbient colorSpecular:_colorSpecular colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap specularMap:_specularMap light:light.direction position:camera.position];
+	[_program useWithProjection:camera.projection model:_localToWorld view:camera.worldToLocal modelView:modelview normal:normal color:_color colorAmbient:_colorAmbient colorSpecular:_colorSpecular colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap specularMap:_specularMap ambientOcclusionMap:_ambientOcclusionMap light:light.direction position:camera.position];
 	[_buffer draw];
 
 	if (_color.alpha < 1)

@@ -118,6 +118,8 @@ typedef struct {
 		width  = CGImageGetWidth (image);
 		height = CGImageGetHeight(image);
 		CGRect rect = CGRectMake(0.0f, 0.0f, width, height);
+		coords = CGRectMake(0, 0, 1, 1);
+		scale = 1;
 
 		void *imageData = malloc(width * height * 4);
 		CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();

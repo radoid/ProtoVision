@@ -8,8 +8,8 @@
 #import "ProtoVision.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface Cube3D : Mesh3D
 
-@property (strong, nonatomic) Window3D *window;
+- (id)initWithWidth:(float)width height:(float)height depth:(float)depth;
 
 @end

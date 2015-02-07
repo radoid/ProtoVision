@@ -32,7 +32,7 @@ static Color2D ColorHSLFromRGB(float r, float g, float b, float alpha) {
 	return hsl;
 }
 
-static Color2D ColorRGBFromHSL(float h, float s, float l, float alpha) {
+static Color2D Color2DFromHSL(float h, float s, float l, float alpha) {
 	float r = l, g = l, b = l;
 	float v = (l <= 0.5f) ? (l * (1.0f + s)) : (l + s - l * s);
 	if (v > 0) {

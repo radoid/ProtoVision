@@ -10,7 +10,7 @@
 
 @interface Button2D : Container2D {
 	float width, height;
-	BOOL state;
+	BOOL _state;
 	//NSString *text;
 	//Font2D *font;
 	Text2D *text;
@@ -26,7 +26,7 @@
 
 - (id)initWithImageNamed:(NSString *)imagename;
 - (id)initWithImageNamed:(NSString *)normalimagename hoverImageNamed:(NSString *)hoverimagename;
-- (id)initWithImageNamed:(NSString *)normalimagename hoverImageNamed:(NSString *)hoverimagename frame:(CGRect)rect stretch:(CGRect)newstretch;
-- (id)initWithImageNamed:(NSString *)normalimagename hoverImageNamed:(NSString *)hoverimagename frame:(CGRect)rect stretch:(CGRect)newstretch text:(NSString *)text font:(Font2D *)font;
+- (id)initWithImageNamed:(NSString *)normalimagename hoverImageNamed:(NSString *)hoverimagename frame:(CGRect)rect stretch:(CGRect)stretch;
+- (id)initWithImageNamed:(NSString *)normalimagename hoverImageNamed:(NSString *)hoverimagename frame:(CGRect)rect stretch:(CGRect)stretch text:(NSString *)text font:(Font2D *)font;
 
 @end

@@ -16,7 +16,7 @@
 }
 @property (nonatomic) Buffer3D *buffer;
 @property (nonatomic) Program3D *program;
-@property (nonatomic) Texture2D *colorMap, *normalMap, *specularMap;
+@property (nonatomic) Texture2D *colorMap, *normalMap, *specularMap, *ambientOcclusionMap;
 @property (nonatomic) Color2D color, colorAmbient, colorSpecular;
 
 - (id)initWithProgram:(Program3D *)program buffer:(Buffer3D *)buffer;
@@ -27,6 +27,10 @@
 - (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize normalSize:(int)normalsize tangentSize:(int)tansize colorSize:(int)colorsize isDynamic:(BOOL)dynamic;
 
 - (float)radius;
+
+- (Color2D)colorDiffuse;
+
+- (void)setColorDiffuse:(Color2D)color;
 
 - (float)opacity;
 - (void)setOpacity:(float)opacity;

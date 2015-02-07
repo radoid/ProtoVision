@@ -40,7 +40,7 @@
 #import "3D/Mesh3D.h"
 #import "3D/Mesh3D+OBJ.h"
 #import "3D/Container3D.h"
-#import "3D/Box3D.h"
+#import "3D/Cube3D.h"
 #import "3D/Line3D.h"
 #import "3D/Disc3D.h"
 #import "3D/Sphere3D.h"

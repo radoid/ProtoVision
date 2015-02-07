@@ -27,6 +27,18 @@
 		EF0BB2461A6E443400713C2E /* Circle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF0BB2431A6E443400713C2E /* Circle2D.h */; };
 		EF0BB2471A6E443400713C2E /* Circle2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0BB2441A6E443400713C2E /* Circle2D.m */; };
 		EF0BB2481A6E443400713C2E /* Circle2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0BB2441A6E443400713C2E /* Circle2D.m */; };
+		EF7103F21A85155E00A2B8AE /* flower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF7103F11A85155E00A2B8AE /* flower.jpg */; };
+		EF7103F41A851B8400A2B8AE /* pyramid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF7103F31A851B8400A2B8AE /* pyramid.jpg */; };
+		EF7103F91A851E5200A2B8AE /* chester-ambientocclusion.png in Resources */ = {isa = PBXBuildFile; fileRef = EF7103F51A851E5200A2B8AE /* chester-ambientocclusion.png */; };
+		EF7103FA1A851E5200A2B8AE /* chester-color.png in Resources */ = {isa = PBXBuildFile; fileRef = EF7103F61A851E5200A2B8AE /* chester-color.png */; };
+		EF7103FB1A851E5200A2B8AE /* chester-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = EF7103F71A851E5200A2B8AE /* chester-normal.png */; };
+		EF7103FC1A851E5200A2B8AE /* chester-specular.png in Resources */ = {isa = PBXBuildFile; fileRef = EF7103F81A851E5200A2B8AE /* chester-specular.png */; };
+		EF7104011A85232E00A2B8AE /* slate-ambientocclusion.png in Resources */ = {isa = PBXBuildFile; fileRef = EF7103FD1A85232E00A2B8AE /* slate-ambientocclusion.png */; };
+		EF7104021A85232E00A2B8AE /* slate-color.png in Resources */ = {isa = PBXBuildFile; fileRef = EF7103FE1A85232E00A2B8AE /* slate-color.png */; };
+		EF7104031A85232E00A2B8AE /* slate-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = EF7103FF1A85232E00A2B8AE /* slate-normal.png */; };
+		EF7104041A85232E00A2B8AE /* slate-specular.png in Resources */ = {isa = PBXBuildFile; fileRef = EF7104001A85232E00A2B8AE /* slate-specular.png */; };
+		EF7104051A8567B300A2B8AE /* vertex.v1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D811A695838009BD387 /* vertex.v1.vsh */; };
+		EF7104061A8567B300A2B8AE /* vertex.v1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7F1A695838009BD387 /* vertex.v1.fsh */; };
 		EF7E7D341A695778009BD387 /* Camera2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CED1A695778009BD387 /* Camera2D.m */; };
 		EF7E7D361A695778009BD387 /* Texture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7CEF1A695778009BD387 /* Texture2D.h */; };
 		EF7E7D371A695778009BD387 /* Polygon2D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7CF01A695778009BD387 /* Polygon2D.m */; };
@@ -59,7 +71,7 @@
 		EF7E7D541A695778009BD387 /* Pyramid3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D0E1A695778009BD387 /* Pyramid3D.h */; };
 		EF7E7D551A695778009BD387 /* Program3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D0F1A695778009BD387 /* Program3D.m */; };
 		EF7E7D561A695778009BD387 /* Pyramid3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D101A695778009BD387 /* Pyramid3D.m */; };
-		EF7E7D571A695778009BD387 /* Box3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D111A695778009BD387 /* Box3D.h */; };
+		EF7E7D571A695778009BD387 /* Cube3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D111A695778009BD387 /* Cube3D.h */; };
 		EF7E7D581A695778009BD387 /* Mesh3D+OBJ.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D121A695778009BD387 /* Mesh3D+OBJ.h */; };
 		EF7E7D591A695778009BD387 /* Sphere3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D131A695778009BD387 /* Sphere3D.m */; };
 		EF7E7D5A1A695778009BD387 /* Container3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D141A695778009BD387 /* Container3D.m */; };
@@ -79,7 +91,7 @@
 		EF7E7D691A695778009BD387 /* Light3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D231A695778009BD387 /* Light3D.m */; };
 		EF7E7D6B1A695778009BD387 /* Quaternion3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D251A695778009BD387 /* Quaternion3D.h */; };
 		EF7E7D6D1A695778009BD387 /* Buffer3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D271A695778009BD387 /* Buffer3D.m */; };
-		EF7E7D6E1A695778009BD387 /* Box3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D281A695778009BD387 /* Box3D.m */; };
+		EF7E7D6E1A695778009BD387 /* Cube3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D281A695778009BD387 /* Cube3D.m */; };
 		EF7E7D6F1A695778009BD387 /* Camera3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D291A695778009BD387 /* Camera3D.h */; };
 		EF7E7D701A695778009BD387 /* Mesh3D.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2A1A695778009BD387 /* Mesh3D.h */; };
 		EF7E7D711A695778009BD387 /* View3D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D2C1A695778009BD387 /* View3D+OSX.m */; };
@@ -88,20 +100,15 @@
 		EF7E7D741A695778009BD387 /* Window3D+OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D2F1A695778009BD387 /* Window3D+OSX.h */; };
 		EF7E7D751A695778009BD387 /* Texture2D+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D301A695778009BD387 /* Texture2D+OSX.m */; };
 		EF7E7D771A695778009BD387 /* ProtoVision.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7E7D321A695778009BD387 /* ProtoVision.h */; };
-		EF7E7D821A695838009BD387 /* unlit.v1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7A1A695838009BD387 /* unlit.v1.fsh */; };
-		EF7E7D831A695838009BD387 /* unlit.v3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7B1A695838009BD387 /* unlit.v3.fsh */; };
-		EF7E7D841A695838009BD387 /* unlit.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7C1A695838009BD387 /* unlit.v3.vsh */; };
-		EF7E7D851A695838009BD387 /* default.v3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7D1A695838009BD387 /* default.v3.fsh */; };
-		EF7E7D861A695838009BD387 /* unlit.v1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7E1A695838009BD387 /* unlit.v1.vsh */; };
-		EF7E7D871A695838009BD387 /* default.v1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7F1A695838009BD387 /* default.v1.fsh */; };
-		EF7E7D881A695838009BD387 /* default.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D801A695838009BD387 /* default.v3.vsh */; };
-		EF7E7D891A695838009BD387 /* default.v1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D811A695838009BD387 /* default.v1.vsh */; };
+		EF7E7D851A695838009BD387 /* vertex.v3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D7D1A695838009BD387 /* vertex.v3.fsh */; };
+		EF7E7D881A695838009BD387 /* vertex.v3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EF7E7D801A695838009BD387 /* vertex.v3.vsh */; };
 		EF7E7D8B1A69587A009BD387 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7E7D8A1A69587A009BD387 /* OpenGL.framework */; };
 		EF90F0C61A83742E004EB0D0 /* normalmap-box.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF90F0C51A83742E004EB0D0 /* normalmap-box.jpg */; };
 		EF90F0C81A8375C0004EB0D0 /* colormap-box.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF90F0C71A8375C0004EB0D0 /* colormap-box.jpg */; };
 		EF90F0D21A837F54004EB0D0 /* ambientocclusionmap-box.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF90F0CF1A837F54004EB0D0 /* ambientocclusionmap-box.jpg */; };
 		EF90F0D31A837F54004EB0D0 /* bumpmap-box.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF90F0D01A837F54004EB0D0 /* bumpmap-box.jpg */; };
 		EF90F0D41A837F54004EB0D0 /* specularmap-box.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF90F0D11A837F54004EB0D0 /* specularmap-box.jpg */; };
+		EF90F1041A84073D004EB0D0 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = EF90F1031A84073D004EB0D0 /* test.png */; };
 		EF9755871A695C49009FDB0B /* SpinningCubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755861A695C49009FDB0B /* SpinningCubeController.m */; };
 		EF9755881A695C7A009FDB0B /* ProtoVisionOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */; };
 		EF9755B31A695F1C009FDB0B /* View3D+iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */; };
@@ -131,9 +138,7 @@
 		EF9755CC1A696022009FDB0B /* Line3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D221A695778009BD387 /* Line3D.m */; };
 		EF9755CD1A696022009FDB0B /* Light3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D231A695778009BD387 /* Light3D.m */; };
 		EF9755CF1A696022009FDB0B /* Buffer3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D271A695778009BD387 /* Buffer3D.m */; };
-		EF9755D01A696022009FDB0B /* Box3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D281A695778009BD387 /* Box3D.m */; };
-		EF9755DA1A69614E009FDB0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755D91A69614E009FDB0B /* main.m */; };
-		EF9755DD1A69614E009FDB0B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9755DC1A69614E009FDB0B /* AppDelegate.m */; };
+		EF9755D01A696022009FDB0B /* Cube3D.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7E7D281A695778009BD387 /* Cube3D.m */; };
 		EF9755FD1A69619E009FDB0B /* ProtoVisionIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9755921A695EFA009FDB0B /* ProtoVisionIOS.framework */; };
 		EF9756021A6961F3009FDB0B /* TouchCubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9756011A6961F3009FDB0B /* TouchCubeController.m */; };
 /* End PBXBuildFile section */
@@ -168,6 +173,16 @@
 		2DC35BF954A7C843C2B9A3B6 /* Disc3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Disc3D.m; sourceTree = "<group>"; };
 		EF0BB2431A6E443400713C2E /* Circle2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle2D.h; sourceTree = "<group>"; };
 		EF0BB2441A6E443400713C2E /* Circle2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circle2D.m; sourceTree = "<group>"; };
+		EF7103F11A85155E00A2B8AE /* flower.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flower.jpg; sourceTree = "<group>"; };
+		EF7103F31A851B8400A2B8AE /* pyramid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pyramid.jpg; sourceTree = "<group>"; };
+		EF7103F51A851E5200A2B8AE /* chester-ambientocclusion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chester-ambientocclusion.png"; sourceTree = "<group>"; };
+		EF7103F61A851E5200A2B8AE /* chester-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chester-color.png"; sourceTree = "<group>"; };
+		EF7103F71A851E5200A2B8AE /* chester-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chester-normal.png"; sourceTree = "<group>"; };
+		EF7103F81A851E5200A2B8AE /* chester-specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chester-specular.png"; sourceTree = "<group>"; };
+		EF7103FD1A85232E00A2B8AE /* slate-ambientocclusion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slate-ambientocclusion.png"; sourceTree = "<group>"; };
+		EF7103FE1A85232E00A2B8AE /* slate-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slate-color.png"; sourceTree = "<group>"; };
+		EF7103FF1A85232E00A2B8AE /* slate-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slate-normal.png"; sourceTree = "<group>"; };
+		EF7104001A85232E00A2B8AE /* slate-specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slate-specular.png"; sourceTree = "<group>"; };
 		EF7E7CD01A695484009BD387 /* ProtoVisionOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtoVisionOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF7E7CED1A695778009BD387 /* Camera2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera2D.m; sourceTree = "<group>"; };
 		EF7E7CEE1A695778009BD387 /* Button2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button2D.m; sourceTree = "<group>"; };
@@ -204,7 +219,7 @@
 		EF7E7D0E1A695778009BD387 /* Pyramid3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pyramid3D.h; sourceTree = "<group>"; };
 		EF7E7D0F1A695778009BD387 /* Program3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Program3D.m; sourceTree = "<group>"; };
 		EF7E7D101A695778009BD387 /* Pyramid3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pyramid3D.m; sourceTree = "<group>"; };
-		EF7E7D111A695778009BD387 /* Box3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box3D.h; sourceTree = "<group>"; };
+		EF7E7D111A695778009BD387 /* Cube3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cube3D.h; sourceTree = "<group>"; };
 		EF7E7D121A695778009BD387 /* Mesh3D+OBJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mesh3D+OBJ.h"; sourceTree = "<group>"; };
 		EF7E7D131A695778009BD387 /* Sphere3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sphere3D.m; sourceTree = "<group>"; };
 		EF7E7D141A695778009BD387 /* Container3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Container3D.m; sourceTree = "<group>"; };
@@ -225,7 +240,7 @@
 		EF7E7D231A695778009BD387 /* Light3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Light3D.m; sourceTree = "<group>"; };
 		EF7E7D251A695778009BD387 /* Quaternion3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion3D.h; sourceTree = "<group>"; };
 		EF7E7D271A695778009BD387 /* Buffer3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Buffer3D.m; sourceTree = "<group>"; };
-		EF7E7D281A695778009BD387 /* Box3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Box3D.m; sourceTree = "<group>"; };
+		EF7E7D281A695778009BD387 /* Cube3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cube3D.m; sourceTree = "<group>"; };
 		EF7E7D291A695778009BD387 /* Camera3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera3D.h; sourceTree = "<group>"; };
 		EF7E7D2A1A695778009BD387 /* Mesh3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh3D.h; sourceTree = "<group>"; };
 		EF7E7D2C1A695778009BD387 /* View3D+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View3D+OSX.m"; sourceTree = "<group>"; };
@@ -236,20 +251,17 @@
 		EF7E7D311A695778009BD387 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF7E7D321A695778009BD387 /* ProtoVision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtoVision.h; sourceTree = "<group>"; };
 		EF7E7D331A695778009BD387 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		EF7E7D7A1A695838009BD387 /* unlit.v1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = unlit.v1.fsh; sourceTree = "<group>"; };
-		EF7E7D7B1A695838009BD387 /* unlit.v3.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = unlit.v3.fsh; sourceTree = "<group>"; };
-		EF7E7D7C1A695838009BD387 /* unlit.v3.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = unlit.v3.vsh; sourceTree = "<group>"; };
-		EF7E7D7D1A695838009BD387 /* default.v3.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v3.fsh; sourceTree = "<group>"; };
-		EF7E7D7E1A695838009BD387 /* unlit.v1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = unlit.v1.vsh; sourceTree = "<group>"; };
-		EF7E7D7F1A695838009BD387 /* default.v1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v1.fsh; sourceTree = "<group>"; };
-		EF7E7D801A695838009BD387 /* default.v3.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v3.vsh; sourceTree = "<group>"; };
-		EF7E7D811A695838009BD387 /* default.v1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.v1.vsh; sourceTree = "<group>"; };
+		EF7E7D7D1A695838009BD387 /* vertex.v3.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = vertex.v3.fsh; sourceTree = "<group>"; };
+		EF7E7D7F1A695838009BD387 /* vertex.v1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = vertex.v1.fsh; sourceTree = "<group>"; };
+		EF7E7D801A695838009BD387 /* vertex.v3.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = vertex.v3.vsh; sourceTree = "<group>"; };
+		EF7E7D811A695838009BD387 /* vertex.v1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = vertex.v1.vsh; sourceTree = "<group>"; };
 		EF7E7D8A1A69587A009BD387 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		EF90F0C51A83742E004EB0D0 /* normalmap-box.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "normalmap-box.jpg"; sourceTree = "<group>"; };
 		EF90F0C71A8375C0004EB0D0 /* colormap-box.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "colormap-box.jpg"; sourceTree = "<group>"; };
 		EF90F0CF1A837F54004EB0D0 /* ambientocclusionmap-box.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ambientocclusionmap-box.jpg"; sourceTree = "<group>"; };
 		EF90F0D01A837F54004EB0D0 /* bumpmap-box.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bumpmap-box.jpg"; sourceTree = "<group>"; };
 		EF90F0D11A837F54004EB0D0 /* specularmap-box.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "specularmap-box.jpg"; sourceTree = "<group>"; };
+		EF90F1031A84073D004EB0D0 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		EF9755651A695BF0009FDB0B /* Spinning Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spinning Cube.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9755681A695BF0009FDB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF9755851A695C49009FDB0B /* SpinningCubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpinningCubeController.h; sourceTree = "<group>"; };
@@ -265,9 +277,6 @@
 		EF9755B21A695F1C009FDB0B /* Gyro3D+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Gyro3D+iOS.m"; sourceTree = "<group>"; };
 		EF9755D51A69614E009FDB0B /* Touch Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Touch Cube.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9755D81A69614E009FDB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF9755D91A69614E009FDB0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		EF9755DB1A69614E009FDB0B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		EF9755DC1A69614E009FDB0B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		EF9756001A6961F3009FDB0B /* TouchCubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchCubeController.h; sourceTree = "<group>"; };
 		EF9756011A6961F3009FDB0B /* TouchCubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchCubeController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -376,8 +385,8 @@
 		EF7E7D091A695778009BD387 /* 3D */ = {
 			isa = PBXGroup;
 			children = (
-				EF7E7D111A695778009BD387 /* Box3D.h */,
-				EF7E7D281A695778009BD387 /* Box3D.m */,
+				EF7E7D111A695778009BD387 /* Cube3D.h */,
+				EF7E7D281A695778009BD387 /* Cube3D.m */,
 				EF7E7D171A695778009BD387 /* Buffer3D.h */,
 				EF7E7D271A695778009BD387 /* Buffer3D.m */,
 				EF7E7D291A695778009BD387 /* Camera3D.h */,
@@ -431,14 +440,10 @@
 		EF7E7D791A695838009BD387 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				EF7E7D7E1A695838009BD387 /* unlit.v1.vsh */,
-				EF7E7D7A1A695838009BD387 /* unlit.v1.fsh */,
-				EF7E7D7C1A695838009BD387 /* unlit.v3.vsh */,
-				EF7E7D7B1A695838009BD387 /* unlit.v3.fsh */,
-				EF7E7D7F1A695838009BD387 /* default.v1.fsh */,
-				EF7E7D811A695838009BD387 /* default.v1.vsh */,
-				EF7E7D801A695838009BD387 /* default.v3.vsh */,
-				EF7E7D7D1A695838009BD387 /* default.v3.fsh */,
+				EF7E7D811A695838009BD387 /* vertex.v1.vsh */,
+				EF7E7D7F1A695838009BD387 /* vertex.v1.fsh */,
+				EF7E7D801A695838009BD387 /* vertex.v3.vsh */,
+				EF7E7D7D1A695838009BD387 /* vertex.v3.fsh */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -459,10 +464,21 @@
 				EF9755861A695C49009FDB0B /* SpinningCubeController.m */,
 				EF9755681A695BF0009FDB0B /* Info.plist */,
 				EF90F0C51A83742E004EB0D0 /* normalmap-box.jpg */,
+				EF7103F51A851E5200A2B8AE /* chester-ambientocclusion.png */,
+				EF7103F61A851E5200A2B8AE /* chester-color.png */,
+				EF7103F71A851E5200A2B8AE /* chester-normal.png */,
+				EF7103F81A851E5200A2B8AE /* chester-specular.png */,
+				EF7103F31A851B8400A2B8AE /* pyramid.jpg */,
 				EF90F0C71A8375C0004EB0D0 /* colormap-box.jpg */,
 				EF90F0CF1A837F54004EB0D0 /* ambientocclusionmap-box.jpg */,
+				EF7103FD1A85232E00A2B8AE /* slate-ambientocclusion.png */,
+				EF7103FE1A85232E00A2B8AE /* slate-color.png */,
+				EF7103FF1A85232E00A2B8AE /* slate-normal.png */,
+				EF7104001A85232E00A2B8AE /* slate-specular.png */,
 				EF90F0D01A837F54004EB0D0 /* bumpmap-box.jpg */,
 				EF90F0D11A837F54004EB0D0 /* specularmap-box.jpg */,
+				EF7103F11A85155E00A2B8AE /* flower.jpg */,
+				EF90F1031A84073D004EB0D0 /* test.png */,
 				2DC3587FED835DE1D1F31D7C /* specular.v3.vsh */,
 				2DC3546BFDF1B932AAFA44F5 /* specular.v3.fsh */,
 			);
@@ -476,13 +492,13 @@
 				EF9755951A695EFA009FDB0B /* Info.plist */,
 				EF7E7D1C1A695778009BD387 /* Controller3D+iOS.h */,
 				EF7E7D211A695778009BD387 /* Controller3D+iOS.m */,
-				EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */,
-				EF9755AD1A695F1C009FDB0B /* Window3D+iOS.h */,
-				EF9755AE1A695F1C009FDB0B /* View3D+iOS.m */,
 				EF9755AF1A695F1C009FDB0B /* Texture2D+iOS.m */,
 				EF9755B01A695F1C009FDB0B /* Gyro3D+iOS.h */,
-				EF9755B11A695F1C009FDB0B /* Window3D+iOS.m */,
 				EF9755B21A695F1C009FDB0B /* Gyro3D+iOS.m */,
+				EF9755AC1A695F1C009FDB0B /* View3D+iOS.h */,
+				EF9755AE1A695F1C009FDB0B /* View3D+iOS.m */,
+				EF9755AD1A695F1C009FDB0B /* Window3D+iOS.h */,
+				EF9755B11A695F1C009FDB0B /* Window3D+iOS.m */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -490,23 +506,12 @@
 		EF9755D61A69614E009FDB0B /* Touch Cube */ = {
 			isa = PBXGroup;
 			children = (
-				EF9755DB1A69614E009FDB0B /* AppDelegate.h */,
-				EF9755DC1A69614E009FDB0B /* AppDelegate.m */,
 				EF9756001A6961F3009FDB0B /* TouchCubeController.h */,
 				EF9756011A6961F3009FDB0B /* TouchCubeController.m */,
-				EF9755D71A69614E009FDB0B /* Supporting Files */,
+				EF9755D81A69614E009FDB0B /* Info.plist */,
 			);
 			name = "Touch Cube";
 			path = "Demos/Touch Cube";
-			sourceTree = "<group>";
-		};
-		EF9755D71A69614E009FDB0B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				EF9755D81A69614E009FDB0B /* Info.plist */,
-				EF9755D91A69614E009FDB0B /* main.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -521,7 +526,7 @@
 				EF7E7D451A695778009BD387 /* Mesh2D.h in Headers */,
 				EF7E7D491A695778009BD387 /* Controller2D.h in Headers */,
 				EF7E7D601A695778009BD387 /* Sphere3D.h in Headers */,
-				EF7E7D571A695778009BD387 /* Box3D.h in Headers */,
+				EF7E7D571A695778009BD387 /* Cube3D.h in Headers */,
 				EF7E7D581A695778009BD387 /* Mesh3D+OBJ.h in Headers */,
 				EF7E7D631A695778009BD387 /* Ray3D.h in Headers */,
 				EF7E7D4E1A695778009BD387 /* Button2D.h in Headers */,
@@ -700,14 +705,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF7E7D891A695838009BD387 /* default.v1.vsh in Resources */,
-				EF7E7D871A695838009BD387 /* default.v1.fsh in Resources */,
-				EF7E7D881A695838009BD387 /* default.v3.vsh in Resources */,
-				EF7E7D851A695838009BD387 /* default.v3.fsh in Resources */,
-				EF7E7D861A695838009BD387 /* unlit.v1.vsh in Resources */,
-				EF7E7D821A695838009BD387 /* unlit.v1.fsh in Resources */,
-				EF7E7D841A695838009BD387 /* unlit.v3.vsh in Resources */,
-				EF7E7D831A695838009BD387 /* unlit.v3.fsh in Resources */,
+				EF7E7D881A695838009BD387 /* vertex.v3.vsh in Resources */,
+				EF7E7D851A695838009BD387 /* vertex.v3.fsh in Resources */,
 				2DC35EA7B7DB4A8F330954DE /* specular.v3.vsh in Resources */,
 				2DC3563C485E683226613CE4 /* specular.v3.fsh in Resources */,
 			);
@@ -717,11 +716,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF7104031A85232E00A2B8AE /* slate-normal.png in Resources */,
+				EF7103F41A851B8400A2B8AE /* pyramid.jpg in Resources */,
+				EF7103FC1A851E5200A2B8AE /* chester-specular.png in Resources */,
 				EF90F0C81A8375C0004EB0D0 /* colormap-box.jpg in Resources */,
 				EF90F0D41A837F54004EB0D0 /* specularmap-box.jpg in Resources */,
 				EF90F0D21A837F54004EB0D0 /* ambientocclusionmap-box.jpg in Resources */,
+				EF7103FA1A851E5200A2B8AE /* chester-color.png in Resources */,
+				EF7103FB1A851E5200A2B8AE /* chester-normal.png in Resources */,
+				EF7103F21A85155E00A2B8AE /* flower.jpg in Resources */,
 				EF90F0D31A837F54004EB0D0 /* bumpmap-box.jpg in Resources */,
+				EF7104041A85232E00A2B8AE /* slate-specular.png in Resources */,
 				EF90F0C61A83742E004EB0D0 /* normalmap-box.jpg in Resources */,
+				EF7104011A85232E00A2B8AE /* slate-ambientocclusion.png in Resources */,
+				EF90F1041A84073D004EB0D0 /* test.png in Resources */,
+				EF7103F91A851E5200A2B8AE /* chester-ambientocclusion.png in Resources */,
+				EF7104021A85232E00A2B8AE /* slate-color.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +739,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF7104051A8567B300A2B8AE /* vertex.v1.vsh in Resources */,
+				EF7104061A8567B300A2B8AE /* vertex.v1.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,7 +773,7 @@
 				EF7E7D3F1A695778009BD387 /* Image2D.m in Sources */,
 				EF7E7D561A695778009BD387 /* Pyramid3D.m in Sources */,
 				EF7E7D681A695778009BD387 /* Line3D.m in Sources */,
-				EF7E7D6E1A695778009BD387 /* Box3D.m in Sources */,
+				EF7E7D6E1A695778009BD387 /* Cube3D.m in Sources */,
 				EF7E7D371A695778009BD387 /* Polygon2D.m in Sources */,
 				EF7E7D731A695778009BD387 /* Window3D+OSX.m in Sources */,
 				EF7E7D3C1A695778009BD387 /* Line2D.m in Sources */,
@@ -810,7 +822,7 @@
 				EF9755CC1A696022009FDB0B /* Line3D.m in Sources */,
 				EF9755CD1A696022009FDB0B /* Light3D.m in Sources */,
 				EF9755CF1A696022009FDB0B /* Buffer3D.m in Sources */,
-				EF9755D01A696022009FDB0B /* Box3D.m in Sources */,
+				EF9755D01A696022009FDB0B /* Cube3D.m in Sources */,
 				EF9755B91A695F1C009FDB0B /* Gyro3D+iOS.m in Sources */,
 				EF9755B81A695F1C009FDB0B /* Window3D+iOS.m in Sources */,
 				EF9755B61A695F1C009FDB0B /* Texture2D+iOS.m in Sources */,
@@ -825,9 +837,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9755DD1A69614E009FDB0B /* AppDelegate.m in Sources */,
 				EF9756021A6961F3009FDB0B /* TouchCubeController.m in Sources */,
-				EF9755DA1A69614E009FDB0B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,11 +46,9 @@
 	return self;
 }
 
-- (void) dealloc {
-	if (name) {
-		NSLog(@"Brisemo name %d", name);
+- (void)dealloc {
+	if (name)
 		glDeleteTextures(1, &name);
-	}
 }
 
 - (NSString*)description {

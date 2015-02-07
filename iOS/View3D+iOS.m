@@ -272,13 +272,13 @@
 	return _controller;
 }
 
-- (void)pushController:(Controller3D *)newcontroller {
+- (void)pushController:(Controller3D *)controller {
 	if (!_controllerStack)
 		_controllerStack = [[NSMutableArray alloc] init];
 	if (_controller)
 		[_controller stop];
-	[_controllerStack addObject:newcontroller];
-	_controller = newcontroller;
+	[_controllerStack addObject:controller];
+	_controller = controller;
 	_controller.view = self;
 	//_button = nil;  // TODO
 	[_controller start];

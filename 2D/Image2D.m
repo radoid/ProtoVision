@@ -10,30 +10,28 @@
 
 
 @interface Image2D (Copying)
-- (id)initWithTexture:(Texture2D *)newtexture origin:(CGPoint)neworigin frame:(CGRect)newframe stretch:(CGRect)newstretch buffer:(Buffer2D *)newvbo;
+- (id)initWithTexture:(Texture2D *)texture origin:(CGPoint)origin frame:(CGRect)frame stretch:(CGRect)stretch buffer:(Buffer2D *)vbo;
 - (id)copyWithZone:(NSZone *)zone;
 @end
 
 
 @implementation Image2D
 
-@synthesize width, height;
-
 - (id)initWithImageNamed:(NSString *)imagename {
 	return [self initWithImageNamed:imagename origin:CGPointMake(0, 0) frame:CGRectZero stretch:CGRectZero];
 }
 
-- (id)initWithImageNamed:(NSString *)imagename origin:(CGPoint)neworigin {
-	return [self initWithImageNamed:imagename origin:neworigin frame:CGRectZero stretch:CGRectZero];
+- (id)initWithImageNamed:(NSString *)imagename origin:(CGPoint)origin {
+	return [self initWithImageNamed:imagename origin:origin frame:CGRectZero stretch:CGRectZero];
 }
 
-- (id)initWithImageNamed:(NSString *)imagename origin:(CGPoint)neworigin frame:(CGRect)newframe stretch:(CGRect)newstretch {
-	Texture2D *newtexture = [Texture2D textureWithImageNamed:imagename];
-	if (!newtexture) {
+- (id)initWithImageNamed:(NSString *)imagename origin:(CGPoint)origin frame:(CGRect)frame stretch:(CGRect)stretch {
+	Texture2D *texture = [Texture2D textureWithImageNamed:imagename];
+	if (!texture) {
 		NSLog(@"ERROR: Subtexture \"%@\" failed for Image2D!", imagename);
 		return nil;
 	}
-	return [self initWithTexture:newtexture origin:neworigin frame:newframe stretch:newstretch];
+	return [self initWithTexture:texture origin:origin frame:frame stretch:stretch];
 }
 
 - (id)initWithTexture:(Texture2D *)newtexture {
@@ -54,15 +52,15 @@
 		_origin = neworigin;
 		_x = (newframe.size.width && newframe.size.height ? newframe.origin.x : 0);
 		_y = (newframe.size.width && newframe.size.height ? newframe.origin.y : 0);
-		width = (newframe.size.width && newframe.size.height ? newframe.size.width : _texture.width);
-		height = (newframe.size.width && newframe.size.height ? newframe.size.height : _texture.height);
+		_width = (newframe.size.width && newframe.size.height ? newframe.size.width : _texture.width);
+		_height = (newframe.size.width && newframe.size.height ? newframe.size.height : _texture.height);
 		CGRect stretch = newstretch;
 		if (stretch.size.width < 0)
 			stretch.size.width = _texture.width + stretch.size.width - stretch.origin.x;
 		if (stretch.size.height < 0)
 			stretch.size.height = _texture.height + stretch.size.height - stretch.origin.y;
 
-		if (stretch.size.width > 0 && stretch.size.height > 0 && (stretch.size.width < width || stretch.size.height < height)) {
+		if (stretch.size.width > 0 && stretch.size.height > 0 && (stretch.size.width < _width || stretch.size.height < _height)) {
 			/*CGPoint p1 = stretch.origin;
 			CGPoint p2 = CGPointMake(stretch.origin.x + stretch.size.width + (width - texture.width), stretch.origin.y + stretch.size.height + (height - texture.height));
 			CGPoint coord0 = texture.coords.origin;
@@ -93,28 +91,28 @@
 
 			CGRect coords = _texture.coords;
 			CGRect subcoords = CGRectMake(coords.origin.x + stretch.origin.x * coords.size.width / _texture.width, coords.origin.y + stretch.origin.y * coords.size.height / _texture.height, stretch.size.width * coords.size.width / _texture.width, stretch.size.height * coords.size.height / _texture.height);
-			CGRect subframe = CGRectMake(stretch.origin.x, stretch.origin.y, stretch.size.width + (width - _texture.width), stretch.size.height + (height - _texture.height));
+			CGRect subframe = CGRectMake(stretch.origin.x, stretch.origin.y, stretch.size.width + (_width - _texture.width), stretch.size.height + (_height - _texture.height));
 
 			GLfloat vertices[] = {
-				0, height, 0, coords.origin.x, coords.origin.y + coords.size.height,
-				subframe.origin.x, height, 0, subcoords.origin.x, coords.origin.y + coords.size.height,
-				subframe.origin.x + subframe.size.width, 0, height, subcoords.origin.x + subcoords.size.width, coords.origin.y + coords.size.height,
-				width, height, 0, coords.origin.x + coords.size.width, coords.origin.y + coords.size.height,
+				0, _height, 0, coords.origin.x, coords.origin.y + coords.size.height,
+				subframe.origin.x, _height, 0, subcoords.origin.x, coords.origin.y + coords.size.height,
+				subframe.origin.x + subframe.size.width, 0, _height, subcoords.origin.x + subcoords.size.width, coords.origin.y + coords.size.height,
+				_width, _height, 0, coords.origin.x + coords.size.width, coords.origin.y + coords.size.height,
 
 				0, subframe.origin.y + subframe.size.height, 0, coords.origin.x, subcoords.origin.y + subcoords.size.height,
 				subframe.origin.x, subframe.origin.y + subframe.size.height, 0, subcoords.origin.x, subcoords.origin.y + subcoords.size.height,
 				subframe.origin.x + subframe.size.width, subframe.origin.y + subframe.size.height, 0, subcoords.origin.x + subcoords.size.width, subcoords.origin.y + subcoords.size.height,
-				width, subframe.origin.y + subframe.size.height, 0, coords.origin.x + coords.size.width, subcoords.origin.y + subcoords.size.height,
+				_width, subframe.origin.y + subframe.size.height, 0, coords.origin.x + coords.size.width, subcoords.origin.y + subcoords.size.height,
 
 				0, subframe.origin.y, 0, coords.origin.x, subcoords.origin.y,
 				subframe.origin.x, subframe.origin.y, 0, subcoords.origin.x, subcoords.origin.y,
 				subframe.origin.x + subframe.size.width, subframe.origin.y, 0, subcoords.origin.x + subcoords.size.width, subcoords.origin.y,
-				width, subframe.origin.y, 0, coords.origin.x + coords.size.width, subcoords.origin.y,
+				_width, subframe.origin.y, 0, coords.origin.x + coords.size.width, subcoords.origin.y,
 
 				0, 0, 0, coords.origin.x, coords.origin.y,
 				subframe.origin.x, 0, 0, subcoords.origin.x, coords.origin.y,
 				subframe.origin.x + subframe.size.width, 0, 0, subcoords.origin.x + subcoords.size.width, coords.origin.y,
-				width, 0, 0, coords.origin.x + coords.size.width, coords.origin.y };
+				_width, 0, 0, coords.origin.x + coords.size.width, coords.origin.y };
 
 			GLushort indices[] = {
 				0, 4, 1, 5, 2, 6, 3, 7, 7,
@@ -132,9 +130,9 @@
 
 			GLfloat vertices[] = {
 				0.0, 0.0, 0, 0, 0,
-				width, 0.0, 0, newframe.size.width / _texture.width, 0,
-				0.0, height, 0, 0, newframe.size.height / _texture.height,
-				width, height, 0, newframe.size.width / _texture.width, newframe.size.height / _texture.height };
+				_width, 0.0, 0, newframe.size.width / _texture.width, 0,
+				0.0, _height, 0, 0, newframe.size.height / _texture.height,
+				_width, _height, 0, newframe.size.width / _texture.width, newframe.size.height / _texture.height };
 
 			return [self initWithMode:GL_TRIANGLE_STRIP vertices:vertices vertexCount:sizeof(vertices)/sizeof(GLfloat)/5 indices:nil	 indexCount:0 vertexSize:3 texCoordsSize:2 colorSize:0 isDynamic:NO];
 		}
@@ -145,8 +143,8 @@
 
 - (id)copyWithZone:(NSZone *)zone {
 	Image2D *copy = [super copyWithZone:zone];
-	copy.width = width;
-	copy.height = height;
+	copy.width = _width;
+	copy.height = _height;
 	//return [[Image2D allocWithZone:zone] initWithTexture:texture origin:_origin frame:CGRectMake(x, y, width, height) stretch:CGRectZero buffer:buffer];
 	return copy;
 }

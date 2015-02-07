@@ -40,10 +40,10 @@
 		_uModel = glGetUniformLocation(_programname, "uModel");
 		_uModelView = glGetUniformLocation(_programname, "uModelView");
 		_uNormal = glGetUniformLocation(_programname, "uNormal");
+		_uLightCount = glGetUniformLocation(_programname, "uLightCount");
 		_uLight = glGetUniformLocation(_programname, "uLight");
 		_uEye = glGetUniformLocation(_programname, "uEye");
 		_uTime = glGetUniformLocation(_programname, "uTime");
-		_uColor = glGetUniformLocation(_programname, "uColor");
 		_uColor = glGetUniformLocation(_programname, "uColor");
 		_uColorAmbient = glGetUniformLocation(_programname, "uColorAmbient");
 		_uColorSpecular = glGetUniformLocation(_programname, "uColorSpecular");
@@ -54,6 +54,8 @@
 		_uNormalMapSampler = glGetUniformLocation(_programname, "uNormalMapSampler");
 		_uUseSpecularMap = glGetUniformLocation(_programname, "uUseSpecularMap");
 		_uSpecularMapSampler = glGetUniformLocation(_programname, "uSpecularMapSampler");
+		_uUseAmbientOcclusionMap = glGetUniformLocation(_programname, "uUseAmbientOcclusionMap");
+		_uAmbientOcclusionMapSampler = glGetUniformLocation(_programname, "uAmbientOcclusionMapSampler");
 
 		_aPosition = glGetAttribLocation(_programname, "aPosition");
 		_aNormal = glGetAttribLocation(_programname, "aNormal");
@@ -124,14 +126,14 @@
 + (id)defaultProgram {
 	static id material;
 	if (!material)
-		material = [Program3D programNamed:@"default"];
+		material = [Program3D programNamed:@"vertex"];
 	return material;
 }
 
 + (id)defaultProgram2D {
 	static id material2D;
 	if (!material2D)
-		material2D = [Program3D programNamed:@"unlit"];
+		material2D = [Program3D programNamed:@"vertex"];
 	return material2D;
 }
 
@@ -139,12 +141,14 @@
 	glUseProgram(_programname);
 }
 
-- (void)useWithProjection:(Matrix4x4)projection model:(Matrix4x4)model modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color colorAmbient:(Color2D)colorAmbient colorSpecular:(Color2D)colorSpecular colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap specularMap:(Texture2D *)specularMap light:(Vector3D)direction position:(Vector3D)position {
+- (void)useWithProjection:(Matrix4x4)projection model:(Matrix4x4)model view:(Matrix4x4)view modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color colorAmbient:(Color2D)colorAmbient colorSpecular:(Color2D)colorSpecular colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap specularMap:(Texture2D *)specularMap ambientOcclusionMap:(Texture2D *)ambientOcclusionMap light:(Vector3D)direction position:(Vector3D)position {
 	glUseProgram(_programname);
 	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
 	glUniformMatrix4fv(_uModel, 1, GL_FALSE, (const GLfloat *)&model);
 	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
 	glUniformMatrix3fv(_uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
+	if (_uLightCount > -1 && _uLight > -1)
+		glUniform1i(_uLightCount, 1);
 	if (_uLight > -1)
 		glUniform3fv(_uLight, 1, (const GLfloat *)&direction);
 	if (_uEye > -1)
@@ -181,6 +185,14 @@
 		[specularMap bind];
 	}
 
+	if (_uUseAmbientOcclusionMap > -1)
+		glUniform1i(_uUseAmbientOcclusionMap, ambientOcclusionMap && _uAmbientOcclusionMapSampler > -1 ? GL_TRUE : GL_FALSE);
+	if (ambientOcclusionMap && _uAmbientOcclusionMapSampler > -1) {
+		glUniform1i(_uAmbientOcclusionMapSampler, 3);
+		glActiveTexture(GL_TEXTURE3);
+		[ambientOcclusionMap bind];
+	}
+
 	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);
 }
 
@@ -189,8 +201,11 @@
 	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
 	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
 	glUniform4fv(_uColor, 1, (const GLfloat *)&color);
-	glUniform1i(_uUseColorMap, texture ? GL_TRUE : GL_FALSE);
-	if (texture) {
+	if (_uLightCount > -1)
+		glUniform1i(_uLightCount, 0);
+	if (_uUseColorMap > -1)
+		glUniform1i(_uUseColorMap, texture ? GL_TRUE : GL_FALSE);
+	if (texture && _uColorMapSampler > -1) {
 		glUniform1i(_uColorMapSampler, 0);
 		glActiveTexture (GL_TEXTURE0);
 		[texture bind];
