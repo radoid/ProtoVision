@@ -135,7 +135,7 @@
 	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[_program useWithProjection:camera.projection model:_localToWorld view:camera.worldToLocal modelView:modelview normal:normal color:_color colorAmbient:_colorAmbient colorSpecular:_colorSpecular colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap specularMap:_specularMap ambientOcclusionMap:_ambientOcclusionMap light:light.direction position:camera.position];
+	[_program useWithProjection:camera.projection model:_localToWorld view:camera.worldToLocal modelView:modelview normal:normal color:_color colorAmbient:_colorAmbient colorSpecular:_colorSpecular colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap specularMap:_specularMap ambientOcclusionMap:_ambientOcclusionMap light:light position:camera.position];
 	[_buffer draw];
 
 	if (_color.alpha < 1)

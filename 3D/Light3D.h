@@ -7,11 +7,10 @@
 
 #import "ProtoVision.h"
 
-
-@interface Light3D : NSObject
+@interface Light3D : Object3D
 
 @property (nonatomic) BOOL hasPosition, hasDirection;
-@property (nonatomic) Vector3D position, direction;
+@property (nonatomic) Vector3D direction;
 @property (nonatomic) Color2D color;
 
 - (id)initWithPosition:(Vector3D)position;

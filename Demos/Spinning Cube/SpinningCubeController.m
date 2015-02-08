@@ -24,34 +24,37 @@ int main(int argc, const char * argv[]) {
 
 - (void)start {
 	scene = [[Container3D alloc] init];
-	camera = [[Camera3D alloc] initWithPerspectivePosition:Vector3DMake(0, 0, 2) lookAt:Vector3DZero up:Vector3DY fovy:65 aspect:_view.frame.size.width / _view.frame.size.height near:0.1f far:20.f];
-	light = [[Light3D alloc] initWithDirection:Vector3DMake(+0.5, 0, -0.5)];
+	camera = [[Camera3D alloc] initWithPerspectivePosition:Vector3DMake(0, 0, .2) lookAt:Vector3DZero up:Vector3DY fovy:65 aspect:_view.frame.size.width / _view.frame.size.height near:0.01f far:10.f];
+	light = [[Light3D alloc] initWithDirection:Vector3DMake(+1.5, 0, -0.5)];
 
-	Box3D *box = [[Box3D alloc] initWithWidth:1 height:1 depth:1];
-	box.x = -0.5;
+	Cube3D *box = [[Cube3D alloc] initWithWidth:.1 height:.1 depth:.1];
+	box.x = -0.05;
+	//box.normalMap = [[Texture2D alloc] initWithImageNamed:@"test.png"];
+	//box.normalMap = [[Texture2D alloc] initWithImageNamed:@"flower.jpg"];
+	//box.colorMap = [[Texture2D alloc] initWithImageNamed:@"slate-color.png"];
+	//box.normalMap = [[Texture2D alloc] initWithImageNamed:@"slate-normal.png"];
+	//box.ambientOcclusionMap = [[Texture2D alloc] initWithImageNamed:@"slate-ambientocclusion.png"];
 	box.colorMap = [[Texture2D alloc] initWithImageNamed:@"colormap-box.jpg"];
 	box.normalMap = [[Texture2D alloc] initWithImageNamed:@"normalmap-box.jpg"];
 	//box.specularMap = [[Texture2D alloc] initWithImageNamed:@"specularmap-box.jpg"];
-	box.colorAmbient = ColorRGBFromHSL(.17, .24, .3, 1);
-	box.color = ColorRGBFromHSL(.14, .54, .76, 1);
-	box.colorSpecular = ColorRGBFromHSL(.14, .54, .9, 1);
-	box.program = [Program3D programNamed:@"specular"];
+	//box.ambientOcclusionMap = [[Texture2D alloc] initWithImageNamed:@"ambientocclusionmap-box.jpg"];
+	box.colorAmbient = Color2DFromHSL(.17, .24, .30, 1);
+	box.colorDiffuse = Color2DFromHSL(.15, .34, .56, 1);
+	box.colorSpecular = Color2DFromHSL(.14, .34, .95, 1);
+	//box.program = [Program3D programNamed:@"specular"];
 	[scene add:box];
 
-	Sphere3D *sphere = [[Sphere3D alloc] initWithRadius:0.6 levels:50];
-	sphere.position = Vector3DMake(0.7, 0, 0);
-	sphere.colorAmbient = ColorRGBFromHSL(.47, .54, .1, 1);
-	sphere.color = ColorRGBFromHSL(.44, .54, .86, 1);
-	sphere.colorSpecular = ColorRGBFromHSL(.42, .54, .95, 1);
-	sphere.specularMap = [[Texture2D alloc] initWithImageNamed:@"specularmap-box.jpg"];
-	sphere.program = [Program3D programNamed:@"specular"];
+	Sphere3D *sphere = [[Sphere3D alloc] initWithRadius:0.06 levels:50];
+	sphere.position = Vector3DMake(0.07, 0, 0);
+	sphere.colorAmbient = Color2DFromHSL(.47, .54, .1, 1);
+	sphere.color = Color2DFromHSL(.44, .54, .86, 1);
+	sphere.colorSpecular = Color2DFromHSL(.42, .54, .95, 1);
+	//sphere.program = [Program3D programNamed:@"specular"];
 	[scene add:sphere];
 
-	/*for (int i=0; i < 20000; i++)
-		[camera rotateAround:Vector3DZero byAxis:Vector3DY angle:+0.279765];
-	for (int i=0; i < 20000; i++)
-		[camera rotateAround:Vector3DZero byAxis:Vector3DY angle:-0.279765];*/
-
+	Line3D *line = [[Line3D alloc] initWithStart:Vector3DFlip(light.direction) end:Vector3DZero];
+	line.color = Color2DMake(1, .5, .5, 1);
+	[scene add:line];
 }
 
 - (void)draw {
@@ -59,7 +62,7 @@ int main(int argc, const char * argv[]) {
 }
 
 /*- (BOOL)update:(float)delta {
-	[camera rotateAround:Vector3DZero byAxis:Vector3DY angle:delta*90];
+	[camera rotateAround:Vector3DZero byAxis:Vector3DY angle:delta*9];
 	return YES;
 }*/
 
@@ -74,24 +77,16 @@ int main(int argc, const char * argv[]) {
 }
 
 - (BOOL)touchMove:(Vector2D)location modifiers:(int)flags {
-	float radius = _view.frame.size.height/5;
+	float radius = _view.frame.size.height/5.;
+	Vector3D movement = { location.x - dragging.x, location.y - dragging.y, 0 };
+	float angle = Vector3DLength(movement) / radius / M_PI * 180;
+	Vector3D axis = Vector3DRotateByAxisAngle(camera.up, camera.forward, - atan2f(movement.y, movement.x) * 180/M_PI);
 
-	float angle = (dragging.x - location.x) / radius * 180/M_PI;
-	[camera setPosition:Vector3DRotateByAxisAngle(dragging_position, Vector3DY, angle) lookAt:Vector3DZero up:Vector3DY];
-	//camera.rotation = Quaternion3DMakeWithAxisAngle(Vector3DY, angle);
-	//NSLog(@"%f", angle);
+	//[scene rotateByAxis:axis angle:angle];
+	//[camera setPosition:Vector3DRotateByAxisAngle(dragging_position, axis, angle) lookAt:Vector3DZero up:camera.up];
+	[camera rotateAround:Vector3DZero byAxis:axis angle:-angle];
 
-	/*float angle = (location.x - dragging.x) / radius * 180/M_PI;
-	[scene rotateByAxis:camera.up angle:angle];
-	angle = - (location.y - dragging.y) / radius * 180/M_PI;
-	[scene rotateByAxis:camera.right angle:angle];
-
-	/*Vector3D movement = { location.x - dragging.x, location.y - dragging.y, 0 };
-	 Vector3D axis = Vector3DRotateWithAxisAngle(camera3d.up, camera3d.forward, - atan2f(movement.y, movement.x) * 180/M_PI);
-	 float angle = Vector3DLength(movement) / radius / M_PI * 180;
-	 [object rotateByAxis:axis angle:angle];*/
-
-	//dragging = location;
+	dragging = location;
 	return YES;
 }
 

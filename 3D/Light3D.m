@@ -13,7 +13,7 @@
 
 - (id)initWithPosition:(Vector3D)position {
 	if ((self = [super init])) {
-		_position = position;
+		self.position = position;
 		_hasPosition = YES;
 		_color = Color2DMake(1, 1, 1, 1);
 	}
@@ -22,7 +22,7 @@
 
 - (id)initWithDirection:(Vector3D)direction {
 	if ((self = [super init])) {
-		_direction = Vector3DUnit(direction);
+		self.direction = Vector3DUnit(direction);
 		_hasDirection = YES;
 		_color = Color2DMake(1, 1, 1, 1);
 	}
@@ -41,6 +41,14 @@
 		_color = color;
 	}
 	return self;
+}
+
+- (Vector3D)direction {
+	return self.forward; // TODO
+}
+
+- (void)setDirection:(Vector3D)direction {
+	[self directTo:direction up:Vector3DY]; // TODO
 }
 
 @end

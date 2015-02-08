@@ -119,7 +119,7 @@
 		if (vs && fs)
 			return [[Program3D alloc] initWithVertexShader:vs fragmentShader:fs];
 	}
-	NSAssert(NO, @"No shaders named \"%@\"!", filename);
+	NSAssert(NO, @"No shader files named \"%@\"", filename);
 	return nil;
 }
 
@@ -141,7 +141,7 @@
 	glUseProgram(_programname);
 }
 
-- (void)useWithProjection:(Matrix4x4)projection model:(Matrix4x4)model view:(Matrix4x4)view modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color colorAmbient:(Color2D)colorAmbient colorSpecular:(Color2D)colorSpecular colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap specularMap:(Texture2D *)specularMap ambientOcclusionMap:(Texture2D *)ambientOcclusionMap light:(Vector3D)direction position:(Vector3D)position {
+- (void)useWithProjection:(Matrix4x4)projection model:(Matrix4x4)model view:(Matrix4x4)view modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color colorAmbient:(Color2D)colorAmbient colorSpecular:(Color2D)colorSpecular colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap specularMap:(Texture2D *)specularMap ambientOcclusionMap:(Texture2D *)ambientOcclusionMap light:(Light3D *)light position:(Vector3D)position {
 	glUseProgram(_programname);
 	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
 	glUniformMatrix4fv(_uModel, 1, GL_FALSE, (const GLfloat *)&model);
@@ -149,8 +149,9 @@
 	glUniformMatrix3fv(_uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
 	if (_uLightCount > -1 && _uLight > -1)
 		glUniform1i(_uLightCount, 1);
+	Vector3D lightv = (light.hasPosition ? light.position : light.direction);
 	if (_uLight > -1)
-		glUniform3fv(_uLight, 1, (const GLfloat *)&direction);
+		glUniform4fv(_uLight, 1, (const GLfloat []) {lightv.x, lightv.y, lightv.z, light.hasPosition ? 1 : 0});
 	if (_uEye > -1)
 		glUniform3fv(_uEye, 1, (const GLfloat *)&position);
 	if (_uTime > -1)

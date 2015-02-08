@@ -30,13 +30,13 @@
 
 #import "3D/Buffer3D.h"
 #import "2D/Buffer2D.h"
-#import "3D/Light3D.h"
 
 #import "3D/VectorIJK.h"
 #import "3D/Plane3D.h"
 #import "3D/Ray3D.h"
 #import "3D/Quaternion3D.h"
 #import "3D/Object3D.h"
+
 #import "3D/Mesh3D.h"
 #import "3D/Mesh3D+OBJ.h"
 #import "3D/Container3D.h"
@@ -46,6 +46,7 @@
 #import "3D/Sphere3D.h"
 #import "3D/Pyramid3D.h"
 #import "3D/Camera3D.h"
+#import "3D/Light3D.h"
 
 #import "2D/Object2D.h"
 #import "2D/Mesh2D.h"

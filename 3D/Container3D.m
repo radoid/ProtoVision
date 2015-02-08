@@ -65,6 +65,11 @@
 	return radius * self.scale;
 }
 
+- (void)setProgram:(Program3D *)program {
+	for (Mesh3D *child in self.children)
+		child.program = program;
+}
+
 - (void)setColor:(Color2D)color {
 	[super setColor:color];
 	for (Mesh3D *child in self.children)

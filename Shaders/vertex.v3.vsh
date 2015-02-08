@@ -2,7 +2,8 @@
 
 uniform mat4 uProjection, uModelView;
 uniform mat3 uNormal;
-uniform vec3 uLight, uEye;
+uniform vec4 uLight;
+uniform vec3 uEye;
 uniform vec4 uColor, uColorAmbient;
 uniform int uLightCount, uColorSize;
 in vec3 aPosition, aNormal;
@@ -14,8 +15,14 @@ out vec2 vTextureUV;
 
 void main (void) {
 	if (uLightCount > 0) {
-		float intensity = (dot(normalize(-uLight), normalize(uNormal * aNormal)) + 1.0) / 2.0;
-		//intensity = max(0.0, dot(normalize(-uLight), normalize(uNormal * aNormal)));
+		vec3 light;
+		if (uLight.w == 0)
+			light = -uLight.xyz;
+		else
+			light = normalize(uLight.xyz - aPosition);
+
+		float intensity = (dot(normalize(light), normalize(uNormal * aNormal)) + 1.0) / 2.0;
+		//intensity = max(0.0, dot(normalize(light), normalize(uNormal * aNormal)));
 
 		if (uColorSize == 8)
 			vColor = mix(aColorAmbient, aColor, intensity);

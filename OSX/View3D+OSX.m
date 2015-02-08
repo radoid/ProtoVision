@@ -234,7 +234,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[self.openGLContext makeCurrentContext];
 
 	if ([_controller keyUp:event.keyCode modifiers:(int)event.modifierFlags]
-	 || [_controller keyPress:event.charactersIgnoringModifiers modifiers:(int)event.modifierFlags])
+	 || [_controller keyPress:[event.charactersIgnoringModifiers characterAtIndex:0] modifiers:(int)event.modifierFlags])
 		self.needsDisplay = YES;
 
 	CGLUnlockContext([self.openGLContext CGLContextObj]);

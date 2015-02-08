@@ -41,7 +41,7 @@
 	return NO;
 }
 - (BOOL)keyUp:(int)keyCode modifiers:(int)flags {return NO;}
-- (BOOL)keyPress:(NSString *)key modifiers:(int)flags {return NO;}
+- (BOOL)keyPress:(unichar)unicode modifiers:(int)flags {return NO;}
 
 - (int)run {
 	@autoreleasepool {

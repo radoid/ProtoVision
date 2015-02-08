@@ -34,7 +34,7 @@
 
 - (BOOL)keyDown:(int)keyCode modifiers:(int)flags;
 - (BOOL)keyUp:(int)keyCode modifiers:(int)flags;
-- (BOOL)keyPress:(NSString *)key modifiers:(int)flags;
+- (BOOL)keyPress:(unichar)unicode modifiers:(int)flags;
 
 - (BOOL)touchDown:(Vector2D)location modifiers:(int)flags;
 - (BOOL)touchMove:(Vector2D)location modifiers:(int)flags;
