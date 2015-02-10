@@ -25,8 +25,8 @@
 	if ((self = [super initWithBuffer:shared])) {
 		self.scaleX = width;
 		self.scaleY = height;
-    }
-    return self;
+	}
+	return self;
 }
 
 @end
