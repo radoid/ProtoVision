@@ -9,7 +9,7 @@
 
 
 int main(int argc, const char * argv[]) {
-	return [[[SpinningCubeController alloc] init] run];
+	return [[[SpinningCubeController alloc] init] runAnimated];
 }
 
 
@@ -30,10 +30,6 @@ int main(int argc, const char * argv[]) {
 	Cube3D *box = [[Cube3D alloc] initWithWidth:.1 height:.1 depth:.1];
 	box.x = -0.05;
 	//box.normalMap = [[Texture2D alloc] initWithImageNamed:@"test.png"];
-	//box.normalMap = [[Texture2D alloc] initWithImageNamed:@"flower.jpg"];
-	//box.colorMap = [[Texture2D alloc] initWithImageNamed:@"slate-color.png"];
-	//box.normalMap = [[Texture2D alloc] initWithImageNamed:@"slate-normal.png"];
-	//box.ambientOcclusionMap = [[Texture2D alloc] initWithImageNamed:@"slate-ambientocclusion.png"];
 	box.colorMap = [[Texture2D alloc] initWithImageNamed:@"colormap-box.jpg"];
 	box.normalMap = [[Texture2D alloc] initWithImageNamed:@"normalmap-box.jpg"];
 	//box.specularMap = [[Texture2D alloc] initWithImageNamed:@"specularmap-box.jpg"];
@@ -41,7 +37,7 @@ int main(int argc, const char * argv[]) {
 	box.colorAmbient = Color2DFromHSL(.17, .24, .30, 1);
 	box.colorDiffuse = Color2DFromHSL(.15, .34, .56, 1);
 	box.colorSpecular = Color2DFromHSL(.14, .34, .95, 1);
-	//box.program = [Program3D programNamed:@"specular"];
+	box.program = [Program3D programNamed:@"specular"];
 	[scene add:box];
 
 	Sphere3D *sphere = [[Sphere3D alloc] initWithRadius:0.06 levels:50];
@@ -49,22 +45,22 @@ int main(int argc, const char * argv[]) {
 	sphere.colorAmbient = Color2DFromHSL(.47, .54, .1, 1);
 	sphere.color = Color2DFromHSL(.44, .54, .86, 1);
 	sphere.colorSpecular = Color2DFromHSL(.42, .54, .95, 1);
-	//sphere.program = [Program3D programNamed:@"specular"];
+	sphere.program = [Program3D programNamed:@"specular"];
 	[scene add:sphere];
 
-	Line3D *line = [[Line3D alloc] initWithStart:Vector3DFlip(light.direction) end:Vector3DZero];
-	line.color = Color2DMake(1, .5, .5, 1);
-	[scene add:line];
+	//Line3D *line = [[Line3D alloc] initWithStart:Vector3DFlip(light.direction) end:Vector3DZero];
+	//line.color = Color2DMake(1, .5, .5, 1);
+	//[scene add:line];
 }
 
 - (void)draw {
 	[scene drawWithCamera:camera light:light];
 }
 
-/*- (BOOL)update:(float)delta {
-	[camera rotateAround:Vector3DZero byAxis:Vector3DY angle:delta*9];
+- (BOOL)update:(float)delta {
+	[camera rotateAround:Vector3DZero byAxis:Vector3DY angle:delta*60];
 	return YES;
-}*/
+}
 
 - (void)reshape {
 	camera.aspect = _view.frame.size.width/_view.frame.size.height;
