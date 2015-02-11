@@ -147,6 +147,14 @@
 	[self setPosition:position direction:Vector3DSubtract(center, position) up:up];
 }
 
+- (void)addTo:(Container3D *)parent {
+	[parent add:self];
+}
+
+- (void)removeFromParent {
+	[_parent remove:self];
+}
+
 - (void)recalculate {
 	_localToWorld = (_parent ? _parent.localToWorld : Matrix4x4Identity);
 	_localToWorld = Matrix4x4Translate(_localToWorld, _x, _y, _z);

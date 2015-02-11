@@ -31,13 +31,13 @@
 	return copy;
 }
 
-- (void)add:(Mesh3D *)child {
+- (void)add:(Object3D *)child {
 	[children addObject:child];
 	child.parent = self;
 	[child recalculate];
 }
 
-- (void)remove:(Mesh3D *)child {
+- (void)remove:(Object3D *)child {
 	child.parent = nil;
 	[child recalculate];
 	[children removeObject:child];
