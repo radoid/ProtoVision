@@ -8,6 +8,7 @@
 #import "ProtoVision.h"
 
 @class Camera3D;
+@class Light3D;
 
 
 @interface Mesh3D : Object3D <NSCopying>
@@ -37,5 +38,6 @@
 
 - (void)drawWithCamera:(Camera3D *)camera;
 - (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light;
+- (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light program:(Program3D *)program;
 
 @end

@@ -136,7 +136,7 @@
 	else if (_vboname)
 		glDrawArrays(_mode, 0, _vertexcount);
 
-	GLenum err = glGetError(); NSAssert(!err, @"[Buffer3D draw] OpenGL error %x", err);
+	GLenum err; NSAssert(!(err = glGetError()), @"[Buffer3D draw] OpenGL error 0x%x", err);
 }
 
 - (void)dealloc {

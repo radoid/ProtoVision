@@ -9,7 +9,7 @@
 
 
 int main(int argc, char * argv[]) {
-	return [[[TouchCubeController alloc] init] run];
+	return [[[TouchCubeController alloc] init] runAnimated];
 }
 
 
@@ -24,7 +24,7 @@ int main(int argc, char * argv[]) {
 - (void)start {
 	scene3d = [[Container3D alloc] init];
 	camera3d = [[Camera3D alloc] initWithPerspectivePosition:Vector3DMake(-2, 2, -2) lookAt:Vector3DMake(0, 0.5, 0) up:Vector3DY fovy:60 aspect:_view.frame.size.width / _view.frame.size.height near:0.1f far:10];
-	light = [[Light3D alloc] initWithDirection:Vector3DMake(5.0, 5.0, 15.0)];
+	light = [[Light3D alloc] initWithDirection:Vector3DMake(5.0, -5.0, 15.0)];
 
 	_view.color = Color2DFromHSL(.55, .3, .6, 1);
 
@@ -32,13 +32,17 @@ int main(int argc, char * argv[]) {
 	box3d.y = 0.1f;
 	box3d.colorAmbient = Color2DFromHSL(.13, 1, 0.3, 1);
 	box3d.colorDiffuse = Color2DFromHSL(.14, 1, 0.6, 1);
-	[scene3d.children addObject:box3d];
+	box3d.colorSpecular= Color2DFromHSL(.14, 1, 0.9, 1);
+	[scene3d add:box3d];
 
 	Sphere3D *sphere3d = [[Sphere3D alloc] initWithRadius:1 levels:30];
-	sphere3d.position = Vector3DMake(0.5f, 0.5f, 0.5f);
-	sphere3d.colorAmbient = Color2DFromHSL(.10, 1, 0.3, 1);
+	sphere3d.position = Vector3DMake(0.5f, 0.75f, 0.5f);
+	sphere3d.colorAmbient = Color2DFromHSL(.08, 1, 0.3, 1);
 	sphere3d.colorDiffuse = Color2DFromHSL(.10, 1, 0.6, 1);
-	[scene3d.children addObject:sphere3d];
+	sphere3d.colorSpecular= Color2DFromHSL(.12, 1, 0.9, 1);
+	[scene3d add:sphere3d];
+
+	scene3d.program = [Program3D programNamed:@"specular"];
 }
 
 - (void)draw {

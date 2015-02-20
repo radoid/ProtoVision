@@ -7,7 +7,6 @@
 
 #import "ProtoVision.h"
 #import "Program3D.h"
-#import "Texture2D.h"
 
 
 @implementation Program3D
@@ -39,7 +38,7 @@
 		_uProjection = glGetUniformLocation(_programname, "uProjection");
 		_uModel = glGetUniformLocation(_programname, "uModel");
 		_uModelView = glGetUniformLocation(_programname, "uModelView");
-		_uNormal = glGetUniformLocation(_programname, "uNormal");
+		_uNormalMatrix = glGetUniformLocation(_programname, "uNormalMatrix");
 		_uLightCount = glGetUniformLocation(_programname, "uLightCount");
 		_uLight = glGetUniformLocation(_programname, "uLight");
 		_uEye = glGetUniformLocation(_programname, "uEye");
@@ -56,19 +55,23 @@
 		_uSpecularMapSampler = glGetUniformLocation(_programname, "uSpecularMapSampler");
 		_uUseAmbientOcclusionMap = glGetUniformLocation(_programname, "uUseAmbientOcclusionMap");
 		_uAmbientOcclusionMapSampler = glGetUniformLocation(_programname, "uAmbientOcclusionMapSampler");
+		_uUseShadowMap = glGetUniformLocation(_programname, "uUseShadowMap");
+		_uShadowMatrix = glGetUniformLocation(_programname, "uShadowMatrix");
+		_uShadowMapSampler = glGetUniformLocation(_programname, "uShadowMapSampler");
 
 		_aPosition = glGetAttribLocation(_programname, "aPosition");
 		_aNormal = glGetAttribLocation(_programname, "aNormal");
 		_aTangent = glGetAttribLocation(_programname, "aTangent");
+		_aTextureUV = glGetAttribLocation(_programname, "aTextureUV");
 		_aColor = glGetAttribLocation(_programname, "aColor");
 		_aColorAmbient = glGetAttribLocation(_programname, "aColorAmbient");
-		_aColor = glGetAttribLocation(_programname, "aColor");
-		_aTextureUV = glGetAttribLocation(_programname, "aTextureUV");
+		_aColorSpecular = glGetAttribLocation(_programname, "aColorSpecular");
+		_aColorIndex = glGetAttribLocation(_programname, "aColorIndex");
 
 		glDeleteShader(vsname);
 		glDeleteShader(fsname);
 
-		GLint err = glGetError(); NSAssert(!err, @"[Program3D init] OpenGL error %x!", err);
+		GLint err; NSAssert(!(err = glGetError()), @"[Program3D init] OpenGL error %x!", err);
 	}
 	return self;
 }
@@ -90,7 +93,7 @@
 	}
 	NSAssert(status, @"Shader compile error");
 
-	GLenum err = glGetError(); NSAssert(!err, @"[Program3D compileSource] OpenGL error %x", err);
+	GLenum err; NSAssert(!(err = glGetError()), @"[Program3D compileSource] OpenGL error %x", err);
 
 	return name;
 }
@@ -124,36 +127,57 @@
 }
 
 + (id)defaultProgram {
-	static id material;
-	if (!material)
-		material = [Program3D programNamed:@"vertex"];
-	return material;
+	static id _default;
+	if (!_default)
+		_default = [Program3D programNamed:@"vertex"];
+	return _default;
 }
 
-+ (id)defaultProgram2D {
-	static id material2D;
-	if (!material2D)
-		material2D = [Program3D programNamed:@"vertex"];
-	return material2D;
++ (id)depthProgram {
+	static id _depth;
+	if (!_depth)
+		_depth = [Program3D programNamed:@"depth"];
+	return _depth;
 }
 
 - (void)use {
 	glUseProgram(_programname);
 }
 
-- (void)useWithProjection:(Matrix4x4)projection model:(Matrix4x4)model view:(Matrix4x4)view modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color colorAmbient:(Color2D)colorAmbient colorSpecular:(Color2D)colorSpecular colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap specularMap:(Texture2D *)specularMap ambientOcclusionMap:(Texture2D *)ambientOcclusionMap light:(Light3D *)light position:(Vector3D)position {
+- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview color:(Color2D)color texture:(Texture2D *)texture {
+	NSAssert(_uProjection >= 0 && _uModelView >= 0, nil);
+	glUseProgram(_programname);
+	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
+	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
+	if (_uColor > -1)
+		glUniform4fv(_uColor, 1, (const GLfloat *)&color);
+	if (_uLightCount > -1)
+		glUniform1i(_uLightCount, 0);
+	if (_uUseColorMap > -1)
+		glUniform1i(_uUseColorMap, texture ? GL_TRUE : GL_FALSE);
+	if (texture && _uColorMapSampler > -1) {
+		glUniform1i(_uColorMapSampler, 0);
+		glActiveTexture (GL_TEXTURE0);
+		[texture bind];
+	}
+
+	GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error 0x%x", err);
+}
+
+- (void)useWithProjection:(Matrix4x4)projection model:(Matrix4x4)model view:(Matrix4x4)view modelView:(Matrix4x4)modelview normal:(Matrix3x3)normal color:(Color2D)color colorAmbient:(Color2D)colorAmbient colorSpecular:(Color2D)colorSpecular colorSize:(int)colorSize colorMap:(Texture2D *)colorMap normalMap:(Texture2D *)normalMap specularMap:(Texture2D *)specularMap ambientOcclusionMap:(Texture2D *)ambientOcclusionMap light:(Light3D *)light eye:(Vector3D)eye {
+	NSAssert(_uProjection >= 0 && _uModelView >= 0, nil);
 	glUseProgram(_programname);
 	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
 	glUniformMatrix4fv(_uModel, 1, GL_FALSE, (const GLfloat *)&model);
 	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
-	glUniformMatrix3fv(_uNormal, 1, GL_FALSE, (const GLfloat *)&normal);
+	glUniformMatrix3fv(_uNormalMatrix, 1, GL_FALSE, (const GLfloat *)&normal);
 	if (_uLightCount > -1 && _uLight > -1)
 		glUniform1i(_uLightCount, 1);
 	Vector3D lightv = (light.hasPosition ? light.position : light.direction);
 	if (_uLight > -1)
 		glUniform4fv(_uLight, 1, (const GLfloat []) {lightv.x, lightv.y, lightv.z, light.hasPosition ? 1 : 0});
 	if (_uEye > -1)
-		glUniform3fv(_uEye, 1, (const GLfloat *)&position);
+		glUniform3fv(_uEye, 1, (const GLfloat *)&eye);
 	if (_uTime > -1)
 		glUniform1f(_uTime, (float)CACurrentMediaTime());
 
@@ -194,25 +218,32 @@
 		[ambientOcclusionMap bind];
 	}
 
-	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);
-}
-
-- (void)useWithProjection:(Matrix4x4)projection modelView:(Matrix4x4)modelview color:(Color2D)color texture:(Texture2D *)texture {
-	glUseProgram(_programname);
-	glUniformMatrix4fv(_uProjection, 1, GL_FALSE, (const GLfloat *)&projection);
-	glUniformMatrix4fv(_uModelView, 1, GL_FALSE, (const GLfloat *)&modelview);
-	glUniform4fv(_uColor, 1, (const GLfloat *)&color);
-	if (_uLightCount > -1)
-		glUniform1i(_uLightCount, 0);
-	if (_uUseColorMap > -1)
-		glUniform1i(_uUseColorMap, texture ? GL_TRUE : GL_FALSE);
-	if (texture && _uColorMapSampler > -1) {
-		glUniform1i(_uColorMapSampler, 0);
-		glActiveTexture (GL_TEXTURE0);
-		[texture bind];
+	if (_uUseAmbientOcclusionMap > -1)
+		glUniform1i(_uUseAmbientOcclusionMap, ambientOcclusionMap && _uAmbientOcclusionMapSampler > -1 ? GL_TRUE : GL_FALSE);
+	if (ambientOcclusionMap && _uAmbientOcclusionMapSampler > -1) {
+		glUniform1i(_uAmbientOcclusionMapSampler, 3);
+		glActiveTexture(GL_TEXTURE3);
+		[ambientOcclusionMap bind];
 	}
 
-	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);
+	GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error 0x%x", err);
+}
+
+- (void)useWithShadowMap:(FrameBuffer3D *)map projection:(Matrix4x4)projection view:(Matrix4x4)view {
+	NSAssert(_uShadowMatrix >= 0 && _uShadowMapSampler >= 0, nil);
+	Matrix4x4 bias = Matrix4x4Make(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0.5, 0.5, 0.5, 1.0);
+	Matrix4x4 shadow = Matrix4x4Multiply(bias, Matrix4x4Multiply(projection, view));
+	glUseProgram(_programname);
+	if (_uUseShadowMap > -1)
+		glUniform1i(_uUseShadowMap, map ? GL_TRUE : GL_FALSE);
+	glUniformMatrix4fv(_uShadowMatrix, 1, GL_FALSE, (const GLfloat *)&shadow);
+	if (map && _uShadowMapSampler > -1) {
+		glUniform1i(_uShadowMapSampler, 4);
+		glActiveTexture (GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, map.texture);
+	}
+
+	GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error 0x%x", err);
 }
 
 - (void)dealloc {

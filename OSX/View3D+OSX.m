@@ -14,17 +14,19 @@
 	NSMutableArray *_controllerStack;
 	Controller3D *_controller;
 
+	NSOpenGLContext *_openGLContext;
+	NSOpenGLPixelFormat *_pixelFormat;
+
 	Color2D _color;
 	CVDisplayLinkRef _displayLink;
-	BOOL _initialized, _started;
+	BOOL _prepared, _started, _animated;
 	CGRect _backingFrame;
 	double _last_time;
 }
-@synthesize backingFrame=_backingFrame, color=_color;
 
 
-- (id)initWithFrame:(NSRect)initframe {
-	NSOpenGLPixelFormat *format = [[NSOpenGLPixelFormat alloc] initWithAttributes:(NSOpenGLPixelFormatAttribute[]) {
+- (id)initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context {
+	_pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:(NSOpenGLPixelFormatAttribute[]) {
 		NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
 		NSOpenGLPFAColorSize, 24,
 		NSOpenGLPFAAlphaSize, 8,
@@ -37,7 +39,22 @@
 		//NSOpenGLPFAStencilSize, 8,
 		//NSOpenGLPFAAccumSize, 0,
 		0}];
-	return [super initWithFrame:initframe pixelFormat:format];
+	NSAssert(_pixelFormat, @"View3D can't initialize OpenGL");
+    _openGLContext = [[NSOpenGLContext alloc] initWithFormat:_pixelFormat shareContext:context];
+
+	if (self = [super initWithFrame:frameRect]) {
+		[_openGLContext makeCurrentContext];
+
+		GLint swapInt = 1;
+		[_openGLContext setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
+
+		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reshape) name:NSViewGlobalFrameDidChangeNotification object:self];
+	}
+	return self;
+}
+
+- (id)initWithFrame:(NSRect)initframe {
+	return [self initWithFrame:initframe shareContext:nil];
 }
 
 - (id)initWithCoder:(NSCoder*)coder {
@@ -50,10 +67,16 @@
 - (void)awakeFromNib {
 	[self initWithFrame:self.frame];
 }
-
+/*
 - (void)setFrame:(NSRect)rect {
 	[super setFrame:rect];
-	[self update];
+	//[self update];
+}*/
+
+- (void)lockFocus {
+	[super lockFocus];
+	if (_openGLContext.view != self)
+		_openGLContext.view = self;
 }
 
 - (float)scale {
@@ -68,11 +91,34 @@
 
 
 /**
+ * Reshaping
+ */
+
+- (void)reshape {
+	//NSLog(@"reshape...");
+	if (_prepared) {
+		CGLLockContext([_openGLContext CGLContextObj]);
+		[_openGLContext makeCurrentContext];
+
+		_backingFrame = [self convertRectToBacking:[self frame]];
+		glViewport(0, 0, _backingFrame.size.width, _backingFrame.size.height);
+
+		if (_started)
+			[_controller reshape];
+
+		[_openGLContext update];
+
+		CGLUnlockContext([_openGLContext CGLContextObj]);
+	}
+	//NSLog(@"...reshape");
+}
+
+
+/**
  * Drawing
  */
 
 - (void)prepareOpenGL {
-	NSAssert(!_controller, nil);
 	self.wantsBestResolutionOpenGLSurface = YES;
 	_backingFrame = [self convertRectToBacking:[self frame]];
 	glViewport(0, 0, _backingFrame.size.width, _backingFrame.size.height);
@@ -83,54 +129,27 @@
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	self.color = Color2DMake(0.8, 0.8, 0.8, 1);
 
-	_initialized = YES;
-	if (_controller && !_started) {  // TODO remove?
-		[_controller start];
-		_started = YES;
-	}
+	_prepared = YES;
 }
 
 - (void)drawRect:(NSRect)rect {
-    if (!_displayLink || CVDisplayLinkIsRunning(_displayLink))
+	if (_prepared && (!_displayLink || !CVDisplayLinkIsRunning(_displayLink))) {
+		CGLLockContext([_openGLContext CGLContextObj]);
+		[_openGLContext makeCurrentContext];
+
 		[self draw];
+
+		CGLUnlockContext([_openGLContext CGLContextObj]);
+	}
 }
 
 - (void)draw {
-	if (_initialized) {
-		CGLLockContext([self.openGLContext CGLContextObj]);
-		[self.openGLContext makeCurrentContext];
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	if (_started)
+		[_controller draw];
 
-		if (_started)
-			[_controller draw];
-
-		[self.openGLContext flushBuffer];
-
-		CGLUnlockContext([self.openGLContext CGLContextObj]);
-	}
-}
-
-
-/**
- * Reshaping
- */
-
-- (void)reshape {
-	if (_initialized) {
-		CGLLockContext([self.openGLContext CGLContextObj]);
-		[self.openGLContext makeCurrentContext];
-
-		_backingFrame = [self convertRectToBacking:[self frame]];
-		glViewport(0, 0, _backingFrame.size.width, _backingFrame.size.height);
-
-		if (_started)
-			[_controller reshape];
-
-		[self.openGLContext update];
-
-		CGLUnlockContext([self.openGLContext CGLContextObj]);
-	}
+	[_openGLContext flushBuffer];
 }
 
 
@@ -139,73 +158,66 @@
  */
 
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext) {
-	CVReturn result = [(__bridge View3D *)displayLinkContext getFrameForTime:outputTime];
-	return result;
+	return [(__bridge View3D *)displayLinkContext getFrameForTime:outputTime];
 }
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime {
-	@autoreleasepool {
-		if (_controller && _started)
-			[self updateAnimation];
+	if (_started) {
+		CGLLockContext([_openGLContext CGLContextObj]);
+		[_openGLContext makeCurrentContext];
+
+		double time = CACurrentMediaTime(), delta = time - _last_time;
+		_last_time = time;
+		@autoreleasepool {
+			if ([_controller update:delta])
+				[self draw];
+		}
+
+		CGLUnlockContext([_openGLContext CGLContextObj]);
 	}
 	return kCVReturnSuccess;
 }
 
 - (void)startAnimation {
-	NSAssert(_initialized, nil);
-	CGLLockContext([self.openGLContext CGLContextObj]);
-	[self.openGLContext makeCurrentContext];
+	NSAssert(_prepared, @"Starting animation unprepared!");
+	CGLLockContext([_openGLContext CGLContextObj]);
+	[_openGLContext makeCurrentContext];
 
-	if (!_started)
-		[_controller start];
-	else
-		[_controller resume];  // TODO only if stopped
-	_started = YES;
+	if (_animated)
+		[_controller resume];
+	_animated = YES;
 	_last_time = CACurrentMediaTime();
 
-	CGLUnlockContext([self.openGLContext CGLContextObj]);
+	CGLUnlockContext([_openGLContext CGLContextObj]);
 
-	GLint swapInt = 1;
-	[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
+	//GLint swapInt = 1;
+	//[_openGLContext setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
 	CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
 	CVDisplayLinkSetOutputCallback(_displayLink, &MyDisplayLinkCallback, (__bridge void *)self);
-	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(_displayLink, [[self openGLContext] CGLContextObj], [[self pixelFormat] CGLPixelFormatObj]);
+	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(_displayLink, [_openGLContext CGLContextObj], [_pixelFormat CGLPixelFormatObj]);
 	CVDisplayLinkStart(_displayLink);
 }
 
 - (void)stopAnimation {
-	NSAssert(_initialized && _started, nil);
-	CGLLockContext([self.openGLContext CGLContextObj]);
-	[self.openGLContext makeCurrentContext];
+	NSAssert(_prepared && _started, nil);
+	CGLLockContext([_openGLContext CGLContextObj]);
+	[_openGLContext makeCurrentContext];
 
 	if (_displayLink) {
 		CVDisplayLinkStop(_displayLink);
 		CVDisplayLinkRelease(_displayLink);
 		_displayLink = 0;
 	}
-	if (_started)
+	if (_started	 && _animated)
 		[_controller stop];
 
-	CGLUnlockContext([self.openGLContext CGLContextObj]);
-}
-
-- (void)updateAnimation {
-	NSAssert(_initialized && _started, nil);
-	CGLLockContext([self.openGLContext CGLContextObj]);
-	[self.openGLContext makeCurrentContext];
-
-	double time = CACurrentMediaTime(), delta = time - _last_time;
-	_last_time = time;
-	if ([_controller update:delta])
-		//self.needsDisplay = YES;
-		[self draw];
-
-	CGLUnlockContext([self.openGLContext CGLContextObj]);
+	CGLUnlockContext([_openGLContext CGLContextObj]);
 }
 
 - (void)dealloc {
 	if (_displayLink)
 		[self stopAnimation];
+	//[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewGlobalFrameDidChangeNotification object:self];
 }
 
 
@@ -218,26 +230,26 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (void)keyDown:(NSEvent *)event {
-	NSAssert(_initialized && _started, nil);
-	CGLLockContext([self.openGLContext CGLContextObj]);
-	[self.openGLContext makeCurrentContext];
+	NSAssert(_prepared && _started, nil);
+	CGLLockContext([_openGLContext CGLContextObj]);
+	[_openGLContext makeCurrentContext];
 
 	if ([_controller keyDown:event.keyCode modifiers:(int)event.modifierFlags])
 		self.needsDisplay = YES;
 
-	CGLUnlockContext([self.openGLContext CGLContextObj]);
+	CGLUnlockContext([_openGLContext CGLContextObj]);
 }
 
 - (void)keyUp:(NSEvent *)event {
-	NSAssert(_initialized && _started, nil);
-	CGLLockContext([self.openGLContext CGLContextObj]);
-	[self.openGLContext makeCurrentContext];
+	NSAssert(_prepared && _started, nil);
+	CGLLockContext([_openGLContext CGLContextObj]);
+	[_openGLContext makeCurrentContext];
 
 	if ([_controller keyUp:event.keyCode modifiers:(int)event.modifierFlags]
 	 || [_controller keyPress:[event.charactersIgnoringModifiers characterAtIndex:0] modifiers:(int)event.modifierFlags])
 		self.needsDisplay = YES;
 
-	CGLUnlockContext([self.openGLContext CGLContextObj]);
+	CGLUnlockContext([_openGLContext CGLContextObj]);
 }
 
 
@@ -246,39 +258,39 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
  */
 
 - (void)mouseDown:(NSEvent *)event {
-	NSAssert(_initialized && _started, nil);
-	CGLLockContext([self.openGLContext CGLContextObj]);
-	[self.openGLContext makeCurrentContext];
+	NSAssert(_prepared && _started, nil);
+	CGLLockContext([_openGLContext CGLContextObj]);
+	[_openGLContext makeCurrentContext];
 
 	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
 	if ([_controller touchDown:location modifiers:(int)event.modifierFlags])
 		self.needsDisplay = YES;
 
-	CGLUnlockContext([self.openGLContext CGLContextObj]);
+	CGLUnlockContext([_openGLContext CGLContextObj]);
 }
 
 - (void)mouseDragged:(NSEvent *)event {
-	NSAssert(_initialized && _started, nil);
-	CGLLockContext([self.openGLContext CGLContextObj]);
-	[self.openGLContext makeCurrentContext];
+	NSAssert(_prepared && _started, nil);
+	CGLLockContext([_openGLContext CGLContextObj]);
+	[_openGLContext makeCurrentContext];
 
 	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
 	if ([_controller touchMove:location modifiers:(int)event.modifierFlags])
 		self.needsDisplay = YES;
 
-	CGLUnlockContext([self.openGLContext CGLContextObj]);
+	CGLUnlockContext([_openGLContext CGLContextObj]);
 }
 
 - (void)mouseUp:(NSEvent *)event {
-	NSAssert(_initialized && _started, nil);
-	CGLLockContext([self.openGLContext CGLContextObj]);
-	[self.openGLContext makeCurrentContext];
+	NSAssert(_prepared && _started, nil);
+	CGLLockContext([_openGLContext CGLContextObj]);
+	[_openGLContext makeCurrentContext];
 
 	Vector2D location = Vector2DMake([NSEvent mouseLocation].x - _window.frame.origin.x, [NSEvent mouseLocation].y - _window.frame.origin.y);
 	if (_started && [_controller touchUp:location modifiers:(int)event.modifierFlags])
 		self.needsDisplay = YES;
 
-	CGLUnlockContext([self.openGLContext CGLContextObj]);
+	CGLUnlockContext([_openGLContext CGLContextObj]);
 }
 
 
@@ -291,6 +303,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (void)pushController:(Controller3D *)controller {
+	NSAssert(_prepared, @"Pushing onto unprepared view!");
 	if (_controllerStack == nil)
 		_controllerStack = [[NSMutableArray alloc] init];
 	if (_controller)
@@ -299,11 +312,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	_controller = controller;
 	_controller.view = self;
 	//_button = nil;  // TODO
-	if (_initialized) {
-		[_controller start];
-		_started = YES;
-		self.needsDisplay = YES;
-	}
+	[_controller start];
+	_started = YES;
+	self.needsDisplay = YES;
+	//NSLog(@"pushed");
 }
 
 - (void)popWithObject:(id)result {

@@ -1,7 +1,7 @@
 #version 150
 
 uniform mat4 uProjection, uModelView;
-uniform mat3 uNormal;
+uniform mat3 uNormalMatrix;
 uniform vec4 uLight;
 uniform vec3 uEye;
 uniform vec4 uColor, uColorAmbient;
@@ -21,8 +21,8 @@ void main (void) {
 		else
 			light = normalize(uLight.xyz - aPosition);
 
-		float intensity = (dot(normalize(light), normalize(uNormal * aNormal)) + 1.0) / 2.0;
-		//intensity = max(0.0, dot(normalize(light), normalize(uNormal * aNormal)));
+		float intensity = (dot(normalize(light), normalize(uNormalMatrix * aNormal)) + 1.0) / 2.0;
+		//intensity = max(0.0, dot(normalize(light), normalize(uNormalMatrix * aNormal)));
 
 		if (uColorSize == 8)
 			vColor = mix(aColorAmbient, aColor, intensity);

@@ -18,10 +18,10 @@ void main(void) {
 	else
 		normal = normalize(vNormal);
 
-	vec4 uLightColor = vec4(1, 1, 1, 1);
+	vec4 uLightColor = vec4(1.0, 1.0, 1.0, 1.0);
 
 	vec3 light;
-	if (uLight.w == 0)
+	if (uLight.w == 0.0)
 		light = -uLight.xyz;
 	else
 		light = normalize(uLight.xyz - vPosition);
@@ -39,7 +39,7 @@ void main(void) {
 		diffuse_color *= texture(uAmbientOcclusionMapSampler, vTextureUV).rgb;
 
 	vec3 view = normalize(uEye - vPosition);
-	float shininess = 5;
+	float shininess = 5.0;
 
 	float specular_intensity;
 	if (vColorSpecular.w > 0.0) // && dot(normal, light) > 0)

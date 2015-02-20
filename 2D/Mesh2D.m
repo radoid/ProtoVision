@@ -23,7 +23,7 @@
 }
 
 - (id)initWithMode:(GLenum)drawmode vertices:(GLfloat *)vbuffer vertexCount:(int)vcount indices:(GLushort *)ibuffer indexCount:(int)icount vertexSize:(int)vertexsize texCoordsSize:(int)texcoordssize colorSize:(int)colorsize isDynamic:(BOOL)dynamic {
-	return [self initWithProgram:[Program3D defaultProgram2D] mode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize colorSize:colorsize isDynamic:dynamic];
+	return [self initWithProgram:[Program3D defaultProgram] mode:drawmode vertices:vbuffer vertexCount:vcount indices:ibuffer indexCount:icount vertexSize:vertexsize texCoordsSize:texcoordssize colorSize:colorsize isDynamic:dynamic];
 }
 
 - (id)initWithProgram:(Program3D *)program buffer:(Buffer3D *)buffer {
@@ -35,7 +35,7 @@
 }
 
 - (id)initWithBuffer:(Buffer3D *)buffer {
-	return [self initWithProgram:[Program3D defaultProgram2D] buffer:buffer];
+	return [self initWithProgram:[Program3D defaultProgram] buffer:buffer];
 }
 
 - (id)copyWithZone:(NSZone *)zone {

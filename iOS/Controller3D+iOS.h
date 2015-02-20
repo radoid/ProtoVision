@@ -33,5 +33,6 @@
 - (void)popWithObject:(NSObject *)result;
 
 - (int)run;
+- (int)runAnimated;
 
 @end

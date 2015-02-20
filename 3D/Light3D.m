@@ -12,8 +12,7 @@
 @implementation Light3D
 
 - (id)initWithPosition:(Vector3D)position {
-	if ((self = [super init])) {
-		self.position = position;
+	if ((self = [super initWithPosition:position direction:Vector3DFlip(position) up:Vector3DY])) { // TODO
 		_hasPosition = YES;
 		_color = Color2DMake(1, 1, 1, 1);
 	}

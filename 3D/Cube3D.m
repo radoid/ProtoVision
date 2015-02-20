@@ -59,6 +59,7 @@
 		self.scaleX = width;
 		self.scaleY = height;
 		self.scaleZ = depth;
+		_radius = 0.707;
 	}
 	return self;
 }

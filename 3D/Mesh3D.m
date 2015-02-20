@@ -7,6 +7,7 @@
 
 #import "ProtoVision.h"
 #import "Mesh3D.h"
+#import "Light3D.h"
 
 
 @implementation Mesh3D
@@ -116,27 +117,35 @@
 }
 
 - (void)drawWithCamera:(Camera3D *)camera {
-	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
-
-	if (_color.alpha < 1)
-		glEnable(GL_BLEND);
-
-	[_program useWithProjection:camera.projection modelView:modelview color:_color texture:_colorMap];
-	[_buffer draw];
-
-	if (_color.alpha < 1)
-		glDisable(GL_BLEND);
+	[self drawWithCamera:camera light:nil];
 }
 
 - (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light {
-	Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
-	Matrix3x3 normal = Matrix3x3Transpose(Matrix4x4Invert3x3(_localToWorld));
+	[self drawWithCamera:camera light:light program:_program];
+}
 
+- (void)drawWithCamera:(Camera3D *)camera light:(Light3D *)light program:(Program3D *)program {
 	if (_color.alpha < 1)
 		glEnable(GL_BLEND);
 
-	[_program useWithProjection:camera.projection model:_localToWorld view:camera.worldToLocal modelView:modelview normal:normal color:_color colorAmbient:_colorAmbient colorSpecular:_colorSpecular colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap specularMap:_specularMap ambientOcclusionMap:_ambientOcclusionMap light:light position:camera.position];
+	if (!program)
+		program = _program;
+	if (light) {
+		Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
+		Matrix3x3 normal = Matrix3x3Transpose(Matrix4x4Invert3x3(_localToWorld));
+		[program useWithProjection:camera.projection model:_localToWorld view:camera.worldToLocal modelView:modelview normal:normal color:_color colorAmbient:_colorAmbient colorSpecular:_colorSpecular colorSize:_buffer.colorsize colorMap:_colorMap normalMap:_normalMap specularMap:_specularMap ambientOcclusionMap:_ambientOcclusionMap light:light eye:camera.position];
+	} else {
+		Matrix4x4 modelview = Matrix4x4Multiply(camera.worldToLocal, _localToWorld);
+		[program useWithProjection:camera.projection modelView:modelview color:_color texture:_colorMap];
+	}
+
+	if (program != _program)
+		[_buffer setAttribArraysFromProgram:program];
+
 	[_buffer draw];
+
+	if (program != _program)
+		[_buffer setAttribArraysFromProgram:_program];
 
 	if (_color.alpha < 1)
 		glDisable(GL_BLEND);

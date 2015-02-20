@@ -204,7 +204,7 @@ typedef struct {
 							 GL_UNSIGNED_BYTE,
 							 [bitmap bitmapData]);
 
-			GLenum err = glGetError(); if (err) NSLog(@"[Texture2D init] OpenGL error %x", err);
+			GLenum err; NSAssert(!(err = glGetError()), @"[Texture2D init] OpenGL error %x", err);
 		} else {
 			// Handle other bitmap formats.
 		}
@@ -275,10 +275,10 @@ static int current_name = 0;
 }
 
 - (void)bind {
-	if (name && name != current_name) {
+	if (name && name != current_name) { // TODO
 		glBindTexture(GL_TEXTURE_2D, name);
 		//NSLog(@"[Texture2D bind] Bindana tekstura %d", name);
-		GLenum err = glGetError(); if (err) NSLog(@"[Texture2D bind] OpenGL error %x", err);
+		GLenum err; NSAssert(!(err = glGetError()), @"[Texture2D bind] OpenGL error 0x%x", err);
 		current_name = name;
 	}
 }

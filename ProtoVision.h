@@ -25,8 +25,10 @@
 #import "3D/Vector3D.h"
 #import "2D/Color2D.h"
 
-#import "3D/Program3D.h"
 #import "2D/Texture2D.h"
+#import "3D/FrameBuffer3D.h"
+
+#import "3D/Program3D.h"
 
 #import "3D/Buffer3D.h"
 #import "2D/Buffer2D.h"

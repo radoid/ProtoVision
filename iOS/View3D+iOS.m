@@ -60,7 +60,7 @@
 		_color = Color2DMake(.8, .8, .8, 1);
 	}
 
-	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);  // TODO
+	GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error 0x%x", err);  // TODO
 
 	//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
 	//[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -172,7 +172,7 @@
 			[_controller resume];
 		_started = YES;
 	}
-	GLenum err = glGetError(); NSAssert(!err, @"OpenGL error %x", err);  // TODO
+	GLenum err; NSAssert(!(err = glGetError()), @"OpenGL error 0x%x", err);  // TODO
 
 	if (_displayLink)
 		return;

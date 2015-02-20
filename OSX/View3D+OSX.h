@@ -11,7 +11,10 @@
 @class Controller3D;
 
 
-@interface View3D : NSOpenGLView
+@interface View3D : NSView
+
+@property (readonly) NSOpenGLPixelFormat *pixelFormat;
+@property (readonly) NSOpenGLContext *openGLContext;
 
 @property (nonatomic, readonly) CGRect backingFrame;
 @property (nonatomic) Color2D color;

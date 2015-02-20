@@ -31,6 +31,7 @@
 		[self setOpaque:YES];
 		[self setHidesOnDeactivate:YES];
 		[self makeKeyAndOrderFront:self];
+		//NSLog(@"initedwithfullscreen");
 	}
 	return self;
 }

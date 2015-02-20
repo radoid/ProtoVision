@@ -11,7 +11,7 @@
 
 @implementation Controller3D
 {
-	BOOL _animated;
+	BOOL _activated, _animated;
 }
 
 - (void)start {}
@@ -45,8 +45,9 @@
 
 - (int)run {
 	@autoreleasepool {
-		[[NSApplication sharedApplication] setDelegate:self];
-		[[NSApplication sharedApplication] run];
+		NSApplication *app = [NSApplication sharedApplication];
+		[app setDelegate:self];
+		[app run];
 	}
 	return 0;
 }
@@ -58,15 +59,20 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	_window = [[Window3D alloc] initWithFullScreen];
-	[_window.view pushController:self];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification {
+	//NSLog(@"didbecomeactive");
+	if (!_activated)
+		[_window.view pushController:self];
+	_activated = YES;
+	//[NSApp terminate:self];
 	if (_animated)
 		[_window.view startAnimation];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)aNotification {
+	//NSLog(@"didresignactive");
 	if (_animated)
 		[_window.view stopAnimation];
 }
